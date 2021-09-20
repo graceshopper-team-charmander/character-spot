@@ -15,7 +15,8 @@ module.exports = {
   plugins: ['react'],
   rules: {
     semi: ['off', 'always'],
-    quotes: ['off', 'single'],
+    quotes: ['off', 'double'],
     indent: ['off', 2],
+    'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
   },
 };
