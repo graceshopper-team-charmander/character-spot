@@ -6,7 +6,7 @@ const Product = db.define("product", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: false,
     }
   },
   imageUrl: {
@@ -14,10 +14,10 @@ const Product = db.define("product", {
     defaultValue: "/images/default-product.jpg"
   },
   price: {
-    type: Sequelize.DECIMAL(2, 1),
+    type: Sequelize.DECIMAL(3, 2),
     allowNull: false,
     validate: {
-      isEmpty: false,
+      notEmpty: false,
       min: 0.01
     }
   },
