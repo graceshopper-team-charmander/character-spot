@@ -14,15 +14,15 @@ const AllProducts = (props) => {
     dispatch(fetchProducts());
   }, []);
 
-  if(fetchStatus === FETCH_PENDING) return <div>Loading</div>
-  else if(fetchStatus === FETCH_FAILED) return <div>Error!</div>
-  return <div>
-    {
-      products.map(product => (
-        <ProductRow key={product.id} product ={product}/>
-      ))
-    }
-  </div>;
+  if (fetchStatus === FETCH_PENDING) return <div>Loading</div>;
+  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
+  return (
+    <div>
+      {products.map((product) => (
+        <ProductRow key={product.id} product={product} />
+      ))}
+    </div>
+  );
 };
 
 export default AllProducts;
