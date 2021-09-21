@@ -33,8 +33,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: state.auth.loggedIn
-  }
-}
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
