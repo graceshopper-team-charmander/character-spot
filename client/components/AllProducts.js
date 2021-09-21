@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
 import { FETCH_FAILED, FETCH_PENDING } from "../constants";
+import ProductRow from "./ProductRow";
 
 const AllProducts = (props) => {
   const dispatch = useDispatch();
@@ -18,9 +19,7 @@ const AllProducts = (props) => {
   return <div>
     {
       products.map(product => (
-        <div key={product.id}>
-          {product.name}
-        </div>
+        <ProductRow key={product.id} product ={product}/>
       ))
     }
   </div>;
