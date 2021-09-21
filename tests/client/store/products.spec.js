@@ -50,7 +50,6 @@ describe("Redux: Product", () => {
     beforeEach(() => {
       mockAxios = new MockAdapter(axios);
     });
-
     it("returns a function", async () => {
       const thunk = await fetchProducts();
       expect(typeof thunk).to.be.equal("function");
