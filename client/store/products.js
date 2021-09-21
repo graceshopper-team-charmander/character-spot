@@ -11,7 +11,7 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
  * Action Creators       *
  ************************/
 //--Thunks--
-export const fetchProducts = (location) => {
+export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       dispatch(setFetchProductsStatus(FETCH_PENDING));

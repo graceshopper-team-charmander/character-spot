@@ -7,7 +7,6 @@ const AllProducts = (props) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const fetchStatus = useSelector((state) => state.products.fetchStatus);
-  console.log('fetchStatus', fetchStatus);
 
   //on mount
   useEffect(() => {
@@ -16,7 +15,6 @@ const AllProducts = (props) => {
 
   if(fetchStatus === FETCH_PENDING) return <div>Loading</div>
   else if(fetchStatus === FETCH_FAILED) return <div>Error!</div>
-console.log('*********', products);
   return <div>
     {
       products.map(product => (
