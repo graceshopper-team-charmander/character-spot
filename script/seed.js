@@ -18,7 +18,9 @@ async function seed() {
   const fakeUsers = []
   for(let i = 0; i < amtOfFakeData; i++){
     fakeUsers.push( {
-      username: faker.internet.email(),
+      email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       password: faker.internet.password()
     })
   }
@@ -51,8 +53,8 @@ async function seed() {
 
   // Original Code: Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ email: 'cody@charm.com', firstName: 'Cody', lastName: 'Turtle', password: '123' }),
+    User.create({ email: 'murphy@charm.com',  firstName: 'Murphy', lastName: 'Law', password: '123'}),
   ])
 
   console.log(`seeded successfully`)

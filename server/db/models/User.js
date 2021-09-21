@@ -7,12 +7,12 @@ const axios = require('axios');
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
-  username: {
+  email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
     validate: {
-      // isEmail: true
+      isEmail: true,
       notEmpty: true
     }
   },
@@ -21,6 +21,26 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       notEmpty: true
+    }
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  fullName: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return this.firstName + ' ' + this.lastName;
     }
   },
   isAdmin: {
@@ -61,7 +81,7 @@ User.findByToken = async function(token) {
     const {id} = await jwt.verify(token, process.env.JWT)
     const user = User.findByPk(id)
     if (!user) {
-      throw 'nooo'
+      throw "Bad token";
     }
     return user
   } catch (ex) {
