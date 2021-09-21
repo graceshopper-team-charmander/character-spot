@@ -45,13 +45,13 @@ export const setProducts = (products) => {
  ************************/
 const initialState = {
   fetchStatus: FETCH_PENDING,
-  students: []
+  products: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PRODUCTS:
-      return { ...state, ...action.payload };
+      return { ...state, products: [...action.products] };
     case SET_PRODUCTS_FETCH_STATUS:
       return { ...state, fetchStatus: action.status };
     default:
