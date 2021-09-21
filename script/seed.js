@@ -1,19 +1,21 @@
-'use strict'
+"use strict";
 
-const {db, models: {User, Product, Cart} } = require('../server/db')
+const {
+  db,
+  models: { User, Product, Cart }
+} = require("../server/db");
 /** creating fake data */
-const faker = require('faker')
-
+const faker = require("faker");
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+  await db.sync({ force: true }); // clears db and matches models to tables
+  console.log("db synced!");
 
-  let amtOfFakeData = 20
+  let amtOfFakeData = 20;
   //Create Fake Users
   const fakeUsers = []
   for(let i = 0; i < amtOfFakeData; i++){
@@ -22,29 +24,31 @@ async function seed() {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       password: faker.internet.password()
-    })
+    });
   }
 
-  const createdFakeUsers = await Promise.all( fakeUsers.map((user) => User.create(user)))
+  const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
 
   //Create Fake Products
-  const fakeProducts = []
-  for(let i = 0; i < amtOfFakeData; i++){
-    fakeProducts.push( {
+  const fakeProducts = [];
+  for (let i = 0; i < amtOfFakeData; i++) {
+    fakeProducts.push({
       name: faker.random.word(),
       imageUrl: faker.image.food(),
       description: faker.lorem.sentence(),
       price: faker.commerce.price()
-    })
+    });
   }
-  const createdFakeProducts = await Promise.all( fakeProducts.map((product) => Product.create(product)))
+  const createdFakeProducts = await Promise.all(
+    fakeProducts.map((product) => Product.create(product))
+  );
 
-    //Map Products to Users
-  createdFakeUsers[0].addProduct(createdFakeProducts[0])
-  createdFakeUsers[0].addProduct(createdFakeProducts[1])
-  createdFakeUsers[0].addProduct(createdFakeProducts[2])
-  createdFakeUsers[0].addProduct(createdFakeProducts[3])
-
+  //Map Products to Users
+  createdFakeUsers[0].addProduct(createdFakeProducts[0]);
+  createdFakeUsers[0].addProduct(createdFakeProducts[1]);
+  createdFakeUsers[0].addProduct(createdFakeProducts[2]);
+  createdFakeUsers[0].addProduct(createdFakeProducts[3]);
+  createdFakeUsers[1].addProduct(createdFakeProducts[0]);
 
   // Original Code: Creating Users
   const users = await Promise.all([
@@ -52,14 +56,14 @@ async function seed() {
     User.create({ email: 'murphy@charm.com',  firstName: 'Murphy', lastName: 'Law', password: '123'}),
   ])
 
-  console.log(`seeded successfully`)
+  console.log(`seeded successfully`);
 
   return {
     users: {
       cody: users[0],
       murphy: users[1]
     }
-  }
+  };
 }
 
 /*
@@ -68,18 +72,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...')
+  console.log("seeding...");
   try {
-    await seed()
-  }
- catch (err) {
-    console.error(err)
-    process.exitCode = 1
-  }
- finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
+    await seed();
+  } catch (err) {
+    console.error(err);
+    process.exitCode = 1;
+  } finally {
+    console.log("closing db connection");
+    await db.close();
+    console.log("db connection closed");
   }
 }
 
@@ -89,8 +91,8 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
-  runSeed()
+  runSeed();
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;
