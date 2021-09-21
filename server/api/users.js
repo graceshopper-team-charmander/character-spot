@@ -1,8 +1,25 @@
 const router = require("express").Router();
 const {
-  models: { User, Product, Cart }
+  models: { User }
 } = require("../db");
-module.exports = router;
+const { requireTokenMiddleware, isAdminMiddleware } = require("../auth-middleware");
+const cookieParser = require("cookie-parser");
+const cookieSecret = process.env.cookieSecret;
+router.use(cookieParser(cookieSecret));
+
+//GET /api/users - returns a list of all users
+router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      attributes: ["id", "email", "firstName", "lastName"]
+    });
+    res.json(users);
+  }catch(err) {
+    next(err);
+  }
+});
+
+
 
 router.get("/", async (req, res, next) => {
   try {
@@ -85,6 +102,8 @@ router.delete("/:userId/cart/:productId", async(req, res, next) => {
     }
     res.send(product)
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
+
+module.exports = router;

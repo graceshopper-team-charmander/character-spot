@@ -1,6 +1,7 @@
 const router = require("express").Router();
 module.exports = router;
 
+//Error Handler for /api
 router.use("/users", require("./users"));
 router.use("/products", require("./products"));
 

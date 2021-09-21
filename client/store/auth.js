@@ -1,60 +1,90 @@
-import axios from 'axios'
-import history from '../history'
+import axios from "axios";
+import history from "../history";
 
-const TOKEN = 'token'
+/***********************
+ * STATES        *
+ ***********************/
+export const LOGGED_IN = true;
+export const NOT_LOGGED_IN = false;
 
-/**
- * ACTION TYPES
- */
-const SET_AUTH = 'SET_AUTH'
+/***********************
+ * ACTION TYPES        *
+ ***********************/
+const LOGIN = "LOGIN";
+const LOGOUT = "LOGOUT";
 
-/**
- * ACTION CREATORS
- */
-const setAuth = auth => ({type: SET_AUTH, auth})
+/***********************
+ * ACTION CREATORS     *
+ ***********************/
+const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
+const setLoggedOut = () => ({ type: LOGOUT });
 
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
-  const token = window.localStorage.getItem(TOKEN)
-  if (token) {
-    const res = await axios.get('/auth/me', {
-      headers: {
-        authorization: token
+export const authenticate = (method, credentials) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(`/auth/${method}`, credentials);
+      if (response.data.loggedIn) {
+        dispatch(setLoggedIn(response.data.firstName));
+      } else {
+        console.log("Failed to authenticate");
+        //@todo failed to authenticate
       }
-    })
-    return dispatch(setAuth(res.data))
-  }
-}
-
-export const authenticate = (username, password, method) => async dispatch => {
-  try {
-    const res = await axios.post(`/auth/${method}`, {username, password})
-    window.localStorage.setItem(TOKEN, res.data.token)
-    dispatch(me())
-  } catch (authError) {
-    return dispatch(setAuth({error: authError}))
-  }
-}
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const logout = () => {
-  window.localStorage.removeItem(TOKEN)
-  history.push('/login')
-  return {
-    type: SET_AUTH,
-    auth: {}
-  }
-}
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get("/auth/logout");
+      if (!response.data.loggedIn) {
+        dispatch(setLoggedOut());
+      } else {
+        console.log("Failed to logout");
+        //@todo failed to logout
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
-/**
- * REDUCER
- */
-export default function(state = {}, action) {
+export const whoAmI = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get("/auth/whoAmI");
+      if (response.data.loggedIn) {
+        dispatch(setLoggedIn(response.data.firstName));
+      } else {
+        console.log("Failed to authenticate");
+        //@todo failed to authenticate
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+/***********************
+ * REDUCER             *
+ ***********************/
+const initialState = {
+  firstName: "guest",
+  loggedIn: NOT_LOGGED_IN
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTH:
-      return action.auth
+    case LOGIN:
+      return { loggedIn: LOGGED_IN, firstName: action.firstName };
+    case LOGOUT:
+      return { loggedIn: NOT_LOGGED_IN, firstName: "guest" };
     default:
-      return state
+      return state;
   }
-}
+};
