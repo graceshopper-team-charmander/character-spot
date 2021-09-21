@@ -6,9 +6,15 @@
 - [ ] access a deployed version of the website so I can browse and purchase products.
   - we need to deploy on heroku
 - [ ] view all available products so I can pick from a variety.
-  - need all products page
+  - need all products page:
+    - products table
+    - products api route
+    - allProducts react page and reducer for allProducts
 - [ ] view a single product so I can see more details.
   - need single product
+    - relies on product table
+    - product api route
+    - singleProduct react page and reducer for single product
 - [ ] add a product to my cart so I can collect my desired products in one place.
   - cart page
   - add item to cart button (all products page, single page)
