@@ -1,6 +1,9 @@
 'use strict'
 
-const {db, models: {User, Product} } = require('../server/db')
+const {db, models: {User, Product, Cart} } = require('../server/db')
+/** creating fake data */
+const faker = require('faker')
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -10,14 +13,50 @@ async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
 
-  // Creating Users
+  let amtOfFakeData = 20
+  //Create Fake Users
+  const fakeUsers = []
+  for(let i = 0; i < amtOfFakeData; i++){
+    fakeUsers.push( {
+      username: faker.internet.email(),
+      password: faker.internet.password()
+    })
+  }
+
+  const createdFakeUsers = await Promise.all( fakeUsers.map((user) => User.create(user)))
+
+  //Create Fake Products
+  const fakeProducts = []
+  for(let i = 0; i < amtOfFakeData; i++){
+    fakeProducts.push( {
+      name: faker.random.word(),
+      imageUrl: faker.image.food(),
+      description: faker.lorem.sentence(),
+      price: faker.commerce.price()
+    })
+  }
+  const createdFakeProducts = await Promise.all( fakeProducts.map((product) => Product.create(product)))
+
+  // //Create Carts
+  // let carts = []
+  // for(let i = 0; i < amtOfFakeData; i++){
+  //   carts.push(await Cart.create())
+  // }
+  // const createdCarts = await Promise.all(carts)
+  // //Associate Users with Carts and Carts with Products
+  // for(let i = 0; i < amtOfFakeData; i++){
+  //   console.log(carts[i].__proto__)
+  //   createdCarts[i].setUser(createdFakeUsers[i])
+  // }
+
+  // Original Code: Creating Users
   const users = await Promise.all([
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ])
 
-  console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+
   return {
     users: {
       cody: users[0],
