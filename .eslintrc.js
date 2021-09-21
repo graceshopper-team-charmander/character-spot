@@ -17,6 +17,6 @@ module.exports = {
     semi: ["off", "always"],
     quotes: ["off", "double"],
     indent: ["off", 2],
-    "brace-style": [2, "stroustrup", { allowSingleLine: true }]
+    // "brace-style": [2, "stroustrup", { allowSingleLine: true }]
   }
 };

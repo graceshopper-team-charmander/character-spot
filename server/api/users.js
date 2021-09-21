@@ -62,8 +62,21 @@ router.put("/:userId/cart/:productId", async (req, res, next) => {
         }
       ]
     });
-    res.send(user.products);
+    res.send(user);
   } catch (err) {
     next(err);
   }
 });
+
+router.post("/:userId/cart/:productId", async(req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const product = await Product.findByPk(req.params.productId);
+    if(product) {
+      user.addProduct(product)
+    }
+    res.send(product)
+  } catch (err) {
+    next(err)
+  }
+})
