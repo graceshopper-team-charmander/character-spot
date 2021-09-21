@@ -51,18 +51,13 @@ router.put("/:userId/cart/:productId", async (req, res, next) => {
       }
     });
     const updatedCartProduct = await cartProduct[0].update({ quantity: newQuantity });
-    const user = await User.findByPk(req.params.userId, {
-      include: [
-        {
-          model: Product,
-          attributes: ["id", "name", "description", "price", "imageUrl"],
-          through: {
-            attributes: ["quantity"]
-          }
-        }
-      ]
+    const cart = await Cart.findAll({
+      where: {
+        userId: userId,
+      }
     });
-    res.send(user);
+    res.send(cart);
+
   } catch (err) {
     next(err);
   }
@@ -74,6 +69,19 @@ router.post("/:userId/cart/:productId", async(req, res, next) => {
     const product = await Product.findByPk(req.params.productId);
     if(product) {
       user.addProduct(product)
+    }
+    res.send(product)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete("/:userId/cart/:productId", async(req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const product = await Product.findByPk(req.params.productId);
+    if(product) {
+      user.removeProduct(product)
     }
     res.send(product)
   } catch (err) {
