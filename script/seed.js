@@ -37,17 +37,12 @@ async function seed() {
   }
   const createdFakeProducts = await Promise.all( fakeProducts.map((product) => Product.create(product)))
 
-  // //Create Carts
-  // let carts = []
-  // for(let i = 0; i < amtOfFakeData; i++){
-  //   carts.push(await Cart.create())
-  // }
-  // const createdCarts = await Promise.all(carts)
-  // //Associate Users with Carts and Carts with Products
-  // for(let i = 0; i < amtOfFakeData; i++){
-  //   console.log(carts[i].__proto__)
-  //   createdCarts[i].setUser(createdFakeUsers[i])
-  // }
+    //Map Products to Users
+  createdFakeUsers[0].addProduct(createdFakeProducts[0])
+  createdFakeUsers[0].addProduct(createdFakeProducts[1])
+  createdFakeUsers[0].addProduct(createdFakeProducts[2])
+  createdFakeUsers[0].addProduct(createdFakeProducts[3])
+
 
   // Original Code: Creating Users
   const users = await Promise.all([
