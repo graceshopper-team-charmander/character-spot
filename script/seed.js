@@ -1,6 +1,9 @@
 'use strict'
 
 const {db, models: {User, Product} } = require('../server/db')
+/** creating fake data */
+const faker = require('faker')
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -10,14 +13,36 @@ async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
 
-  // Creating Users
+  //Create Fake Users
+  const fakeUsers = []
+  for(let i = 0; i < 20; i++){
+    fakeUsers.push( {
+      username: faker.internet.email(),
+      password: faker.internet.password()
+    })
+  }
+  fakeUsers.forEach( async (user) => await User.create(user))
+
+  //Create Fake Products
+  const fakeProducts = []
+  for(let i = 0; i < 20; i++){
+    fakeProducts.push( {
+      name: faker.random.word(),
+      imageUrl: faker.image.food(),
+      description: faker.lorem.sentence(),
+      price: faker.commerce.price()
+    })
+  }
+  fakeProducts.forEach( async (product) => await Product.create(product))
+
+  // Original Code: Creating Users
   const users = await Promise.all([
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ])
 
-  console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+
   return {
     users: {
       cody: users[0],
