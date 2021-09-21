@@ -41,7 +41,7 @@ User.authenticate = async function ({ username, password }) {
     error.status = 401;
     throw error;
   }
-  return user.generateToken();
+  return { user, token: user.generateToken() };
 };
 
 User.findByToken = async function (token) {
@@ -52,8 +52,7 @@ User.findByToken = async function (token) {
       throw "nooo";
     }
     return user;
-  }
-  catch (ex) {
+  } catch (ex) {
     const error = Error("bad token");
     error.status = 401;
     throw error;
