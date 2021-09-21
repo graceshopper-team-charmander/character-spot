@@ -1,36 +1,60 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {authenticate} from '../store'
+import React, { useState } from "react";
+import { connect, useDispatch } from "react-redux";
+import { authenticate } from "../store";
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+const AuthForm = (props) => {
+  const {name, displayName, error } = props;
+  const [email, setEmail] = useState("cody@charm.com");
+  const [password, setPassword] = useState("123");
+  const [firstName, setFirstName] = useState("Cody");
+  const dispatch = useDispatch();
+  const handleSubmit = (evt) => {
+    console.log('test');
+    evt.preventDefault();
+    if(name === 'signup') {
+      dispatch(authenticate(name, {email, password, firstName}));
+    }
+    else {
+      dispatch(authenticate(name, {email, password}));
+    }
+  }
 
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
-          <label htmlFor="username">
-            <small>Username</small>
+          <label htmlFor="Email">
+            <small>Email</small>
           </label>
-          <input name="username" type="text" />
+          <input value={email} onChange={(evt) => {setEmail(evt.target.value)}} name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input value={password} onChange={(evt) => {setPassword(evt.target.value)}} name="password" type="password" />
         </div>
+        {
+          name === "signup" &&
+            <div>
+              <label htmlFor="First Name">
+                <small>First Name</small>
+              </label>
+              <input value={firstName} onChange={(evt) => {setFirstName(evt.target.value)}} name="firstName" type="text" />
+            </div>
+        }
+
         <div>
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
@@ -39,33 +63,22 @@ const AuthForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-const mapLogin = state => {
+const mapLogin = (state) => {
   return {
-    name: 'login',
-    displayName: 'Login',
+    name: "login",
+    displayName: "Login",
     error: state.auth.error
-  }
-}
+  };
+};
 
-const mapSignup = state => {
+const mapSignup = (state) => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
+    name: "signup",
+    displayName: "Sign Up",
     error: state.auth.error
-  }
-}
+  };
+};
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const username = evt.target.username.value
-      const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
-    }
-  }
-}
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(mapLogin)(AuthForm);
+export const Signup = connect(mapSignup)(AuthForm);

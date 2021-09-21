@@ -1,6 +1,6 @@
 const {
   models: { User }
-} = require("../db");
+} = require("./db");
 
 //middleware to get the user by the data in their token
 const requireTokenMiddleware = async (req, res, next) => {
@@ -19,7 +19,7 @@ const requireTokenMiddleware = async (req, res, next) => {
 };
 
 //check if the user is an admin, proceed if true, throw error otherwise
-const isAdminMiddleware = async (req, res, next) => {
+const isAdminMiddleware = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {

@@ -2,11 +2,10 @@ const router = require("express").Router();
 const {
   models: { User }
 } = require("../db");
-const { requireTokenMiddleware } = require("../api/auth-middleware");
-const cookieParser = require('cookie-parser');
+const { requireTokenMiddleware } = require("../auth-middleware");
+const cookieParser = require("cookie-parser");
 const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
-
 
 router.post("/signup", async (req, res, next) => {
   try {
@@ -19,7 +18,7 @@ router.post("/signup", async (req, res, next) => {
     });
     res.send({
       loggedIn: true,
-      firstName: user.firstName,
+      firstName: user.firstName
     });
   } catch (err) {
     if (err.name === "SequelizeUniqueConstraintError") {
@@ -50,7 +49,7 @@ router.post("/login", async (req, res, next) => {
     });
     res.send({
       loggedIn: true,
-      firstName: user.firstName,
+      firstName: user.firstName
     });
   } catch (err) {
     next(err);
@@ -65,7 +64,7 @@ router.get("/logout", (req, res, next) => {
       signed: true
     });
     res.json({
-      loggedIn: false,
+      loggedIn: false
     });
   } catch (err) {
     next(err);
