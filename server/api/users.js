@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, Product }
+  models: { User, Product, Cart }
 } = require("../db");
 const { requireTokenMiddleware, isAdminMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
@@ -19,10 +19,10 @@ router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next
   }
 });
 
-router.get("/:userId/cart", async (req, res, next) => {
+//Get the cart of a user
+router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    // need to validate userId with middleware
-    const user = await User.findByPk(req.params.userId, {
+    const user = await User.findByPk(req.user.id, {
       include: [
         {
           model: Product,
@@ -39,11 +39,12 @@ router.get("/:userId/cart", async (req, res, next) => {
   }
 });
 
-router.put("/:userId/cart/:productId", async (req, res, next) => {
+//update quantity of an item in the cart
+router.put("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
   try {
     // need to validate userId with middleware
     const productId = req.params.productId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const newQuantity = req.body.quantity;
     const cartProduct = await Cart.findAll({
       where: {
@@ -51,7 +52,10 @@ router.put("/:userId/cart/:productId", async (req, res, next) => {
         productId: productId
       }
     });
-    const updatedCartProduct = await cartProduct[0].update({ quantity: newQuantity });
+    // If product is not in the cart, we need to send some sort of error
+    if(cartProduct.length > 0){
+      await cartProduct[0].update({ quantity: newQuantity })
+    }
     const cart = await Cart.findAll({
       where: {
         userId: userId
@@ -63,9 +67,10 @@ router.put("/:userId/cart/:productId", async (req, res, next) => {
   }
 });
 
-router.post("/:userId/cart/:productId", async (req, res, next) => {
+//Add a product into a user's cart
+router.post("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.userId);
+    const user = await User.findByPk(req.user.id);
     const product = await Product.findByPk(req.params.productId);
     if (product) {
       user.addProduct(product);
@@ -76,9 +81,10 @@ router.post("/:userId/cart/:productId", async (req, res, next) => {
   }
 });
 
-router.delete("/:userId/cart/:productId", async (req, res, next) => {
+//Delete a product from a user's cart
+router.delete("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.userId);
+    const user = await User.findByPk(req.user.id);
     const product = await Product.findByPk(req.params.productId);
     if (product) {
       user.removeProduct(product);
