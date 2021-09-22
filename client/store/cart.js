@@ -1,98 +1,96 @@
 import axios from "axios";
-import { noExtendLeft } from "sequelize/types/lib/operators";
 
-const ADD_TO_CART = "ADD_TO_CART"
-const SET_CART = "SET_CART"
-const UPDATE_QUANTITY = "UPDATE_QUANTITY"
-const DELETE_PRODUCT = "DELETE_PRODUCT"
-
+const ADD_TO_CART = "ADD_TO_CART";
+const SET_CART = "SET_CART";
+const UPDATE_QUANTITY = "UPDATE_QUANTITY";
+const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 const setCart = (cart) => {
   return {
     type: SET_CART,
     cart
-  }
-}
+  };
+};
 
 export const fetchCart = () => {
-  return  async (dispatch) => {
+  return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/cart`)
-      dispatch(setCart(data))
-    } catch(err){
-      console.log(err)
+      const { data } = await axios.get(`/api/users/cart`);
+      dispatch(setCart(data));
+    } catch (err) {
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 const addToCart = (product) => {
   return {
     type: ADD_TO_CART,
     product
-  }
-}
+  };
+};
 
-export const addToCartThunk = (product) => {
-  return async(dispatch) => {
+export const addToCartThunk = (productId) => {
+  return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/users/cart/${product.id}`)
-      dispatch(addToCart(data))
-    } catch(err){
-      console.log(err)
+      const { data } = await axios.post(`/api/users/cart/${productId}`);
+      dispatch(addToCart(data));
+    } catch (err) {
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 const updateQuantity = (cart) => {
   return {
     type: UPDATE_QUANTITY,
     cart
-  }
-}
+  };
+};
 
 export const updateQuantityThunk = (product, quantity) => {
-  return async(dispatch, getState) => {
+  return async (dispatch, getState) => {
     try {
       // const state = getState()
-      const { data } = await axios.put(`/api/users/cart/${product.id}`, {quantity : quantity})
-      dispatch(updateQuantity(data))
+      const { data } = await axios.put(`/api/users/cart/${product.id}`, { quantity: quantity });
+      dispatch(updateQuantity(data));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 const deleteProduct = (product) => {
   return {
     type: DELETE_PRODUCT,
     product
-  }
-}
+  };
+};
 
 export const deleteProductThunk = (user, product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/cart/${product.id}`)
-      dispatch(deleteProduct(data))
+      const { data } = await axios.delete(`/api/users/cart/${product.id}`);
+      dispatch(deleteProduct(data));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
-let initialState = []
+  };
+};
+let initialState = [];
 
 export default (state = initialState, action) => {
-  switch(action.type){
+  switch (action.type) {
     case SET_CART:
-      return {...state, cart: action.cart}
+      return { ...state, cart: action.cart };
     case ADD_TO_CART:
-      return {...state, cart: [...state.cart, action.product]}
+      return { ...state, cart: [...state.cart, action.product] };
     case UPDATE_QUANTITY:
-      return {...state, cart: action.cart}
+      return { ...state, cart: action.cart };
     case DELETE_PRODUCT:
-      const updatedCart = action.cart.filter( (product) => (product.id !== action.product.id))
-      return {...state, cart: updatedCart}
+      const updatedCart = action.cart.filter((product) => product.id !== action.product.id);
+      return { ...state, cart: updatedCart };
     default:
-      return state
+      return state;
   }
-}
+};
