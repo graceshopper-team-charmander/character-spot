@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User }
+  models: { User, Product }
 } = require("../db");
 const { requireTokenMiddleware, isAdminMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
@@ -12,22 +12,6 @@ router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next
   try {
     const users = await User.findAll({
       attributes: ["id", "email", "firstName", "lastName"]
-    });
-    res.json(users);
-  }catch(err) {
-    next(err);
-  }
-});
-
-
-
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ["id", "username"]
     });
     res.json(users);
   } catch (err) {
@@ -70,37 +54,36 @@ router.put("/:userId/cart/:productId", async (req, res, next) => {
     const updatedCartProduct = await cartProduct[0].update({ quantity: newQuantity });
     const cart = await Cart.findAll({
       where: {
-        userId: userId,
+        userId: userId
       }
     });
     res.send(cart);
-
   } catch (err) {
     next(err);
   }
 });
 
-router.post("/:userId/cart/:productId", async(req, res, next) => {
+router.post("/:userId/cart/:productId", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
     const product = await Product.findByPk(req.params.productId);
-    if(product) {
-      user.addProduct(product)
+    if (product) {
+      user.addProduct(product);
     }
-    res.send(product)
+    res.send(product);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-router.delete("/:userId/cart/:productId", async(req, res, next) => {
+router.delete("/:userId/cart/:productId", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
     const product = await Product.findByPk(req.params.productId);
-    if(product) {
-      user.removeProduct(product)
+    if (product) {
+      user.removeProduct(product);
     }
-    res.send(product)
+    res.send(product);
   } catch (err) {
     next(err);
   }

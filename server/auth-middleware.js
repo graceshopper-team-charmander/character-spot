@@ -8,9 +8,8 @@ const requireTokenMiddleware = async (req, res, next) => {
     if (req.signedCookies && req.signedCookies.token) {
       req.user = await User.findByToken(req.signedCookies.token);
       next();
-    }
-    else {
-      throw {status: 401, message: 'Missing Token!'};
+    } else {
+      throw { status: 401, message: "Missing Token!" };
     }
   } catch (err) {
     console.log(err);
@@ -30,4 +29,4 @@ const isAdminMiddleware = (req, res, next) => {
 module.exports = {
   requireTokenMiddleware,
   isAdminMiddleware
-}
+};
