@@ -1,10 +1,19 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCartThunk } from "../store/cart";
 
 const ProductRow = (props) => {
   const { product } = props;
   const { id, name, description, price, imageUrl } = product;
-  console.log(product);
+
+  const dispatch = useDispatch();
+
+  const handleClick = (evt) => {
+    const productId = evt.target.value;
+    dispatch(addToCartThunk(productId));
+  };
   return (
     <div className="col-lg-2 col-md-3 col-sm-4 card p-4 m-2">
       <Link className="product-link" to={`/products/${id}`}>
@@ -14,21 +23,14 @@ const ProductRow = (props) => {
         <img className="card-img" src={imageUrl} alt="Card image cap" />
       </Link>
       <div className="card-body">
-        {/* <p className="card-text">{description}</p> */}
         <p className="card-text">$ {price}</p>
 
-        <a href="#" className="btn btn-secondary add-to-cart">
+        <button value={id} onClick={handleClick} className="btn btn-secondary add-to-cart">
           ADD TO CART
-        </a>
+        </button>
       </div>
     </div>
   );
-
-  // return (
-  //   <Link to={`/products/${product.id}`}>
-  //     <div>{product.name}</div>
-  //   </Link>
-  // );
 };
 
 export default ProductRow;
