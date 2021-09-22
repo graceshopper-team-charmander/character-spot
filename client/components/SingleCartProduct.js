@@ -10,11 +10,10 @@ class SingleCartProduct extends React.Component {
     super(props)
   }
   render() {
-    console.log(this.props)
     return (
       <Card>
         <CardHeader
-        title = "Hello"/>
+        title = {this.props.product.name}/>
       </Card>
     )
   }

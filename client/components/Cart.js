@@ -4,6 +4,7 @@ import { fetchCart } from "../store/cart";
 // import SingleCartProduct from "./SingleCartProduct"
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import SingleCartProduct from "./SingleCartProduct";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,9 @@ const Cart = () => {
           <div className="form-title">Your New Friends (Cart)</div>
         </div>
         <div>
-          {/* TEMP FOR WHEN SINGLECART */}
           {cart.map((product) => {
-            return <div key={product.id}>{product.name}</div>;
+            return <SingleCartProduct key={product.id} product={product} />
           })}
-          {/* <SingleCartProduct key={product.id} product={product} /> */}
         </div>
       </Paper>
     </Grid>
