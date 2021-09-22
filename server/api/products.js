@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Product: Products }
 } = require("../db");
+const { idSchema } = require("./validationSchemas");
 
 //GET /products - returns all the products
 router.get("/", async (req, res, next) => {
@@ -18,21 +19,17 @@ router.get("/", async (req, res, next) => {
 //GET /products/:id - returns a single product, specified by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    if (!isNaN(parseInt(req.params.id))) {
-      //make sure the ID is a number
-      const product = await Products.findByPk(req.params.id, {
-        attributes: ["id", "name", "description", "price", "imageUrl"]
-      });
-      if (product) {
-        res.send(product);
-      } else {
-        throw { status: 404, message: "No such product!" };
-      }
+    //make sure the ID is a number
+    await idSchema.validate(req.params);
+    const product = await Products.findByPk(req.params.id, {
+      attributes: ["id", "name", "description", "price", "imageUrl"]
+    });
+    if (product) {
+      res.send(product);
     } else {
-      throw { message: "Bad product id!" };
+      throw { status: 404, message: "No such product!" };
     }
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });

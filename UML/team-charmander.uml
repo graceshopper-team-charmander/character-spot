@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c0f7b068-e125-479e-8fe0-84a811b0c3f9</OriginalElement>
+  <nodes>
+    <node x="428.0" y="262.5">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.order</node>
+    <node x="843.75" y="204.0">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.ordered_items</node>
+    <node x="92.0" y="351.5">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.users</node>
+    <node x="1008.0" y="732.0">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.category</node>
+    <node x="112.50000000000003" y="959.0">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.carts</node>
+    <node x="494.0" y="631.0">c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.products</node>
+  </nodes>
+  <notes>
+    <note x="59.0" y="64.0">
+      <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.order</node>
+      <value>For each order the customer makes\nMay include additional data such as\npayment method, tracking #, etc\n\nuserId will reference the user that made the order</value>
+      <edge>
+        <point x="0.0" y="-44.5" />
+        <point x="498.5" y="130.75" />
+        <point x="241.5" y="130.75" />
+        <point x="0.0" y="49.5" />
+      </edge>
+    </note>
+    <note x="855.0" y="39.0">
+      <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.ordered_items</node>
+      <value>Saves a copy of each ordered item.\nWe're saving a copy because simply referencing\nthe item in the products database may produce\nan incorrect order history if the \nname/description/price/etc of that item has \nchanged since the user ordered that item.</value>
+      <edge>
+        <point x="-45.25" y="-135.5" />
+        <point x="889.0" y="290.0" />
+        <point x="1033.0" y="290.0" />
+        <point x="0.0" y="58.0" />
+      </edge>
+    </note>
+    <note x="828.75" y="588.0">
+      <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.products</node>
+      <value>Product will be associated with category via a categoryId on products</value>
+      <edge>
+        <point x="0.0" y="-122.5" />
+        <point x="643.5" y="687.0" />
+        <point x="1079.25" y="687.0" />
+        <point x="0.0" y="15.5" />
+      </edge>
+    </note>
+  </notes>
+  <edges>
+    <edge source="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.carts" target="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.products" relationship="REFERENCES">
+      <point x="74.75" y="-83.5" />
+      <point x="336.75" y="982.0" />
+      <point x="643.5" y="982.0" />
+      <point x="0.0" y="122.5" />
+    </edge>
+    <edge source="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.carts" target="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.users" relationship="REFERENCES">
+      <point x="-74.75" y="-83.5" />
+      <point x="187.25" y="982.0" />
+      <point x="241.5" y="982.0" />
+      <point x="0.0" y="122.5" />
+    </edge>
+    <edge source="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.ordered_items" target="c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.order" relationship="REFERENCES">
+      <point x="45.25" y="-135.5" />
+      <point x="979.5" y="290.0" />
+      <point x="498.5" y="290.0" />
+      <point x="0.0" y="44.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="691.0" y="619.0" />
+  <SelectedNodes>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.order</node>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.ordered_items</node>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.users</node>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.category</node>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.carts</node>
+    <node>c0f7b068-e125-479e-8fe0-84a811b0c3f9.TABLE:team-charmander.public.products</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
