@@ -17,12 +17,12 @@ const AllProducts = (props) => {
   if (fetchStatus === FETCH_PENDING) return <div>Loading</div>;
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
   return (
-    <div>
-      <div className="container my-4 ">
-        <h3 className="display-6 d-flex justify-content-center">Products</h3>
+    <div className="container-fluid m-4 px-4 py-4 bg-secondary">
+      <div className="row">
+        <h4 className="col-1 d-flex m-2">Products</h4>
       </div>
 
-      <div className="card-deck">
+      <div className="row">
         {products.map((product) => (
           <ProductRow key={product.id} product={product} />
         ))}

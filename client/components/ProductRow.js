@@ -6,16 +6,18 @@ const ProductRow = (props) => {
   const { id, name, description, price, imageUrl } = product;
   console.log(product);
   return (
-    <div className="card col-2 m-3">
+    <div className="col-lg-2 col-md-3 col-sm-4 card p-4 m-2">
+      <Link className="product-link" to={`/products/${id}`}>
+        <h5 className="card-title">{name}</h5>
+      </Link>
       <Link to={`/products/${id}`}>
-        <img className="card-img-top" src={imageUrl} alt="Card image cap" />
+        <img className="card-img" src={imageUrl} alt="Card image cap" />
       </Link>
       <div className="card-body">
-        <h5 className="card-title">{name}</h5>
         {/* <p className="card-text">{description}</p> */}
         <p className="card-text">$ {price}</p>
 
-        <a href="#" className="btn btn-primary add-to-cart">
+        <a href="#" className="btn btn-secondary add-to-cart">
           ADD TO CART
         </a>
       </div>

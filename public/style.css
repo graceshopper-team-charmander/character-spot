@@ -29,8 +29,22 @@ form div {
   justify-content: flex-start;
 }
 
-.nav-link {
+.nav-link,
+.product-link {
   color: rgb(72, 72, 72);
+}
+
+.nav-link:hover,
+.product-link:hover {
+  color: rgb(230, 0, 18) !important;
+}
+
+.nav-link:active {
+  color: rgb(230, 0, 18) !important;
+}
+
+a:hover {
+  color: rgb(230, 0, 18);
 }
 
 .navbar-right {
@@ -39,10 +53,8 @@ form div {
 }
 
 .navbar-brand {
-  margin-right: 50px;
-}
-.nav-link:hover {
-  color: rgb(230, 0, 18);
+  margin-right: 3%;
+  width: 35%;
 }
 
 .search {
@@ -52,17 +64,34 @@ form div {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* .form-control {
-  border: 1px solid rgb(230, 0, 18);
-} */
 
-.card-deck {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+.search-input:focus {
+  border-color: rgb(230, 0, 18) !important;
+  /* box-shadow: 0 0 10px 1px rgb(230, 0, 18); */
+}
+
+.dropdown-item:hover {
+  color: rgb(230, 0, 18);
+  background-color: transparent;
 }
 
 .add-to-cart {
   align-self: flex-end;
+}
+
+.bg-secondary {
+  background-color: #f5f5f5 !important;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px #cccccc;
+}
+
+.card-img {
+  border-radius: 5px;
+  border: solid 5px #f5f5f5;
 }
