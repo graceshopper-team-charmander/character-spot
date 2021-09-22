@@ -144,10 +144,17 @@ a:hover {
 /***********************
  Background Colors     *
 ***********************/
+.skyblue {
+  background-color: #009edb;
+}
 .orange {
   background-color: #fcd000;
 }
 
 .red {
   background-color: #e71e07
+}
+
+.green {
+  #44af35
 }

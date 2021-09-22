@@ -3,9 +3,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const styles = (theme) => ({
   paperRoot: {
@@ -15,27 +15,17 @@ const styles = (theme) => ({
     width: "100%"
   },
   formControlRoot: {
-    width: '100%',
-  },
+    width: "100%"
+  }
 });
 
-class Address extends React.Component {
+class PaymentMethod extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addressName: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      city: "",
-      state: "",
-      zipCode: "",
+      paymentMethod: "coins",
       errors: {
-        addressName: "",
-        streetAddress1: "",
-        streetAddress2: "",
-        city: "",
-        state: "",
-        zipCode: ""
+        paymentMethod: ""
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -57,15 +47,14 @@ class Address extends React.Component {
             <div className="form-title ">Payment Method</div>
           </div>
           <div className="form-container">
-            <FormControl variant='outlined' className={muiClasses.formControlRoot} margin='dense'>
-              <InputLabel id='payment_method'>Payment Method</InputLabel>
-            <Grid container spacing={1}>
+            <FormControl variant="outlined" className={muiClasses.formControlRoot} margin="dense">
+              <InputLabel id="payment_method">Payment Method</InputLabel>
               <Select
                 labelId="payment_method"
-                label="Paymemt Method"
+                label="Payment Method"
                 fullWidth
                 value="pokeDollars"
-                name="payment_method"
+                name="paymentMethod"
                 onChange={handleChange}>
                 <MenuItem value="coins">Coins</MenuItem>
                 <MenuItem value="gil">Gil</MenuItem>
@@ -77,7 +66,6 @@ class Address extends React.Component {
                 <MenuItem value="bitcoin">Bitcoin</MenuItem>
                 <MenuItem value="eth">Etherium</MenuItem>
               </Select>
-            </Grid>
             </FormControl>
           </div>
         </Paper>
@@ -86,4 +74,4 @@ class Address extends React.Component {
   }
 }
 
-export default withStyles(styles)(Address);
+export default withStyles(styles)(PaymentMethod);

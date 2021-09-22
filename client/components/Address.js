@@ -3,7 +3,10 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const styles = (theme) => ({
   paperRoot: {
@@ -12,6 +15,9 @@ const styles = (theme) => ({
     flexDirection: 'column',
     width: '100%'
   },
+  formControlRoot: {
+    width: "100%"
+  }
 });
 
 class Address extends React.Component {
@@ -56,16 +62,19 @@ class Address extends React.Component {
           <div className='form-container'>
             <Grid container spacing={1}>
               <Grid item xs={12}>
-                <TextField
-                  margin="dense"
-                  label="Address Name"
-                  type="text"
-                  variant="outlined"
-                  fullWidth
-                  value={this.state.addressName}
-                  name="addressName"
-                  onChange={handleChange}
-                />
+                <FormControl variant='outlined' className={muiClasses.formControlRoot} margin='dense'>
+                  <InputLabel id='address_name'>Address Name</InputLabel>
+                  <Select
+                    labelId="address_name"
+                    label="Address Name"
+                    fullWidth
+                    value={this.state.addressName}
+                    name="address"
+                    onChange={handleChange}>
+                    <MenuItem value="home">Home</MenuItem>
+                    <MenuItem value="home">Add New</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
