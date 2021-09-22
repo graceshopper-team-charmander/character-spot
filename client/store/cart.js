@@ -14,10 +14,10 @@ const setCart = (cart) => {
   }
 }
 
-export const fetchCart = (user) => {
+export const fetchCart = () => {
   return  async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${user.id}/cart`)
+      const { data } = await axios.get(`/api/users/cart`)
       dispatch(setCart(data))
     } catch(err){
       console.log(err)
@@ -32,10 +32,10 @@ const addToCart = (product) => {
   }
 }
 
-export const addToCartThunk = (user, product) => {
+export const addToCartThunk = (product) => {
   return async(dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${user.id}/cart/${product.id}`)
+      const { data } = await axios.post(`/api/users/cart/${product.id}`)
       dispatch(addToCart(data))
     } catch(err){
       console.log(err)
@@ -50,10 +50,10 @@ const updateQuantity = (cart) => {
   }
 }
 
-export const updateQuantityThunk = (user, product, quantity) => {
+export const updateQuantityThunk = (product, quantity) => {
   return async(dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${user.id}/cart/${product.id}`)
+      const { data } = await axios.put(`/api/users/cart/${product.id}`, {quantity : quantity})
       dispatch(updateQuantity(data))
     } catch (err) {
       console.log(err)
@@ -71,7 +71,7 @@ const deleteProduct = (product) => {
 export const deleteProductThunk = (user, product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/${user.id}/cart/${product.id}`)
+      const { data } = await axios.delete(`/api/users/cart/${product.id}`)
       dispatch(deleteProduct(data))
     } catch (err) {
       console.log(err)
