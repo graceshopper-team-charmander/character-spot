@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import { me, whoAmI } from "./store";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
+import Cart from "./components/Cart";
 
 /**
  * COMPONENT
@@ -23,21 +24,35 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            <Route exact path="/cart">
+              <Cart />
+            </Route>
+            {/* <Redirect to="/home" /> */}
+            {/* <Route exact path="/products">
+              <AllProducts />
+            </Route> */}
           </Switch>
         ) : (
           <Switch>
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route exact path="/products">
+            {/* <Route exact path="/products">
               <AllProducts />
             </Route>
             <Route path="/products/:id">
               <SingleProduct />
-            </Route>
+            </Route> */}
           </Switch>
         )}
+        <Switch>
+          <Route exact path="/products">
+            <AllProducts />
+          </Route>
+          <Route path="/products/:id">
+            <SingleProduct />
+          </Route>
+        </Switch>
       </div>
     );
   }

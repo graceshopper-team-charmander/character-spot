@@ -13,7 +13,7 @@ const SingleProducts = (props) => {
 
   //on mount
   useEffect(() => {
-    if(id) {
+    if (id) {
       dispatch(fetchSingleProduct(id));
     }
   }, [id]);
@@ -21,7 +21,7 @@ const SingleProducts = (props) => {
   if (fetchStatus === FETCH_PENDING) return <div>Loading</div>;
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
   return (
-    <div>
+    <div className="container-fluid m-4 px-4 py-4 bg-secondary">
       <div>{product.id}</div>
       <div>{product.name}</div>
       <div>{product.imageUrl}</div>
