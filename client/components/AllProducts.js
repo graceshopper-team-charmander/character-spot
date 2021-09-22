@@ -18,9 +18,15 @@ const AllProducts = (props) => {
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
   return (
     <div>
-      {products.map((product) => (
-        <ProductRow key={product.id} product={product} />
-      ))}
+      <div className="container my-4 ">
+        <h3 className="display-6 d-flex justify-content-center">Products</h3>
+      </div>
+
+      <div className="card-deck">
+        {products.map((product) => (
+          <ProductRow key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 };

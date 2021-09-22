@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  color: rgb(72, 72, 72);
 }
 
 a {
@@ -18,4 +19,50 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.navbar > .container-fluid {
+  justify-content: flex-start;
+}
+
+.nav-link {
+  color: rgb(72, 72, 72);
+}
+
+.navbar-right {
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.navbar-brand {
+  margin-right: 50px;
+}
+.nav-link:hover {
+  color: rgb(230, 0, 18);
+}
+
+.search {
+  margin-left: -42px;
+  background-color: rgb(230, 0, 18);
+  color: white;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+/* .form-control {
+  border: 1px solid rgb(230, 0, 18);
+} */
+
+.card-deck {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.add-to-cart {
+  align-self: flex-end;
 }

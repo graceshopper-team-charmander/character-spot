@@ -1,26 +1,27 @@
-import React from 'react'
-import {connect} from 'react-redux'
+/* eslint-disable react/prop-types */
+import React from "react";
+import { connect } from "react-redux";
 
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const {firstName} = props
+export const Home = (props) => {
+  const { firstName } = props;
 
   return (
-    <div>
-      <h3>Welcome, {firstName}</h3>
+    <div className="container my-4 ">
+      <h3 className="display-4 d-flex justify-content-center">Welcome, {firstName}</h3>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     firstName: state.auth.firstName
-  }
-}
+  };
+};
 
-export default connect(mapState)(Home)
+export default connect(mapState)(Home);
