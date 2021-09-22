@@ -17,9 +17,9 @@ async function seed() {
 
   let amtOfFakeData = 20;
   //Create Fake Users
-  const fakeUsers = []
-  for(let i = 0; i < amtOfFakeData; i++){
-    fakeUsers.push( {
+  const fakeUsers = [];
+  for (let i = 0; i < amtOfFakeData; i++) {
+    fakeUsers.push({
       email: faker.internet.email(),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -36,7 +36,8 @@ async function seed() {
       name: faker.random.word(),
       imageUrl: faker.image.food(),
       description: faker.lorem.sentence(),
-      price: faker.commerce.price()
+      price: faker.commerce.price(),
+      quantity: faker.datatype.number()
     });
   }
   const createdFakeProducts = await Promise.all(
@@ -52,9 +53,19 @@ async function seed() {
 
   // Original Code: Creating Users
   const users = await Promise.all([
-    User.create({ email: 'cody@charm.com', firstName: 'Cody', lastName: 'Turtle', password: '123' }),
-    User.create({ email: 'murphy@charm.com',  firstName: 'Murphy', lastName: 'Law', password: '123'}),
-  ])
+    User.create({
+      email: "cody@charm.com",
+      firstName: "Cody",
+      lastName: "Turtle",
+      password: "123"
+    }),
+    User.create({
+      email: "murphy@charm.com",
+      firstName: "Murphy",
+      lastName: "Law",
+      password: "123"
+    })
+  ]);
 
   console.log(`seeded successfully`);
 
