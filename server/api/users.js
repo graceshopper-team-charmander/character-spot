@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
 
+const { idSchema } = require('./validationSchemas')
+
 //GET /api/users - returns a list of all users
 router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next) => {
   try {
@@ -22,45 +24,31 @@ router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next
 //Get the cart of a user
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.id, {
-      include: [
-        {
-          model: Product,
-          attributes: ["id", "name", "description", "price", "imageUrl"],
-          through: {
-            attributes: ["quantity"]
-          }
-        }
-      ]
-    });
-    res.send(user.products);
+    const products = await req.user.getProducts()
+    res.send(products);
   } catch (err) {
     next(err);
   }
 });
 
 //update quantity of an item in the cart
-router.put("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
+router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     // need to validate userId with middleware
-    const productId = req.params.productId;
-    const userId = req.user.id;
+    await idSchema.validate(req.params)
+    const productId = req.params.id;
     const newQuantity = req.body.quantity;
-    const cartProduct = await Cart.findAll({
+    const cartProduct = await Cart.findOne({
       where: {
-        userId: userId,
-        productId: productId
+        userId: req.user.id,
+        productId
       }
     });
     // If product is not in the cart, we need to send some sort of error
-    if(cartProduct.length > 0){
-      await cartProduct[0].update({ quantity: newQuantity })
+    if(cartProduct){
+      await cartProduct.update({ quantity: newQuantity })
     }
-    const cart = await Cart.findAll({
-      where: {
-        userId: userId
-      }
-    });
+    const cart = await req.user.getProducts()
     res.send(cart);
   } catch (err) {
     next(err);
@@ -68,10 +56,11 @@ router.put("/cart/:productId", requireTokenMiddleware, async (req, res, next) =>
 });
 
 //Add a product into a user's cart
-router.post("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
+router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.id);
-    const product = await Product.findByPk(req.params.productId);
+    await idSchema.validate(req.params)
+    const user = req.user
+    const product = await Product.findByPk(req.params.id);
     if (product) {
       user.addProduct(product);
     }
@@ -82,10 +71,11 @@ router.post("/cart/:productId", requireTokenMiddleware, async (req, res, next) =
 });
 
 //Delete a product from a user's cart
-router.delete("/cart/:productId", requireTokenMiddleware, async (req, res, next) => {
+router.delete("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.id);
-    const product = await Product.findByPk(req.params.productId);
+    await idSchema.validate(req.params)
+    const user = req.user
+    const product = await Product.findByPk(req.params.id);
     if (product) {
       user.removeProduct(product);
     }
