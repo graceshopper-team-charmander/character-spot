@@ -1,127 +1,140 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../store";
+import Link from "@mui/material/Link";
+import AppBar from "@mui/material/AppBar";
+import ToolBar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/material/styles";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <nav className="navbar navbar-expand-lg px-3 shadow-sm navbar-light">
-    {/* <div className="container-fluid"> */}
+const useStyles = makeStyles((theme) => ({
+  navbar: {
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "white",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    paddingLeft: "1%",
+    paddingRight: "1%"
+  },
+  toolBar: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row"
+  },
+  link: {
+    color: "#484848",
+    margin: "2%",
+    "&:hover": {
+      color: "#e71e07",
+      textDecoration: "none",
+      transition: "all .4s ease"
+    },
+    width: "25%"
+  },
+  links: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  linkLeft: {
+    display: "flex",
+    width: "50%",
+    justifyContent: "flex-start"
+  },
+  logo: {
+    width: "35%",
+    marginRight: "3%"
+  },
+  linkRight: {
+    display: "flex",
+    width: "50%",
+    justifyContent: "flex-end"
+  }
+  // search: {
+  //   width: "50%",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   flexShrink: 1
+  // },
+  // searchButton: {
+  //   backgroundColor: "#e71e07",
+  //   height: "40px",
+  //   width: "40px",
+  //   alignSelf: "flex-end",
+  //   boxShadow: "none",
+  //   padding: 0,
+  //   borderTopLeftRadius: 0,
+  //   borderBottomLeftRadius: 0
+  // }
+}));
 
-    <img
-      className="navbar-brand"
-      src="https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png"
-    />
+const Navbar = ({ handleClick, isLoggedIn }) => {
+  const styles = useStyles();
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" className={styles.navbar}>
+        <ToolBar className={styles.toolBar}>
+          <img
+            className={styles.logo}
+            src="https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png"
+          />
+          {/* <div className={styles.search}>
+            <TextField id="standard-basic" label="Search" variant="standard" />
+            <Button variant="contained" className={styles.searchButton}>
+              <i className="fas fa-search"></i>
+            </Button>
+          </div> */}
+          <div className={styles.links}>
+            <div className={styles.linkLeft}>
+              <Link component={RouterLink} to="/home" className={styles.link}>
+                <i className="fas fa-home icon"></i>
+                Home
+              </Link>
+              <Link component={RouterLink} to="/products" className={styles.link}>
+                <i className="fas fa-gamepad"></i>
+                Products
+              </Link>
+            </div>
+            {isLoggedIn ? (
+              <div className={styles.linkRight}>
+                <Link component={RouterLink} to="/cart" className={styles.link}>
+                  <i className="fas fa-shopping-cart"></i>
+                  Cart
+                </Link>
+                <Link
+                  component={RouterLink}
+                  to="/home"
+                  onClick={handleClick}
+                  className={styles.link}>
+                  <i className="fas fa-sign-out-alt"></i>
+                  Logout
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.linkRight}>
+                <Link component={RouterLink} to="/login" className={styles.link}>
+                  <i className="fas fa-sign-in-alt"></i>
+                  Login
+                </Link>
 
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <form className="d-flex">
-        <input
-          className="form-control search-input"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button className="btn btn-outline-danger search" type="submit">
-          <i className="fas fa-search"></i>
-        </button>
-      </form>
-      <ul className="navbar-nav mr-auto">
-        {isLoggedIn && (
-          <li className="nav-item">
-            <Link className="nav-link" to="/home">
-              <i className="fas fa-home m-1"></i>
-              Home
-            </Link>
-          </li>
-        )}
-        <li className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            <i className="fas fa-gamepad m-1"></i>
-            Products
-          </a>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <Link className="dropdown-item" to="/products">
-              All
-            </Link>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#">
-              NFTs
-            </a>
-            <a className="dropdown-item" href="#">
-              Collectibles
-            </a>
+                <Link component={RouterLink} to="/signup" className={styles.link}>
+                  <i className="fas fa-user-plus"></i>
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
-        </li>
-      </ul>
-      {isLoggedIn ? (
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0  navbar-right">
-          <li className="nav-item">
-            <Link className="nav-link" to="/cart">
-              <i className="fas fa-shopping-cart m-1"></i>
-              Cart
-            </Link>
-          </li>
-          <a className="nav-link" href="#" onClick={handleClick}>
-            <i className="fas fa-sign-out-alt m-1"></i>
-            Logout
-          </a>
-        </ul>
-      ) : (
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0  navbar-right">
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">
-              <i className="fas fa-sign-in-alt m-1"></i>
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/signup">
-              <i className="fas fa-user-plus m-1"></i>
-              Sign Up
-            </Link>
-          </li>
-        </ul>
-      )}
-
-      {/* <nav>
-          {isLoggedIn ? (
-            <div>
-              The navbar will show these links after you log in
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
-            </div>
-          ) : (
-            <div>
-              The navbar will show these links before you log in
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-          )}
-        </nav> */}
-      <hr />
-    </div>
-    {/* </div> */}
-  </nav>
-);
+        </ToolBar>
+      </AppBar>
+    </Box>
+  );
+};
 
 /**
  * CONTAINER

@@ -9,8 +9,8 @@ export const Home = (props) => {
   const { firstName } = props;
 
   return (
-    <div className="container my-4 ">
-      <h3 className="display-4 d-flex justify-content-center">Welcome, {firstName}</h3>
+    <div>
+      <h3 className="home-header">Welcome, {firstName}</h3>
     </div>
   );
 };
