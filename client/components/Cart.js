@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../store/cart";
-// import SingleCartProduct from "./SingleCartProduct"
 
 import SingleCartProduct from "./SingleCartProduct";
-import { Grid, Paper } from "@mui/material";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
 const Cart = () => {
   const dispatch = useDispatch();

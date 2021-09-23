@@ -3,13 +3,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../store";
-import Link from "@mui/material/Link";
-import AppBar from "@mui/material/AppBar";
-import ToolBar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { makeStyles } from "@mui/material/styles";
+import Link from "@material-ui/core/Link";
+import AppBar from "@material-ui/core/AppBar";
+import ToolBar from "@material-ui/core/Toolbar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -78,7 +78,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
   const styles = useStyles();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" className={styles.navbar}>
+      <AppBar
+        position="static"
+        className={styles.navbar}
+        style={{ backgroundColor: "white !important" }}>
         <ToolBar className={styles.toolBar}>
           <img
             className={styles.logo}

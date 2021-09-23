@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
 import { FETCH_FAILED, FETCH_PENDING } from "../constants";
 import ProductRow from "./ProductRow";
-
-import { makeStyles } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import Paper from "@material-ui/core/Paper";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {

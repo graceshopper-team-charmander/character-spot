@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Address from "./Address";
 import Shipping from "./Shipping";
 import PaymentMethod from "./PaymentMethod";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import { Button, Grid } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
@@ -41,7 +43,7 @@ const Checkout = (props) => {
               className={muiClasses.buttonRoot}
               startIcon={<ShoppingCartOutlinedIcon />}
               onClick={() => {
-               setSnackBarOpen(true);
+                setSnackBarOpen(true);
               }}>
               Place Order
             </Button>
