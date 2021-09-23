@@ -36,7 +36,7 @@ async function seed() {
       name: faker.random.word(),
       imageUrl: faker.image.food(),
       description: faker.lorem.sentence(),
-      price: faker.commerce.price(),
+      price: faker.datatype.number(),
       quantity: faker.datatype.number()
     });
   }
