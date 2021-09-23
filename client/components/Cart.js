@@ -22,7 +22,9 @@ const Cart = () => {
         </div>
         <div>
           {cart.map((product) => {
-            return <SingleCartProduct key={product.id} product={product} />
+            console.log('cart', cart)
+            console.log('product', product)
+            return <SingleCartProduct key={product.id} product = {product}/>
           })}
         </div>
       </Paper>
