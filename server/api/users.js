@@ -69,14 +69,12 @@ router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
             productId: req.params.id
           }
         });
-
       if(cartProduct){
         await cartProduct.update({ quantity: cartProduct.quantity + 1 })
       }
       } else {
         user.addProduct(product);
       }
-
     }
     const cart = await req.user.getProducts()
     res.send(cart);
