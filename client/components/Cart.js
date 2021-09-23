@@ -1,31 +1,75 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../store/cart";
-
+import Box from "@material-ui/core/Box";
 import SingleCartProduct from "./SingleCartProduct";
-import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+  buttonRoot: {
+    backgroundColor: "#009edb",
+    color: "white"
+  }
+}));
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const muiClasses = useStyles();
   const cart = useSelector((state) => state.cart.cart) || [];
 
   useEffect(() => {
     dispatch(fetchCart());
   }, []);
+  const shipping = 500.
 
+  const subTotal = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + ele.price, 0)) : (0.00)
   return (
     <Grid item xs={12}>
-      <Paper elevation={1}>
-        <div className="form-header">
-          <div className="form-title">Your New Friends (Cart)</div>
-        </div>
+      <div className="form-header">
+        <div className="form-title">Your New Friends (Cart)</div>
+      </div>
+      <div>
+        {cart.map((product) => {
+          return <SingleCartProduct key={product.id} product={product} />;
+        })}
+      </div>
+      <Card
+        variant="outlined"
+        style = {{margin: "5px", textAlign: "right"}}>
+          <Box sx={{m: 2}}>
+            <Typography
+              style = {{fontWeight: 400, fontSize: 16, paddingBottom: "5px"}}>
+            Subtotal ({cart.length} {(cart.length === 1) ? "item": "items"}): ${subTotal / 100}
+            </Typography>
+            <Typography
+              style = {{fontWeight: 400, fontSize: 16, paddingBottom: "5px"}}>
+            Shipping: ${(shipping / 100.00).toFixed(2)}
+            </Typography>
+            <Typography
+              style = {{fontWeight: 600, fontSize: 20}}>
+            Total: ${(subTotal + shipping )/ 100}
+            </Typography>
+          </Box>
+      </Card>
+      <Box
+        style = {{margin: "5px", textAlign: "right"}}>
         <div>
-          {cart.map((product) => {
-            return <SingleCartProduct key={product.id} product={product} />;
-          })}
+          <Link to={`/checkout`}>
+            <Button
+              size="large"
+              variant="contained"
+              color="secondary"
+              className={muiClasses.buttonRoot}
+              >Checkout</Button>
+          </Link>
         </div>
-      </Paper>
+      </Box>
     </Grid>
   );
 };
