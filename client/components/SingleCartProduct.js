@@ -8,12 +8,21 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuantityThunk, deleteProductThunk } from "../store/cart";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+  cardRoot: {
+    border: "8px solid #fcd000",
+    borderRadius: "10px"
+  }
+}));
 
 const SingleCartProduct = (props) => {
   const dispatch = useDispatch();
   const product = props.product;
+  const muiClasses = useStyles();
   return (
-    <Card variant="outlined" style={{ margin: "5px" }}>
+    <Card className={muiClasses.cardRoot} style={{ margin: "5px" }}>
       <Box sx={{ display: "flex" }}>
         <CardMedia
           component="img"
@@ -53,7 +62,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: {product.price}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${product.price / 100}</Typography>
         </Box>
       </Box>
     </Card>
