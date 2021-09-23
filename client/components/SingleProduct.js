@@ -9,17 +9,18 @@ import { updateQuantityThunk, addToCartThunk } from "../store/cart";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    margin: "3%"
+    margin: "3% auto",
+    width: "80%"
   },
+  topRow: {},
   leftCol: {
-    width: "50%"
+    width: "45%"
   },
   rightCol: {
-    width: "50%",
+    width: "55%",
     paddingLeft: "2%"
   },
   button: {
@@ -58,7 +59,12 @@ const SingleProducts = (props) => {
       justifyContent="center"
       alignItems="center">
       {/* top row */}
-      <Grid container direction="row" justifyContent="center" alignItems="stretch">
+      <Grid
+        container
+        direction="row"
+        className={styles.topRow}
+        justifyContent="center"
+        alignItems="stretch">
         {/* left column */}
         <Grid container className={styles.leftCol} justifyContent="flex-end">
           <img className="single-product-img" src={product.imageUrl} alt={product.name}></img>
@@ -73,7 +79,7 @@ const SingleProducts = (props) => {
           {/* top of right column */}
           <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
             <div className="single-product-title">{product.name}</div>
-            <div>{product.price / 100}</div>
+            <div>$ {product.price / 100}</div>
           </Grid>
           {/* bottom of right column */}
           <Grid item>

@@ -83,7 +83,7 @@ form div {
  Single Product        *
 ***********************/
 .single-product-img {
-  width: 600px;
+  width: 100%;
   height: 400px;
 }
 
