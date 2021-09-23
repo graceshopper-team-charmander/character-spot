@@ -9,18 +9,6 @@ router.use(cookieParser(cookieSecret));
 
 const { idSchema } = require("./validationSchemas");
 
-//GET /api/users - returns a list of all users
-router.get("/", requireTokenMiddleware, isAdminMiddleware, async (req, res, next) => {
-  try {
-    const users = await User.findAll({
-      attributes: ["id", "email", "firstName", "lastName"]
-    });
-    res.json(users);
-  } catch (err) {
-    next(err);
-  }
-});
-
 //Get the cart of a user
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {

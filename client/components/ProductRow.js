@@ -100,7 +100,7 @@ const ProductRow = (props) => {
               alt={name}
             />
             <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
-              ${price}
+              ${price/100}
             </Typography>
           </div>
         </CardContent>
