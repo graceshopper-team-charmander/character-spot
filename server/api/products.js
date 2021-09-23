@@ -8,7 +8,7 @@ const { idSchema } = require("./validationSchemas");
 router.get("/", async (req, res, next) => {
   try {
     const products = await Products.findAll({
-      attributes: ["id", "name", "description", "price", "imageUrl"]
+      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"]
     });
     res.send(products);
   } catch (err) {

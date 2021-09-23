@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Product: Product }
+  models: { Product, User }
 } = require("../db");
 const cookieParser = require("cookie-parser");
 const cookieSecret = process.env.cookieSecret;
@@ -11,6 +11,18 @@ const { productSchema, idSchema } = require("./validationSchemas");
 //all routes under /api/admin require a user to be logged in and have admin privileges
 router.use(requireTokenMiddleware, isAdminMiddleware, (req, res, next) => {
   next();
+});
+
+//GET /api/users - returns a list of all users
+router.get("/users", async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      attributes: ["id", "email", "firstName", "lastName"]
+    });
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
 });
 
 //GET /api/admin/products - returns all the products for admins
