@@ -15,16 +15,14 @@ const Cart = () => {
   }, []);
 
   return (
-    <Grid item xs={12} >
+    <Grid item xs={12}>
       <Paper elevation={1}>
         <div className="form-header">
           <div className="form-title">Your New Friends (Cart)</div>
         </div>
         <div>
           {cart.map((product) => {
-            console.log('cart', cart)
-            console.log('product', product)
-            return <SingleCartProduct key={product.id} product = {product}/>
+            return <SingleCartProduct key={product.id} product={product} />;
           })}
         </div>
       </Paper>

@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../store";
+import { fetchCart } from "../store/cart";
+
 import Link from "@material-ui/core/Link";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
@@ -10,6 +13,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -55,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "50%",
     justifyContent: "flex-end"
-  }
+  },
+  total: {}
   // search: {
   //   width: "50%",
   //   display: "flex",
@@ -74,8 +79,23 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-const Navbar = ({ handleClick, isLoggedIn }) => {
+const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
+
+  let total = 0;
+  if (!cart) {
+    total = 0;
+  } else {
+    let quantity = cart.map((item) => {
+      return item.cart.quantity;
+    });
+    total = quantity.reduce((accum, current) => accum + current);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -107,8 +127,17 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
             {isLoggedIn ? (
               <div className={styles.linkRight}>
                 <Link component={RouterLink} to="/cart" className={styles.link}>
-                  <i className="fas fa-shopping-cart"></i>
+                  <Badge
+                    badgeContent={total}
+                    color="secondary"
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left"
+                    }}>
+                    <i className="fas fa-shopping-cart"></i>
+                  </Badge>
                   Cart
+                  {/* <span className={styles.total}>{total}</span> */}
                 </Link>
                 <Link component={RouterLink} to="/" onClick={handleClick} className={styles.link}>
                   <i className="fas fa-sign-out-alt"></i>
@@ -139,8 +168,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
  * CONTAINER
  */
 const mapState = (state) => {
+  // const cart = state.cart.cart || [];
+  // const cartItem = cart[0] || {};
+  // console.log("cart", cartItem.cart);
   return {
-    isLoggedIn: state.auth.loggedIn
+    isLoggedIn: state.auth.loggedIn,
+    cart: state.cart.cart
   };
 };
 
