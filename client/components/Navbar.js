@@ -86,7 +86,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
     dispatch(fetchCart());
   }, []);
 
-  console.log(cart);
   let total = 0;
   if (!cart.length) {
     total = 0;

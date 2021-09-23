@@ -6,21 +6,19 @@ import { authenticate } from "../store";
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const {name, displayName, error } = props;
+  const { name, displayName, error } = props;
   const [email, setEmail] = useState("cody@charm.com");
   const [password, setPassword] = useState("123");
   const [firstName, setFirstName] = useState("Cody");
   const dispatch = useDispatch();
   const handleSubmit = (evt) => {
-    console.log('test');
     evt.preventDefault();
-    if(name === 'signup') {
-      dispatch(authenticate(name, {email, password, firstName}));
+    if (name === "signup") {
+      dispatch(authenticate(name, { email, password, firstName }));
+    } else {
+      dispatch(authenticate(name, { email, password }));
     }
-    else {
-      dispatch(authenticate(name, {email, password}));
-    }
-  }
+  };
 
   return (
     <div>
@@ -29,23 +27,43 @@ const AuthForm = (props) => {
           <label htmlFor="Email">
             <small>Email</small>
           </label>
-          <input value={email} onChange={(evt) => {setEmail(evt.target.value)}} name="email" type="text" />
+          <input
+            value={email}
+            onChange={(evt) => {
+              setEmail(evt.target.value);
+            }}
+            name="email"
+            type="text"
+          />
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input value={password} onChange={(evt) => {setPassword(evt.target.value)}} name="password" type="password" />
+          <input
+            value={password}
+            onChange={(evt) => {
+              setPassword(evt.target.value);
+            }}
+            name="password"
+            type="password"
+          />
         </div>
-        {
-          name === "signup" &&
-            <div>
-              <label htmlFor="First Name">
-                <small>First Name</small>
-              </label>
-              <input value={firstName} onChange={(evt) => {setFirstName(evt.target.value)}} name="firstName" type="text" />
-            </div>
-        }
+        {name === "signup" && (
+          <div>
+            <label htmlFor="First Name">
+              <small>First Name</small>
+            </label>
+            <input
+              value={firstName}
+              onChange={(evt) => {
+                setFirstName(evt.target.value);
+              }}
+              name="firstName"
+              type="text"
+            />
+          </div>
+        )}
 
         <div>
           <button type="submit">{displayName}</button>
@@ -78,7 +96,6 @@ const mapSignup = (state) => {
     error: state.auth.error
   };
 };
-
 
 export const Login = connect(mapLogin)(AuthForm);
 export const Signup = connect(mapSignup)(AuthForm);
