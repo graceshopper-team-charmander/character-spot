@@ -80,6 +80,34 @@ form div {
 ***********************/
 
 /***********************
+ Single Product        *
+***********************/
+.single-product-img {
+  width: 600px;
+  height: 400px;
+}
+
+.single-product-title {
+  font-size: 3rem;
+  color: #484848;
+  font-weight: bold;
+}
+
+.single-product-sub-title {
+  font-size: 2rem;
+  color: #484848;
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+.divider {
+  width: 75%;
+  height: 8px;
+  background-color: #44af35;
+  margin: 2% auto;
+}
+
+/***********************
  Page                 *
 ***********************/
 .page {
@@ -87,7 +115,6 @@ form div {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-
 
 /***********************
  Forms                 *
@@ -120,7 +147,7 @@ form div {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 /***********************
@@ -138,5 +165,5 @@ form div {
 }
 
 .green {
-  background-color: #44af35
+  background-color: #44af35;
 }
