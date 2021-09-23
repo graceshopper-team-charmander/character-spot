@@ -24,6 +24,7 @@ const SingleProducts = (props) => {
     <div>
       <div>{product.id}</div>
       <div>{product.name}</div>
+      <div>{product.price/100}</div>
       <div>{product.imageUrl}</div>
       <div>{product.description}</div>
     </div>
