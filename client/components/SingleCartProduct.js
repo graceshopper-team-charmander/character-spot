@@ -1,6 +1,5 @@
 import React, { useEffect} from "react";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -56,4 +55,3 @@ const SingleCartProduct = (props) => {
 }
 
 export default SingleCartProduct;
-

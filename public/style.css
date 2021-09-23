@@ -88,12 +88,6 @@ form div {
   padding-right: 1rem;
 }
 
-/***********************
- Checkout Page         *
-***********************/
-.checkout-page > div {
-  margin-bottom: 1rem;
-}
 
 /***********************
  Forms                 *
@@ -122,6 +116,13 @@ form div {
   flex-grow: 1;
 }
 
+.form-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  padding-top: .5rem;
+}
+
 /***********************
  Background Colors     *
 ***********************/
@@ -137,5 +138,5 @@ form div {
 }
 
 .green {
-  background-color: #44af35;
+  background-color: #44af35
 }

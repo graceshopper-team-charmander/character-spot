@@ -9,7 +9,7 @@ import ToolBar from "@material-ui/core/Toolbar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -78,7 +78,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
   const styles = useStyles();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" className={styles.navbar}>
+      <AppBar
+        position="static"
+        className={styles.navbar}
+        style={{ backgroundColor: "white !important" }}>
         <ToolBar className={styles.toolBar}>
           <img
             className={styles.logo}
