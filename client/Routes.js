@@ -39,7 +39,7 @@ class Routes extends Component {
             <Cart />
           </Route>
           <Route path="/checkout">
-            <Checkout/>
+            <Checkout />
           </Route>
           {isLoggedIn ? (
             <Redirect to="/" />

@@ -95,7 +95,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
           </div> */}
           <div className={styles.links}>
             <div className={styles.linkLeft}>
-              <Link component={RouterLink} to="/home" className={styles.link}>
+              <Link component={RouterLink} to="/" className={styles.link}>
                 <i className="fas fa-home icon"></i>
                 Home
               </Link>
@@ -110,11 +110,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
                   <i className="fas fa-shopping-cart"></i>
                   Cart
                 </Link>
-                <Link
-                  component={RouterLink}
-                  to="/home"
-                  onClick={handleClick}
-                  className={styles.link}>
+                <Link component={RouterLink} to="/" onClick={handleClick} className={styles.link}>
                   <i className="fas fa-sign-out-alt"></i>
                   Logout
                 </Link>
