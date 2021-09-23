@@ -15,7 +15,7 @@ const Cart = () => {
   }, []);
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} >
       <Paper elevation={1}>
         <div className="form-header">
           <div className="form-title">Your New Friends (Cart)</div>
