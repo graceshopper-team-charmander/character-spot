@@ -15,6 +15,18 @@ const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     backgroundColor: "#009edb",
     color: "white"
+  },
+  smallText: {
+    fontWeight: 400,
+    paddingBottom: "5px"
+  },
+  total: {
+    fontWeight: 600,
+    fontSize: "20px"
+  },
+  totalRoot: {
+    border: "8px solid #44af35",
+    borderRadius: "10px",
   }
 }));
 
@@ -41,18 +53,19 @@ const Cart = () => {
       </div>
       <Card
         variant="outlined"
-        style = {{margin: "5px", textAlign: "right"}}>
+        style = {{margin: "5px", textAlign: "right"}}
+        className = {muiClasses.totalRoot}>
           <Box sx={{m: 2}}>
             <Typography
-              style = {{fontWeight: 400, fontSize: 16, paddingBottom: "5px"}}>
+              className = {muiClasses.smallText}>
             Subtotal ({cart.length} {(cart.length === 1) ? "item": "items"}): ${subTotal / 100}
             </Typography>
             <Typography
-              style = {{fontWeight: 400, fontSize: 16, paddingBottom: "5px"}}>
+              className = {muiClasses.smallText}>
             Shipping: ${(shipping / 100.00).toFixed(2)}
             </Typography>
             <Typography
-              style = {{fontWeight: 600, fontSize: 20}}>
+              className = {muiClasses.total}>
             Total: ${(subTotal + shipping )/ 100}
             </Typography>
           </Box>

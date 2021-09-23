@@ -12,8 +12,33 @@ const { idSchema } = require("./validationSchemas");
 //Get the cart of a user
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const products = await req.user.getProducts();
+    const products = await req.user.getProducts()
+    // {
+    //   through: {
+    //     model: Cart,
+    //     where: {
+    //       status: "PENDING"
+    //     }
+    //   }
+    // });
     res.send(products);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Checkout a cart
+router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    const cartOfUser = await Cart.findAll({
+      where: {
+        userId: req.user.id,
+      }
+    });
+    if (cartOfUser.length > 0) {
+      cartOfUser.map( async (product) => await product.update( { status: "FULFILLED"}))
+    }
+    res.send(cartOfUser);
   } catch (err) {
     next(err);
   }
@@ -83,5 +108,7 @@ router.delete("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 module.exports = router;

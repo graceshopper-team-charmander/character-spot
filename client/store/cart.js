@@ -4,6 +4,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
+const SUBMIT_ORDER = "SUBMIT_ORDER"
 
 const setCart = (cart) => {
   return {
@@ -78,6 +79,25 @@ export const deleteProductThunk = (product) => {
   };
 };
 
+const submitOrder = (cart) => {
+  return {
+    type: SUBMIT_ORDER,
+    cart
+  }
+}
+
+export const submitOrderThunk = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/users/checkout`);
+      dispatch(submitOrder(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+
 let initialState = { cart: [] };
 
 export default (state = initialState, action) => {
@@ -91,6 +111,8 @@ export default (state = initialState, action) => {
     case DELETE_PRODUCT:
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
+    case SUBMIT_ORDER:
+      return {...state, cart: []}
     default:
       return state;
   }

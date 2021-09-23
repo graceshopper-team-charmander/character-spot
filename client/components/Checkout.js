@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Address from "./Address";
 import Shipping from "./Shipping";
 import PaymentMethod from "./PaymentMethod";
-
+import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+
+import { submitOrderThunk } from "../store/cart";
 
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
@@ -19,10 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Checkout = (props) => {
   const muiClasses = useStyles();
+  const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
-
+  const cart = useSelector((state) => state.cart.cart);
   return (
+
     <div className="page">
       <Grid container spacing={2} direction="column">
         <Grid item>
@@ -44,6 +48,7 @@ const Checkout = (props) => {
               startIcon={<ShoppingCartOutlinedIcon />}
               onClick={() => {
                 setSnackBarOpen(true);
+                dispatch(submitOrderThunk())
               }}>
               Place Order
             </Button>
