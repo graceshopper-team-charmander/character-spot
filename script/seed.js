@@ -6,6 +6,7 @@ const {
 } = require("../server/db");
 /** creating fake data */
 const faker = require("faker");
+const Order = require("../server/db/models/Order");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -15,7 +16,7 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  let amtOfFakeData = 20;
+  let amtOfFakeData = 22;
   //Create Fake Users
   const fakeUsers = [];
   for (let i = 0; i < amtOfFakeData; i++) {
@@ -28,6 +29,14 @@ async function seed() {
   }
 
   const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
+
+  const createdFakeOrders = []
+
+  for(let i = 0; i < createdFakeUsers.length; i++){
+    const order = await Order.create( {status: "PENDING"} )
+    createdFakeOrders.push(order)
+    await order.setUser(createdFakeUsers[i])
+  }
 
   //Create Fake Products
   const fakeProducts = [];
@@ -45,11 +54,11 @@ async function seed() {
   );
 
   //Map Products to Users
-  createdFakeUsers[0].addProduct(createdFakeProducts[0]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[1]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[2]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[3]);
-  createdFakeUsers[1].addProduct(createdFakeProducts[0]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[0]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[1]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[2]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[3]);
+  createdFakeOrders[21].addProduct(createdFakeProducts[0]);
 
   // Original Code: Creating Users
   const users = await Promise.all([

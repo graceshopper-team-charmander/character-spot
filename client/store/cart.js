@@ -42,10 +42,10 @@ export const addToCartThunk = (productId) => {
   };
 };
 
-const updateQuantity = (cart) => {
+const updateQuantity = (product) => {
   return {
     type: UPDATE_QUANTITY,
-    cart
+    product
   };
 };
 
@@ -71,8 +71,8 @@ const deleteProduct = (product) => {
 export const deleteProductThunk = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/cart/${product.id}`);
-      dispatch(deleteProduct(data));
+      await axios.delete(`/api/users/cart/${product.id}`);
+      dispatch(deleteProduct(product));
     } catch (err) {
       console.log(err);
     }
@@ -107,7 +107,14 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return { ...state, cart: action.cart };
     case UPDATE_QUANTITY:
-      return { ...state, cart: action.cart };
+      const updatedProducts = state.cart.map( (product) => {
+        if(product.id === action.product.id) {
+          return action.product
+        } else {
+          return product
+        }
+      })
+      return { ...state, cart: updatedProducts};
     case DELETE_PRODUCT:
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };

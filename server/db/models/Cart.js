@@ -9,11 +9,6 @@ const Cart = db.define("cart", {
     validate: {
       min: 1
     }
-  },
-  status: {
-    type: Sequelize.ENUM("PENDING", "FULFILLED"),
-    allowNull: false,
-    defaultValue: "PENDING"
   }
 });
 
