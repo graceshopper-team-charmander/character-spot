@@ -74,7 +74,7 @@ export const whoAmI = () => {
  * REDUCER             *
  ***********************/
 const initialState = {
-  firstName: "guest",
+  firstName: "Guest",
   loggedIn: NOT_LOGGED_IN
 };
 
@@ -83,7 +83,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return { loggedIn: LOGGED_IN, firstName: action.firstName };
     case LOGOUT:
-      return { loggedIn: NOT_LOGGED_IN, firstName: "guest" };
+      return { loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
     default:
       return state;
   }
