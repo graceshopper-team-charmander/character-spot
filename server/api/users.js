@@ -12,8 +12,29 @@ const { idSchema } = require("./validationSchemas");
 //Get the cart of a user
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const products = await req.user.getProducts();
+    const order = await req.user.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
+    const products = await order[0].getProducts();
     res.send(products);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Checkout a cart
+router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    const order = await req.user.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
+    await order[0].update({ status: "FULFILLED" });
+    await req.user.createOrder();
+    res.send(order);
   } catch (err) {
     next(err);
   }
@@ -26,18 +47,24 @@ router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
     await idSchema.validate(req.params);
     const productId = req.params.id;
     const newQuantity = req.body.quantity;
-    const cartProduct = await Cart.findOne({
+
+    const order = await req.user.getOrders({
       where: {
-        userId: req.user.id,
-        productId
+        status: "PENDING"
+      }
+    });
+
+    const cartProduct = await order[0].getProducts({
+      where: {
+        id: productId
       }
     });
     // If product is not in the cart, we need to send some sort of error
-    if (cartProduct) {
-      await cartProduct.update({ quantity: newQuantity });
+    if (cartProduct[0]) {
+      await cartProduct[0].cart.update({ quantity: newQuantity });
     }
-    const cart = await req.user.getProducts();
-    res.send(cart);
+
+    res.send(cartProduct[0]);
   } catch (err) {
     next(err);
   }
@@ -48,21 +75,28 @@ router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);
     const user = req.user;
-    const product = await Product.findByPk(req.params.id);
+    const productId = req.params.id;
+    const product = await Product.findByPk(productId);
+
+    const order = await req.user.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
     if (product) {
-      if (await user.hasProduct(product)) {
-        const cartProduct = await Cart.findOne({
-          where: {
-            userId: req.user.id,
-            productId: req.params.id
-          }
-        });
-        await cartProduct.update({ quantity: cartProduct.quantity + 1 });
+      //does order have the product?
+      const cartProduct = await order[0].getProducts({
+        where: {
+          id: productId
+        }
+      });
+      if (cartProduct[0]) {
+        await cartProduct[0].cart.update({ quantity: cartProduct[0].cart.quantity + 1 });
       } else {
-        await user.addProduct(product);
+        await order[0].addProduct(product);
       }
     }
-    const cart = await req.user.getProducts();
+    const cart = await order[0].getProducts();
     res.send(cart);
   } catch (err) {
     next(err);
@@ -73,12 +107,14 @@ router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
 router.delete("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);
-    const user = req.user;
-    const product = await Product.findByPk(req.params.id);
-    if (product) {
-      user.removeProduct(product);
-    }
-    res.send(product);
+
+    const order = await req.user.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
+    await order[0].removeProduct(req.params.id);
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

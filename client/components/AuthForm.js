@@ -12,7 +12,6 @@ const AuthForm = (props) => {
   const [firstName, setFirstName] = useState("Cody");
   const dispatch = useDispatch();
   const handleSubmit = (evt) => {
-    console.log('test');
     evt.preventDefault();
     if(name === 'signup') {
       dispatch(authenticate(name, {email, password, firstName}));
