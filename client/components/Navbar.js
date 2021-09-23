@@ -86,8 +86,9 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
     dispatch(fetchCart());
   }, []);
 
+  console.log(cart);
   let total = 0;
-  if (!cart) {
+  if (!cart.length) {
     total = 0;
   } else {
     let quantity = cart.map((item) => {

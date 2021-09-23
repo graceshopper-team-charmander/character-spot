@@ -80,11 +80,10 @@ const ProductRow = (props) => {
 
   const dispatch = useDispatch();
 
-  const handleClick = (evt) => {
-    console.log(evt.currentTarget.value);
-    const productId = evt.currentTarget.value;
-    dispatch(addToCartThunk(productId));
+  const handleClick = () => {
+    dispatch(addToCartThunk(id));
   };
+
   return (
     <Card className={styles.card}>
       <Link to={`/products/${id}`}>
@@ -106,7 +105,7 @@ const ProductRow = (props) => {
           </div>
         </CardContent>
       </Link>
-      <Button variant="contained" value={id} onClick={handleClick} className={styles.button}>
+      <Button variant="contained" onClick={handleClick} className={styles.button}>
         ADD TO CART
       </Button>
     </Card>
