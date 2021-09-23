@@ -107,12 +107,6 @@ a:hover {
   padding-right: 1rem;
 }
 
-/***********************
- Checkout Page         *
-***********************/
-.checkout-page > div {
-  margin-bottom: 1rem;
-}
 
 /***********************
  Forms                 *
@@ -141,6 +135,13 @@ a:hover {
   flex-grow: 1
 }
 
+.form-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  padding-top: .5rem;
+}
+
 /***********************
  Background Colors     *
 ***********************/
@@ -156,5 +157,5 @@ a:hover {
 }
 
 .green {
-  #44af35
+  background-color: #44af35
 }
