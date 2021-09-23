@@ -85,6 +85,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   useEffect(() => {
     dispatch(fetchCart());
   }, []);
+
   let total = 0;
   if (!cart.length) {
     total = 0;
