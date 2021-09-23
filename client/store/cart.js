@@ -77,14 +77,15 @@ export const deleteProductThunk = (product) => {
     }
   };
 };
-let initialState = [];
+
+let initialState = { cart: [] };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CART:
       return { ...state, cart: action.cart };
     case ADD_TO_CART:
-      return { ...state, cart: action.cart  };
+      return { ...state, cart: action.cart };
     case UPDATE_QUANTITY:
       return { ...state, cart: action.cart };
     case DELETE_PRODUCT:

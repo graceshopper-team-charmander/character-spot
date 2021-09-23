@@ -50,21 +50,19 @@ router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
     const user = req.user;
     const product = await Product.findByPk(req.params.id);
     if (product) {
-      if(await user.hasProduct(product)){
+      if (await user.hasProduct(product)) {
         const cartProduct = await Cart.findOne({
           where: {
             userId: req.user.id,
             productId: req.params.id
           }
         });
-      if(cartProduct){
-        await cartProduct.update({ quantity: cartProduct.quantity + 1 })
-      }
+        await cartProduct.update({ quantity: cartProduct.quantity + 1 });
       } else {
-        user.addProduct(product);
+        await user.addProduct(product);
       }
     }
-    const cart = await req.user.getProducts()
+    const cart = await req.user.getProducts();
     res.send(cart);
   } catch (err) {
     next(err);
