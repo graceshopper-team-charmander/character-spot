@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    padding: "1%"
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    paddingLeft: "1%",
+    paddingRight: "1%"
   },
   toolBar: {
     width: "100%",
