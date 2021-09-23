@@ -168,9 +168,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
  * CONTAINER
  */
 const mapState = (state) => {
-  // const cart = state.cart.cart || [];
-  // const cartItem = cart[0] || {};
-  // console.log("cart", cartItem.cart);
   return {
     isLoggedIn: state.auth.loggedIn,
     cart: state.cart.cart
