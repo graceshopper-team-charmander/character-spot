@@ -67,7 +67,7 @@ const deleteProduct = (product) => {
   };
 };
 
-export const deleteProductThunk = (user, product) => {
+export const deleteProductThunk = (product) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`/api/users/cart/${product.id}`);
@@ -88,7 +88,7 @@ export default (state = initialState, action) => {
     case UPDATE_QUANTITY:
       return { ...state, cart: action.cart };
     case DELETE_PRODUCT:
-      const updatedCart = action.cart.filter((product) => product.id !== action.product.id);
+      const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
     default:
       return state;
