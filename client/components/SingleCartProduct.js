@@ -45,8 +45,10 @@ const SingleCartProduct = (props) => {
             </div>
           </CardActions>
         </Box>
-        <Box sx={{m: 2}}>
-          <Typography>Price: {product.price}</Typography>
+        <Box sx={{m: 2}}
+          style = {{flexGrow: 1}}>
+          <Typography
+            style = {{textAlign: "right"}}>Price: {product.price}</Typography>
         </Box>
       </Box>
     </Card>
