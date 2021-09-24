@@ -40,7 +40,7 @@ const Cart = () => {
   }, []);
   const shipping = 500.
 
-  const subTotal = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + ele.price, 0)) : (0.00)
+  const subTotal = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + (ele.price * ele.cart.quantity), 0)) : (0.00)
   return (
     <Grid item xs={12}>
       <div className="form-header">

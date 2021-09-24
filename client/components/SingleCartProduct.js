@@ -62,7 +62,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: ${product.price / 100}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${product.price * product.cart.quantity / 100}</Typography>
         </Box>
       </Box>
     </Card>
