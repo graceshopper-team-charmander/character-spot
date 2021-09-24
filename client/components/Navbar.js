@@ -137,7 +137,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                     <i className="fas fa-shopping-cart"></i>
                   </Badge>
                   Cart
-                  {/* <span className={styles.total}>{total}</span> */}
                 </Link>
                 <Link component={RouterLink} to="/" onClick={handleClick} className={styles.link}>
                   <i className="fas fa-sign-out-alt"></i>

@@ -30,12 +30,12 @@ async function seed() {
 
   const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
 
-  const createdFakeOrders = []
+  const createdFakeOrders = [];
 
-  for(let i = 0; i < createdFakeUsers.length; i++){
-    const order = await Order.create( {status: "PENDING"} )
-    createdFakeOrders.push(order)
-    await order.setUser(createdFakeUsers[i])
+  for (let i = 0; i < createdFakeUsers.length; i++) {
+    const order = await Order.create({ status: "PENDING" });
+    createdFakeOrders.push(order);
+    await order.setUser(createdFakeUsers[i]);
   }
 
   //Create Fake Products
@@ -75,6 +75,19 @@ async function seed() {
       password: "123"
     })
   ]);
+
+  const cody = users[0];
+  const order = await Order.create({ status: "PENDING" });
+  await order.setUser(cody);
+  await order.addProduct(createdFakeProducts[0]);
+
+  await Product.create({
+    name: "Luigi",
+    imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
+    description: "An Italian plumber's brother. Makes better spaghetti.",
+    price: 9999,
+    quantity: 1
+  });
 
   console.log(`seeded successfully`);
 
