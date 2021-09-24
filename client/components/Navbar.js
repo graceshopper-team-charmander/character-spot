@@ -6,6 +6,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../store";
 import { fetchCart } from "../store/cart";
 
+import NavbarMenu from "./NavbarMenu";
+
 import Link from "@material-ui/core/Link";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
@@ -59,6 +61,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "50%",
     justifyContent: "flex-end"
+  },
+  badge: {
+    marginRight: "4%",
+    marginBottom: "15px"
   },
   total: {}
   // search: {
@@ -133,16 +139,20 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                     anchorOrigin={{
                       vertical: "top",
                       horizontal: "left"
-                    }}>
-                    <i className="fas fa-shopping-cart"></i>
-                  </Badge>
+                    }}
+                    className={styles.badge}></Badge>
+                  <i className="fas fa-shopping-cart"></i>
                   Cart
                   {/* <span className={styles.total}>{total}</span> */}
                 </Link>
-                <Link component={RouterLink} to="/" onClick={handleClick} className={styles.link}>
+                {/* <Link component={RouterLink} className={styles.link}> */}
+                <NavbarMenu />
+                {/* </Link> */}
+
+                {/* <Link component={RouterLink} to="/" onClick={handleClick} className={styles.link}>
                   <i className="fas fa-sign-out-alt"></i>
                   Logout
-                </Link>
+                </Link> */}
               </div>
             ) : (
               <div className={styles.linkRight}>
