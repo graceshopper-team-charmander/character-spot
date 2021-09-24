@@ -58,7 +58,7 @@ const Cart = () => {
           <Box sx={{m: 2}}>
             <Typography
               className = {muiClasses.smallText}>
-            Subtotal ({cart.length} {(cart.length === 1) ? "item": "items"}): ${subTotal / 100}
+            Subtotal ({cart.length} {(cart.length === 1) ? "item": "items"}): ${(subTotal / 100).toLocaleString('en')}
             </Typography>
             <Typography
               className = {muiClasses.smallText}>
@@ -66,7 +66,7 @@ const Cart = () => {
             </Typography>
             <Typography
               className = {muiClasses.total}>
-            Total: ${(subTotal + shipping )/ 100}
+            Total: ${((subTotal + shipping )/ 100).toLocaleString('en')}
             </Typography>
           </Box>
       </Card>
