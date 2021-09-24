@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     // width: "25%",
     textTransform: "none",
-    fontFamily: "Helvetica, sans-serif",
+    // fontFamily: "Helvetica, sans-serif",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
