@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   totalRoot: {
     border: "8px solid #44af35",
     borderRadius: "10px",
-  }
+  },
 }));
 
 const Cart = () => {
@@ -41,7 +41,8 @@ const Cart = () => {
 
   const subTotal = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + (ele.price * ele.cart.quantity), 0)) : (0.00)
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12}
+      style = {{margin: "10px"}}>
       <div className="form-header">
         <div className="form-title">Your New Friends (Cart)</div>
       </div>
@@ -52,7 +53,7 @@ const Cart = () => {
       </div>
       <Card
         variant="outlined"
-        style = {{margin: "5px", textAlign: "right"}}
+        style = {{margin: "10px", textAlign: "right"}}
         className = {muiClasses.totalRoot}>
           <Box sx={{m: 2}}>
             <Typography
@@ -70,7 +71,7 @@ const Cart = () => {
           </Box>
       </Card>
       <Box
-        style = {{margin: "5px", textAlign: "right"}}>
+        style = {{margin: "10px", textAlign: "right"}}>
         <div>
           <Link to={`/checkout`}>
             <Button

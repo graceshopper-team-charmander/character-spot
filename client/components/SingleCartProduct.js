@@ -14,7 +14,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
     border: "8px solid #fcd000",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    margin: "10px"
   },
   buttonRoot: {
     maxWidth: "30px",
@@ -29,7 +30,7 @@ const SingleCartProduct = (props) => {
   const product = props.product;
   const muiClasses = useStyles();
   return (
-    <Card className={muiClasses.cardRoot} style={{ margin: "5px" }}>
+    <Card className={muiClasses.cardRoot}>
       <Box sx={{ display: "flex" }}>
         <CardMedia
           component="img"
@@ -62,7 +63,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cart.quantity / 100).toLocaleString('en')}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cart.quantity / 100).toFixed(2).toLocaleString('en')}</Typography>
         </Box>
       </Box>
     </Card>
