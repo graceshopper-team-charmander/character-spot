@@ -54,7 +54,10 @@ const SingleCartProduct = (props) => {
               </Button>
             </div>
             <div onClick={() => dispatch(deleteProductThunk(product))}>
-              <DeleteIcon />
+              <Button
+                className = {muiClasses.buttonRoot}>
+                  <DeleteIcon />
+              </Button>
             </div>
           </CardActions>
         </Box>
