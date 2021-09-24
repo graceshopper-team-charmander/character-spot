@@ -5,6 +5,7 @@ import { FETCH_FAILED, FETCH_PENDING } from "../constants";
 import { fetchSingleProduct } from "../store/singleProduct";
 import { useParams } from "react-router-dom";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";
+// import Pokedex from "../../public/images/pokedex-background.png";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -13,9 +14,17 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
   page: {
     margin: "3% auto",
-    width: "80%"
+    width: "90%"
   },
-  topRow: {},
+  topRow: {
+    backgroundImage: `url("https://live.staticflickr.com/65535/51510331535_0b1bbbff47_o.png")`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "600px",
+    width: "100%",
+    border: "25px solid gray",
+    borderRadius: "25px"
+  },
   leftCol: {
     width: "45%"
   },
@@ -66,7 +75,8 @@ const SingleProducts = (props) => {
         justifyContent="center"
         alignItems="stretch">
         {/* left column */}
-        <Grid container className={styles.leftCol} justifyContent="flex-end">
+
+        <Grid container className={styles.leftCol} justifyContent="center" alignItems="center">
           <img className="single-product-img" src={product.imageUrl} alt={product.name}></img>
         </Grid>
         {/* right column */}
@@ -74,14 +84,18 @@ const SingleProducts = (props) => {
           container
           className={styles.rightCol}
           direction="column"
-          justifyContent="space-between"
-          alignItems="flex-start">
+          justifyContent="space-around"
+          alignItems="center">
           {/* top of right column */}
-          <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
+          <Grid container direction="column" justifyContent="center" alignItems="center">
             <div className="single-product-title">{product.name}</div>
+          </Grid>
+
+          {/* middle of right column */}
+          <Grid container direction="column" justifyContent="center" alignItems="center">
+            <div>{product.description}</div>
             <div>$ {product.price / 100}</div>
           </Grid>
-          {/* bottom of right column */}
           <Grid item>
             <Button
               variant="contained"
@@ -92,12 +106,11 @@ const SingleProducts = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <hr className="divider" />
+      {/* <hr className="divider" />
       {/* bottom row */}
-      <Grid container direction="column" justifyContent="flex-start" alignItems="center">
-        <div className="single-product-sub-title">Product Description</div>
-        <div>{product.description}</div>
-      </Grid>
+      {/* <Grid container direction="column" justifyContent="flex-start" alignItems="center">
+        <div className="single-product-sub-title">Reviews Or Something</div>
+      </Grid> */}
     </Grid>
   );
 };
