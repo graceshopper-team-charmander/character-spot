@@ -50,15 +50,20 @@ const updateQuantity = (product) => {
 };
 
 export const updateQuantityThunk = (product, quantity) => {
-  return async (dispatch, getState) => {
-    try {
-      // const state = getState()
-      const { data } = await axios.put(`/api/users/cart/${product.id}`, { quantity: quantity });
-      dispatch(updateQuantity(data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  if(quantity === 0) {
+    return deleteProductThunk(product)
+  } else {
+    return async (dispatch, getState) => {
+      try {
+        // const state = getState()
+        const { data } = await axios.put(`/api/users/cart/${product.id}`, { quantity: quantity });
+        dispatch(updateQuantity(data));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  }
+
 };
 
 const deleteProduct = (product) => {
