@@ -5,7 +5,6 @@ import { FETCH_FAILED, FETCH_PENDING } from "../constants";
 import { fetchSingleProduct } from "../store/singleProduct";
 import { useParams } from "react-router-dom";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";
-// import Pokedex from "../../public/images/pokedex-background.png";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     width: "90%"
   },
   topRow: {
-    backgroundImage: `url("https://live.staticflickr.com/65535/51510331535_0b1bbbff47_o.png")`,
+    backgroundImage: `url("/images/pokedex-background.png")`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "600px",
