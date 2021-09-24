@@ -30,12 +30,12 @@ async function seed() {
 
   const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
 
-  const createdFakeOrders = []
+  const createdFakeOrders = [];
 
-  for(let i = 0; i < createdFakeUsers.length; i++){
-    const order = await Order.create( {status: "PENDING"} )
-    createdFakeOrders.push(order)
-    await order.setUser(createdFakeUsers[i])
+  for (let i = 0; i < createdFakeUsers.length; i++) {
+    const order = await Order.create({ status: "PENDING" });
+    createdFakeOrders.push(order);
+    await order.setUser(createdFakeUsers[i]);
   }
 
   //Create Fake Products
