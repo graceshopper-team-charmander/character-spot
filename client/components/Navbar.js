@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
   toolBar: {
     width: "100%",
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    fontSize: "1.3rem"
+
   },
   link: {
     color: "#484848",
@@ -42,6 +44,17 @@ const useStyles = makeStyles((theme) => ({
     },
     width: "25%"
   },
+  link2: {
+    color: "#484848",
+    margin: "2%",
+    "&:hover": {
+      color: "#e71e07",
+      textDecoration: "none",
+      transition: "all .4s ease"
+    },
+    width: "25%",
+    flexGrow: 1
+  },
   links: {
     width: "100%",
     display: "flex",
@@ -51,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   linkLeft: {
     display: "flex",
     width: "50%",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    alignItems:"center"
   },
   logo: {
     width: "35%",
@@ -60,7 +74,8 @@ const useStyles = makeStyles((theme) => ({
   linkRight: {
     display: "flex",
     width: "50%",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    alignItems:"center"
   },
   badge: {
     marginRight: "4%",
@@ -125,7 +140,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                 <i className="fas fa-home icon"></i>
                 Home
               </Link>
-              <Link component={RouterLink} to="/products" className={styles.link}>
+              <Link component={RouterLink} to="/products" className={styles.link2}>
                 <i className="fas fa-gamepad"></i>
                 Products
               </Link>

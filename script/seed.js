@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, Cart }
+  models: { User, Product, Cart, ProductCategory }
 } = require("../server/db");
 /** creating fake data */
 const faker = require("faker");
@@ -30,6 +30,13 @@ async function seed() {
 
   const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
 
+  //Create Fake Categories
+  const categories = Array(10).fill('').map(item => ProductCategory.create({
+    name: faker.random.word()
+  }));
+
+  await Promise.all(categories);
+
   const createdFakeOrders = [];
 
   for (let i = 0; i < createdFakeUsers.length; i++) {
@@ -52,6 +59,10 @@ async function seed() {
   const createdFakeProducts = await Promise.all(
     fakeProducts.map((product) => Product.create(product))
   );
+
+  createdFakeProducts.forEach(product => {
+    product.addCategory(Math.floor(Math.random() * 10) + 1);
+  });
 
   //Map Products to Users
   createdFakeOrders[0].addProduct(createdFakeProducts[0]);

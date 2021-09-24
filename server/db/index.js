@@ -3,9 +3,12 @@
 const db = require("./db");
 
 const User = require("./models/User");
-const { Product } = require("./models/Product");
+const { Product, categoryFilter } = require("./models/Product");
+const { ProductCategory } = require("./models/ProductCategory");
+
 const Cart = require('./models/Cart')
 const Order = require('./models/Order')
+
 
 //associations could go here!
 
@@ -18,12 +21,17 @@ Product.belongsToMany(Order, {through: Cart})
 User.hasMany(Order)
 Order.belongsTo(User)
 
+Product.belongsToMany(ProductCategory, {through: 'product_category_join', as: 'categories'});
+ProductCategory.belongsToMany(Product, {through: 'product_category_join', as: 'categories'});
+
 module.exports = {
   db,
   models: {
     User,
     Product,
-    Cart
+    ProductCategory,
+    Cart,
+    categoryFilter
   }
 };
 

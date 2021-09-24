@@ -1,12 +1,13 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const { Op } = require("sequelize");
 
 const Product = db.define("product", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      notEmpty: true
     }
   },
 
@@ -40,4 +41,26 @@ const Product = db.define("product", {
   }
 });
 
-module.exports = { Product };
+/************************
+ Sequelize Helpers      *
+ ***********************/
+/**
+ * returns a sequelize fragment for filtering by category
+ * @param {string|null} categories
+ * @returns {{where: sequelize.where}|{}}
+ */
+const categoryFilter = ({ categories }) => {
+  console.log("categories", categories);
+  if (categories) {
+    return {
+      where: {
+        id: {
+          [Op.in]: [1, 2, 3]
+        }
+      }
+    };
+  }
+  return {};
+};
+
+module.exports = { Product, categoryFilter };
