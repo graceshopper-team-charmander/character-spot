@@ -4,7 +4,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
-const SUBMIT_ORDER = "SUBMIT_ORDER"
+const SUBMIT_ORDER = "SUBMIT_ORDER";
 
 const setCart = (cart) => {
   return {
@@ -50,8 +50,8 @@ const updateQuantity = (product) => {
 };
 
 export const updateQuantityThunk = (product, quantity) => {
-  if(quantity === 0) {
-    return deleteProductThunk(product)
+  if (quantity === 0) {
+    return deleteProductThunk(product);
   } else {
     return async (dispatch, getState) => {
       try {
@@ -63,7 +63,6 @@ export const updateQuantityThunk = (product, quantity) => {
       }
     };
   }
-
 };
 
 const deleteProduct = (product) => {
@@ -88,8 +87,8 @@ const submitOrder = (cart) => {
   return {
     type: SUBMIT_ORDER,
     cart
-  }
-}
+  };
+};
 
 export const submitOrderThunk = () => {
   return async (dispatch) => {
@@ -102,7 +101,6 @@ export const submitOrderThunk = () => {
   };
 };
 
-
 let initialState = { cart: [] };
 
 export default (state = initialState, action) => {
@@ -112,19 +110,19 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return { ...state, cart: action.cart };
     case UPDATE_QUANTITY:
-      const updatedProducts = state.cart.map( (product) => {
-        if(product.id === action.product.id) {
-          return action.product
+      const updatedProducts = state.cart.map((product) => {
+        if (product.id === action.product.id) {
+          return action.product;
         } else {
-          return product
+          return product;
         }
-      })
-      return { ...state, cart: updatedProducts};
+      });
+      return { ...state, cart: updatedProducts };
     case DELETE_PRODUCT:
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
     case SUBMIT_ORDER:
-      return {...state, cart: []}
+      return { ...state, cart: [] };
     default:
       return state;
   }

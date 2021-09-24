@@ -19,6 +19,14 @@ import Orders from "./components/Orders";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    //check localStorage for cart
+    if(localStorage.getItem('characterShopCart')) {
+      console.log('has existing cart');
+    }
+    else {
+      console.log('setting cart');
+      localStorage.setItem('characterShopCart', {});
+    }
   }
 
   render() {

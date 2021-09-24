@@ -108,6 +108,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   }, []);
 
   let total = 0;
+  console.log('cart', cart);
   if (!cart.length) {
     total = 0;
   } else {

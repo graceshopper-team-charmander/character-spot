@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCartThunk } from "../store/cart";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCartThunk, addToLocalCart } from "../store/cart";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Card from "@material-ui/core/Card";
@@ -75,14 +75,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductRow = (props) => {
+  const styles = useStyles();
   const { product } = props;
   const { id, name, description, price, imageUrl } = product;
-
-  const styles = useStyles();
-
   const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const isLoggedIn = useSelector(state => state.auth.loggedIn);
 
   return (
     <div>
@@ -108,7 +107,7 @@ const ProductRow = (props) => {
         </Link>
         <Button variant="contained" onClick={ () => {
           setSnackBarOpen(true);
-          dispatch(addToCartThunk(id));
+          isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
         }} className={styles.button}>
           ADD TO CART
         </Button>
