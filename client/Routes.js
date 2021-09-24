@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -9,6 +10,8 @@ import SingleProduct from "./components/SingleProduct";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import { fetchProductCategories } from "./store/products";
+import Orders from "./components/Orders";
+
 
 /**
  * COMPONENT
@@ -41,6 +44,9 @@ class Routes extends Component {
           </Route>
           <Route path="/checkout">
             <Checkout />
+          </Route>
+          <Route path="/orders">
+            <Orders />
           </Route>
           {isLoggedIn ? (
             <Redirect to="/" />

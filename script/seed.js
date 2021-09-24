@@ -6,6 +6,7 @@ const {
 } = require("../server/db");
 /** creating fake data */
 const faker = require("faker");
+const Order = require("../server/db/models/Order");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -15,7 +16,7 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  let amtOfFakeData = 20;
+  let amtOfFakeData = 22;
   //Create Fake Users
   const fakeUsers = [];
   for (let i = 0; i < amtOfFakeData; i++) {
@@ -36,6 +37,13 @@ async function seed() {
 
   await Promise.all(categories);
 
+  const createdFakeOrders = [];
+
+  for (let i = 0; i < createdFakeUsers.length; i++) {
+    const order = await Order.create({ status: "PENDING" });
+    createdFakeOrders.push(order);
+    await order.setUser(createdFakeUsers[i]);
+  }
 
   //Create Fake Products
   const fakeProducts = [];
@@ -57,11 +65,11 @@ async function seed() {
   });
 
   //Map Products to Users
-  createdFakeUsers[0].addProduct(createdFakeProducts[0]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[1]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[2]);
-  createdFakeUsers[0].addProduct(createdFakeProducts[3]);
-  createdFakeUsers[1].addProduct(createdFakeProducts[0]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[0]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[1]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[2]);
+  createdFakeOrders[0].addProduct(createdFakeProducts[3]);
+  createdFakeOrders[21].addProduct(createdFakeProducts[0]);
 
   // Original Code: Creating Users
   const users = await Promise.all([
@@ -78,6 +86,19 @@ async function seed() {
       password: "123"
     })
   ]);
+
+  const cody = users[0];
+  const order = await Order.create({ status: "PENDING" });
+  await order.setUser(cody);
+  await order.addProduct(createdFakeProducts[0]);
+
+  await Product.create({
+    name: "Luigi",
+    imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
+    description: "An Italian plumber's brother. Makes better spaghetti.",
+    price: 9999,
+    quantity: 1
+  });
 
   console.log(`seeded successfully`);
 

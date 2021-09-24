@@ -4,6 +4,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
+const SUBMIT_ORDER = "SUBMIT_ORDER"
 
 const setCart = (cart) => {
   return {
@@ -41,23 +42,28 @@ export const addToCartThunk = (productId) => {
   };
 };
 
-const updateQuantity = (cart) => {
+const updateQuantity = (product) => {
   return {
     type: UPDATE_QUANTITY,
-    cart
+    product
   };
 };
 
 export const updateQuantityThunk = (product, quantity) => {
-  return async (dispatch, getState) => {
-    try {
-      // const state = getState()
-      const { data } = await axios.put(`/api/users/cart/${product.id}`, { quantity: quantity });
-      dispatch(updateQuantity(data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  if(quantity === 0) {
+    return deleteProductThunk(product)
+  } else {
+    return async (dispatch, getState) => {
+      try {
+        // const state = getState()
+        const { data } = await axios.put(`/api/users/cart/${product.id}`, { quantity: quantity });
+        dispatch(updateQuantity(data));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  }
+
 };
 
 const deleteProduct = (product) => {
@@ -70,13 +76,32 @@ const deleteProduct = (product) => {
 export const deleteProductThunk = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/cart/${product.id}`);
-      dispatch(deleteProduct(data));
+      await axios.delete(`/api/users/cart/${product.id}`);
+      dispatch(deleteProduct(product));
     } catch (err) {
       console.log(err);
     }
   };
 };
+
+const submitOrder = (cart) => {
+  return {
+    type: SUBMIT_ORDER,
+    cart
+  }
+}
+
+export const submitOrderThunk = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/users/checkout`);
+      dispatch(submitOrder(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 
 let initialState = { cart: [] };
 
@@ -87,10 +112,19 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return { ...state, cart: action.cart };
     case UPDATE_QUANTITY:
-      return { ...state, cart: action.cart };
+      const updatedProducts = state.cart.map( (product) => {
+        if(product.id === action.product.id) {
+          return action.product
+        } else {
+          return product
+        }
+      })
+      return { ...state, cart: updatedProducts};
     case DELETE_PRODUCT:
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
+    case SUBMIT_ORDER:
+      return {...state, cart: []}
     default:
       return state;
   }
