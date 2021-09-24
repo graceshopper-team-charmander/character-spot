@@ -3,39 +3,40 @@
 const marioProducts = [
   {
     name: "Mario",
-    imageUrl: "",
+    imageUrl:
+      "https://static.wikia.nocookie.net/mario/images/e/ed/1906px-Mario_Mario_Party_10.png/revision/latest?cb=20210504081623",
     description: "An Italian plumber. Makes great spaghetti.",
     price: 10000,
-    quantity: ""
+    quantity: 15
   },
   {
     name: "Luigi",
-    imageUrl: "",
+    imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
     description: "An Italian plumber's brother. Makes better spaghetti.",
     price: 9999,
-    quantity: ""
+    quantity: 10
   },
   {
     name: "Daisy",
-    imageUrl: "",
+    imageUrl: "https://live.staticflickr.com/65535/51511096576_482b7637b8_o.png",
     description: "Princess of Sarasaland. Can fly with an umbrella. Basically Mary Poppins.",
     price: 20000,
-    quantity: ""
+    quantity: 13
   },
   {
     name: "Peach",
-    imageUrl: "",
+    imageUrl: "https://live.staticflickr.com/65535/51510306737_2f196a525a_o.png",
     description:
       "Princess of Mushroom Kingdom. Captured by Bowser on purpose because he has the best snacks.",
-    price: 0,
-    quantity: ""
+    price: 5999,
+    quantity: 20
   },
   {
     name: "Bowser",
     imageUrl: "",
     description: "A really big turtle. Always has really great snacks.",
     price: 0,
-    quantity: ""
+    quantity: 100
   }
 ];
 
@@ -50,28 +51,28 @@ const dbzProducts = [
   {
     name: "Vegeta",
     imageUrl: "",
-    description: "5'5\"... 5'11\" with hair",
+    description: "5'5\" without hair. 5'11\" with hair",
     price: 0,
     quantity: ""
   },
   {
     name: "Chi-Chi",
     imageUrl: "",
-    description: "Princess of Fire Mountain. Will ",
+    description: "Fiercest housewife you'll ever meet.",
     price: 0,
     quantity: ""
   },
   {
     name: "Bulma",
     imageUrl: "",
-    description: "",
+    description: "An actual genius.",
     price: 0,
     quantity: ""
   },
   {
     name: "Piccolo",
     imageUrl: "",
-    description: "",
+    description: "It takes more muscles to frown than to smile.",
     price: 0,
     quantity: ""
   }
@@ -81,7 +82,7 @@ const pokemonProducts = [
   {
     name: "Pikachu",
     imageUrl: "",
-    description: "",
+    description: "Not a squirrel.",
     price: 0,
     quantity: ""
   },
@@ -124,21 +125,21 @@ const miscProducts = [
     quantity: ""
   },
   {
-    name: "",
+    name: "Gon", //HunterxHunter
     imageUrl: "",
     description: "",
     price: 0,
     quantity: ""
   },
   {
-    name: "",
+    name: "Cloud", //FF7
     imageUrl: "",
     description: "",
     price: 0,
     quantity: ""
   },
   {
-    name: "",
+    name: "Mac", //Mac Fights Icon
     imageUrl: "",
     description: "",
     price: 0,
