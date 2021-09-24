@@ -47,6 +47,16 @@ router.get("/info", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
+//change info (first name, last name, email) of user
+router.put("/update", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    const user = await req.user.update(req.body)
+    res.send({user});
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 //log the user in, generate a token and set it as a cookie
 router.post("/login", async (req, res, next) => {
   try {

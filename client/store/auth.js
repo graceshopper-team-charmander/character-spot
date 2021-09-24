@@ -13,6 +13,7 @@ export const NOT_LOGGED_IN = false;
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const SET_INFO = "GET_INFO"
+const UPDATE_INFO = "UPDATE_INFO"
 
 /***********************
  * ACTION CREATORS     *
@@ -20,6 +21,7 @@ const SET_INFO = "GET_INFO"
 const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({type: SET_INFO, user})
+const updateInfo = (user) => ({type: UPDATE_INFO, user})
 /**
  * THUNK CREATORS
  */
@@ -82,6 +84,17 @@ export const getInfo = () => {
   };
 };
 
+export const updateInfoThunk = (update) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("/auth/update", update);
+      dispatch(updateInfo(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 /***********************
  * REDUCER             *
  ***********************/
@@ -98,6 +111,8 @@ export default (state = initialState, action) => {
     case LOGOUT:
      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
     case SET_INFO:
+      return {...state, user: action.user};
+    case UPDATE_INFO:
       return {...state, user: action.user};
     default:
       return state;
