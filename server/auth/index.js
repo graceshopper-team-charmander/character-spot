@@ -38,6 +38,15 @@ router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
+//get info of user
+router.get("/info", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    res.send({user: req.user});
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 //log the user in, generate a token and set it as a cookie
 router.post("/login", async (req, res, next) => {
   try {

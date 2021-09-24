@@ -12,13 +12,14 @@ export const NOT_LOGGED_IN = false;
  ***********************/
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
+const SET_INFO = "GET_INFO"
 
 /***********************
  * ACTION CREATORS     *
  ***********************/
 const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
 const setLoggedOut = () => ({ type: LOGOUT });
-
+const setInfo = (user) => ({type: SET_INFO, user})
 /**
  * THUNK CREATORS
  */
@@ -70,20 +71,34 @@ export const whoAmI = () => {
   };
 };
 
+export const getInfo = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("/auth/info");
+      dispatch(setInfo(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 /***********************
  * REDUCER             *
  ***********************/
 const initialState = {
   firstName: "Guest",
-  loggedIn: NOT_LOGGED_IN
+  loggedIn: NOT_LOGGED_IN,
+  user: {}
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      return { loggedIn: LOGGED_IN, firstName: action.firstName };
+      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName };
     case LOGOUT:
-      return { loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
+     return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
+    case SET_INFO:
+      return {...state, user: action.user};
     default:
       return state;
   }
