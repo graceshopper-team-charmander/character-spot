@@ -38,7 +38,7 @@ const Cart = () => {
     dispatch(fetchCart());
   }, []);
   const shipping = 500.
-  const numItems = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + ele.cart.quantity), 0) : (0)
+  const numItems = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + ele.cart.quantity, 0)) : (0)
 
   const subTotal = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + (ele.price * ele.cart.quantity), 0)) : (0.00)
   return (
@@ -59,7 +59,7 @@ const Cart = () => {
           <Box sx={{m: 2}}>
             <Typography
               className = {muiClasses.smallText}>
-            Subtotal ({cart.length} {(cart.length === 1) ? "item": "items"}): ${(subTotal / 100).toLocaleString('en')}
+            Subtotal ({numItems} {(numItems === 1) ? "item": "items"}): ${(subTotal / 100).toLocaleString('en')}
             </Typography>
             <Typography
               className = {muiClasses.smallText}>
