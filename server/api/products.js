@@ -1,16 +1,35 @@
 const router = require("express").Router();
 const {
-  models: { Product: Products }
+  models: { Product, ProductCategory, categoryFilter }
 } = require("../db");
 const { idSchema } = require("./validationSchemas");
 
 //GET /products - returns all the products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Products.findAll({
-      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"]
+    const products = await Product.findAll({
+      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"],
+      include: [
+        {
+          model: ProductCategory,
+          as: "categories",
+          ...categoryFilter(req.query)
+        }
+      ]
     });
     res.send(products);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//GET /products/categories - returns all categories
+router.get("/categories", async (req, res, next) => {
+  try {
+    const categories = await ProductCategory.findAll({
+      attributes: ["id", "name"]
+    });
+    res.json(categories);
   } catch (err) {
     next(err);
   }
@@ -21,7 +40,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     //make sure the ID is a number
     await idSchema.validate(req.params);
-    const product = await Products.findByPk(req.params.id, {
+    const product = await Product.findByPk(req.params.id, {
       attributes: ["id", "name", "description", "price", "imageUrl"]
     });
     if (product) {

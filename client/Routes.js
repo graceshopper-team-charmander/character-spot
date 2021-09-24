@@ -8,6 +8,7 @@ import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import { fetchProductCategories } from "./store/products";
 
 /**
  * COMPONENT
@@ -70,6 +71,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(whoAmI());
+      dispatch(fetchProductCategories());
     }
   };
 };
