@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
       transition: "all .4s ease"
     },
-    // width: "25%",
     textTransform: "none",
-    // fontFamily: "Helvetica, sans-serif",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",

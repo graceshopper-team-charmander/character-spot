@@ -81,6 +81,14 @@ async function seed() {
   await order.setUser(cody);
   await order.addProduct(createdFakeProducts[0]);
 
+  await Product.create({
+    name: "Luigi",
+    imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
+    description: "An Italian plumber's brother. Makes better spaghetti.",
+    price: 9999,
+    quantity: 1
+  });
+
   console.log(`seeded successfully`);
 
   return {
