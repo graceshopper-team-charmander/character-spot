@@ -84,10 +84,6 @@ const ProductRow = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
 
-  // const handleClick = () => {
-  //   dispatch(addToCartThunk(id));
-  // };
-
   return (
     <div>
       <Card className={styles.card}>
@@ -117,7 +113,7 @@ const ProductRow = (props) => {
           ADD TO CART
         </Button>
       </Card>
-      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={() => setSnackBarOpen(false)}>
+      <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>
         <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
           Added to Cart!
         </Alert>
