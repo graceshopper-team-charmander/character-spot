@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCartThunk } from "../store/cart";
@@ -10,6 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -79,36 +81,48 @@ const ProductRow = (props) => {
   const styles = useStyles();
 
   const dispatch = useDispatch();
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
-  const handleClick = () => {
-    dispatch(addToCartThunk(id));
-  };
+  // const handleClick = () => {
+  //   dispatch(addToCartThunk(id));
+  // };
 
   return (
-    <Card className={styles.card}>
-      <Link to={`/products/${id}`}>
-        <CardContent className={styles.cardContent}>
-          <Typography sx={{ fontSize: 10 }} className={styles.cardTitle}>
-            {name}
-          </Typography>
-          <div className={styles.cardBody}>
-            <CardMedia
-              className={styles.cardImage}
-              component="img"
-              height="120"
-              image={imageUrl}
-              alt={name}
-            />
-            <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
-              ${price/100}
+    <div>
+      <Card className={styles.card}>
+        <Link to={`/products/${id}`}>
+          <CardContent className={styles.cardContent}>
+            <Typography sx={{ fontSize: 10 }} className={styles.cardTitle}>
+              {name}
             </Typography>
-          </div>
-        </CardContent>
-      </Link>
-      <Button variant="contained" onClick={handleClick} className={styles.button}>
-        ADD TO CART
-      </Button>
-    </Card>
+            <div className={styles.cardBody}>
+              <CardMedia
+                className={styles.cardImage}
+                component="img"
+                height="120"
+                image={imageUrl}
+                alt={name}
+              />
+              <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
+                ${price/100}
+              </Typography>
+            </div>
+          </CardContent>
+        </Link>
+        <Button variant="contained" onClick={ () => {
+          setSnackBarOpen(true);
+          dispatch(addToCartThunk(id));
+        }} className={styles.button}>
+          ADD TO CART
+        </Button>
+      </Card>
+      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={() => setSnackBarOpen(false)}>
+        <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
+          Added to Cart!
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
 
