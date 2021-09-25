@@ -37,13 +37,6 @@ export const authenticate = (method, credentials) => {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
         dispatch(setLoggedIn(response.data.firstName));
-        // if (localStorage.getItem("characterSpotCart")) {
-        //   //merge carts
-        //   const state = getState();
-        //   dispatch(setCartThunk(state.cart.cart));
-        // } else {
-        //   dispatch(fetchCart());
-        // }
       } else {
         console.log("Failed to authenticate");
         //@todo failed to authenticate
