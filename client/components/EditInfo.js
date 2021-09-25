@@ -86,6 +86,8 @@ class EditInfo extends React.Component {
                     size="small"
                     name="firstName"
                     defaultValue={user ? user.firstName : ""}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
                   />
                 </Box>
@@ -95,6 +97,8 @@ class EditInfo extends React.Component {
                     size="small"
                     name="lastName"
                     defaultValue={user ? user.lastName : ""}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
                   />
                 </Box>
@@ -113,6 +117,8 @@ class EditInfo extends React.Component {
                     size="small"
                     name="email"
                     classes={{ root: muiClasses.textRoot }}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    InputProps={{ disableUnderline: true }}
                     defaultValue={user ? user.email : ""}
                   />
                 </Box>

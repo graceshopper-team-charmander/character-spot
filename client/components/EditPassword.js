@@ -106,6 +106,8 @@ class EditPassword extends React.Component {
                     type="password"
                     name="currentPassword"
                     classes={{ root: muiClasses.textRoot }}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    InputProps={{ disableUnderline: true }}
                     onChange={this.onChangeOld}
                   />
                 </Box>
@@ -116,6 +118,8 @@ class EditPassword extends React.Component {
                     type="password"
                     name="newPassword"
                     classes={{ root: muiClasses.textRoot }}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    InputProps={{ disableUnderline: true }}
                     onChange={this.onChange}
                   />
                 </Box>
@@ -130,6 +134,7 @@ class EditPassword extends React.Component {
                     error={this.state.errorText}
                     helperText={"Passwords must match"}
                     classes={{ root: muiClasses.textRoot }}
+                    InputProps={{ disableUnderline: true }}
                     onChange={this.onChangeConfirm}
                   />
                 </Box>
