@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import { fetchProductCategories } from "./store/products";
 import Orders from "./components/Orders";
+import Profile from "./components/Profile";
 
 
 /**
@@ -47,6 +48,9 @@ class Routes extends Component {
           </Route>
           <Route path="/orders">
             <Orders />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           {isLoggedIn ? (
             <Redirect to="/" />

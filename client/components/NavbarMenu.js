@@ -103,7 +103,10 @@ export function NavbarMenu() {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose} className={classes.link}>
+
+                  <MenuItem onClick={handleClose} className={classes.link}
+                  component = {RouterLink}
+                  to="/profile">
                     <i className="fas fa-user"></i>
                     <div className="nav-link-text">Profile</div>
                   </MenuItem>
