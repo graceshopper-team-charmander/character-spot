@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCartThunk } from "../store/cart";
+import { addToLocalCartThunk } from "../store/localCart";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Card from "@material-ui/core/Card";
@@ -75,14 +76,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductRow = (props) => {
+  const styles = useStyles();
   const { product } = props;
   const { id, name, description, price, imageUrl } = product;
-
-  const styles = useStyles();
-
   const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   return (
     <div>
@@ -110,10 +110,11 @@ const ProductRow = (props) => {
           variant="contained"
           onClick={() => {
             setSnackBarOpen(true);
-            dispatch(addToCartThunk(id));
+            isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCartThunk(product));
           }}
           className={styles.button}>
           <span className="button-font">ADD TO CART</span>
+
         </Button>
       </Card>
       <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>

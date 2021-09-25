@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateQuantityThunk, deleteProductThunk } from "../store/cart";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteLocalCartProduct, updateLocalCartQuantity } from "../store/localCart";
 
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
@@ -29,6 +30,9 @@ const SingleCartProduct = (props) => {
   const dispatch = useDispatch();
   const product = props.product;
   const muiClasses = useStyles();
+  const isLoggedIn = useSelector(state => state.auth.loggedIn);
+  const updateQuantity = (isLoggedIn ? updateQuantityThunk : updateLocalCartQuantity)
+  const deleteProduct = (isLoggedIn ? deleteProductThunk : deleteLocalCartProduct)
   return (
     <Card className={muiClasses.cardRoot}>
       <Box sx={{ display: "flex" }}>
@@ -41,20 +45,20 @@ const SingleCartProduct = (props) => {
           <Typography style={{ fontWeight: 600, fontSize: 20 }}>{product.name}</Typography>
           <Typography>{product.description}</Typography>
           <CardActions style={{ padding: "0px" }}>
-            <div onClick={() => dispatch(updateQuantityThunk(product, product.cart.quantity - 1))}>
+            <div onClick={() => dispatch(updateQuantity(product, product.cartQuantity - 1))}>
               <Button
                 className={muiClasses.buttonRoot}>
                 -
               </Button>
             </div>
-            {product.cart.quantity}
-            <div onClick={() => dispatch(updateQuantityThunk(product, product.cart.quantity + 1))}>
+            {product.cartQuantity}
+            <div onClick={() => dispatch(updateQuantity(product, product.cartQuantity + 1))}>
               <Button
                 className={muiClasses.buttonRoot}>
                 +
               </Button>
             </div>
-            <div onClick={() => dispatch(deleteProductThunk(product))}>
+            <div onClick={() => dispatch(deleteProduct(product))}>
               <Button
                 className = {muiClasses.buttonRoot}>
                   <DeleteIcon />
@@ -63,7 +67,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cart.quantity / 100).toLocaleString('en')}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cartQuantity / 100).toLocaleString('en')}</Typography>
         </Box>
       </Box>
     </Card>

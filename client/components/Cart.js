@@ -38,14 +38,11 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart.cart) || [];
   const fetchStatus = useSelector((state) => state.cart.fetchStatus);
 
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
   const shipping = 500;
-  const numItems = cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.cart.quantity, 0) : 0;
+  const numItems = cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.cartQuantity, 0) : 0;
 
   const subTotal =
-    cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cart.quantity, 0) : 0.0;
+    cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cartQuantity, 0) : 0.0;
 
   if (fetchStatus === FETCH_PENDING)
     return (

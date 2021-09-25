@@ -120,16 +120,16 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchCart());
+  // }, []);
 
   let total = 0;
   if (!cart.length) {
     total = 0;
   } else {
     let quantity = cart.map((item) => {
-      return item.cart.quantity;
+      return item.cartQuantity;
     });
     total = quantity.reduce((accum, current) => accum + current);
   }
@@ -162,44 +162,42 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
           </div>
           <div className={styles.links}>
             <div className={styles.linkLeft}>
-              {/* <Link component={RouterLink} to="/" className={styles.link}>
-                <i className="fas fa-home icon"></i>
-                <div className="nav-link-text">Home</div>
-              </Link> */}
               <Link component={RouterLink} to="/products" className={styles.link}>
                 <i className="fas fa-gamepad"></i>
                 <div className="nav-link-text">Products</div>
               </Link>
             </div>
-            {isLoggedIn ? (
-              <div className={styles.linkRight}>
-                <Link component={RouterLink} to="/cart" className={styles.link}>
-                  <Badge
-                    badgeContent={total}
-                    color="secondary"
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "left"
-                    }}
-                    className={styles.badge}></Badge>
-                  <i className="fas fa-shopping-cart"></i>
-                  <div className="nav-link-text">Cart</div>
-                </Link>
+            <div className={styles.linkRight}>
+              <Link component={RouterLink} to="/cart" className={styles.link}>
+                <Badge
+                  badgeContent={total}
+                  color="secondary"
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left"
+                  }}
+                  className={styles.badge}></Badge>
+                <i className="fas fa-shopping-cart"></i>
+                <div className="nav-link-text">Cart</div>
+              </Link>
+            </div>
+            <div className={styles.linkRight}>
+              {isLoggedIn ? (
                 <NavbarMenu />
-              </div>
-            ) : (
-              <div className={styles.linkRight}>
-                <Link component={RouterLink} to="/login" className={styles.link}>
-                  <i className="fas fa-sign-in-alt"></i>
-                  <div className="nav-link-text">Login</div>
-                </Link>
+              ) : (
+                <>
+                  <Link component={RouterLink} to="/login" className={styles.link}>
+                    <i className="fas fa-sign-in-alt"></i>
+                    <div className="nav-link-text">Login</div>
+                  </Link>
 
-                <Link component={RouterLink} to="/signup" className={styles.link}>
-                  <i className="fas fa-user-plus"></i>
-                  <div className="nav-link-text">Sign Up</div>
-                </Link>
-              </div>
-            )}
+                  <Link component={RouterLink} to="/signup" className={styles.link}>
+                    <i className="fas fa-user-plus"></i>
+                    <div className="nav-link-text">Sign Up</div>
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </ToolBar>
       </AppBar>
