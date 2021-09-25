@@ -1,6 +1,9 @@
 import axios from "axios";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { setFetchProductsStatus } from "./products";
 
-const SET_ORDERS = "SET_ORDERS";
+export const SET_ORDERS_FETCH_STATUS = "SET_ORDERS_FETCH_STATUS";
+export const SET_ORDERS = "SET_ORDERS";
 
 const setOrders = (orders) => {
   return {
@@ -9,23 +12,35 @@ const setOrders = (orders) => {
   };
 };
 
+export const setFetchOrdersStatus = (status) => {
+  return {
+    type: SET_ORDERS_FETCH_STATUS,
+    status
+  };
+};
+
 export const fetchOrders = () => {
   return async (dispatch) => {
     try {
+      dispatch(setFetchOrdersStatus(FETCH_PENDING));
       const { data } = await axios.get("/api/orders");
       dispatch(setOrders(data));
+      dispatch(setFetchOrdersStatus(FETCH_SUCCESS));
     } catch (err) {
+      dispatch(setFetchProductsStatus(FETCH_FAILED));
       console.log(err);
     }
   };
 };
 
-let initialState = { orders: [] };
+let initialState = { fetchStatus: FETCH_PENDING, orders: [] };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDERS:
       return { ...state, orders: action.orders };
+    case SET_ORDERS_FETCH_STATUS:
+      return { ...state, fetchStatus: action.status };
     default:
       return state;
   }
