@@ -58,6 +58,11 @@ a {
   margin-right: 7px;
 }
 
+.nav-link-title {
+  margin-left: 7px;
+  /* margin-right: 3px; */
+}
+
 .navbar-message {
   display: flex;
   justify-content: center;

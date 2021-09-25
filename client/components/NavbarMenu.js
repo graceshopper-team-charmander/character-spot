@@ -14,6 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,7 +94,8 @@ export function NavbarMenu() {
         onClick={handleToggle}
         className={classes.link}>
         <i className="fas fa-user-circle"></i>
-        <div className="nav-link-text">{name}</div>
+        <div className="nav-link-title">{name}</div>
+        <ExpandMoreRoundedIcon />
       </Link>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
