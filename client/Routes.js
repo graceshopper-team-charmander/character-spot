@@ -75,13 +75,13 @@ class Routes extends Component {
 
           {isLoggedIn ? (
             <Switch>
-              <Redirect path="/" />
-              {/* <Route component={NotFound} /> */}
+              <Route exact path="/" component={Home} />
+              <Route component={NotFound} />
             </Switch>
           ) : (
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
               <Route component={NotFound} />
             </Switch>
           )}
