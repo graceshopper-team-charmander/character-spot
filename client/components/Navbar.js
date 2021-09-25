@@ -63,8 +63,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center"
   },
   logo: {
-    width: "35%",
-    marginRight: "3%"
+    zIndex: 3
   },
   linkRight: {
     display: "flex",
@@ -119,10 +118,12 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
         className={styles.navbar}
         style={{ backgroundColor: "white !important" }}>
         <ToolBar className={styles.toolBar}>
-          <img
-            className={styles.logo}
-            src="https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png"
-          />
+          <RouterLink to="/" className={styles.logo}>
+            <img
+              src="https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png"
+              className="logo-image"
+            />
+          </RouterLink>
           {/* <div className={styles.search}>
             <TextField id="standard-basic" label="Search" variant="standard" />
             <Button variant="contained" className={styles.searchButton}>

@@ -16,18 +16,18 @@ body {
   background-color: ghostwhite;
 }
 
-a {
+/* a {
   text-decoration: none;
-}
+} */
 
 label {
   display: block;
 }
 
-nav a {
+/* nav a {
   display: inline-block;
   margin: 1em;
-}
+} */
 
 form div {
   margin: 1em;
@@ -79,6 +79,10 @@ form div {
   position: relative;
   top: -20px;
   z-index: 1;
+}
+
+.logo-image {
+  width: 100%;
 }
 
 /***********************
