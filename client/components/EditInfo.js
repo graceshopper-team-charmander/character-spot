@@ -45,7 +45,7 @@ render() {
           <Box style={{ flexGrow: 1, margin: 0 }}>
             <h1>Name </h1>
           </Box>
-          <Box style = {{margin: 0}}>
+          <Box style = {{margin: 0, display: "flex", flexDirection: "column"}}>
           <TextField
             id="outlined-size-small"
             size="small"

@@ -63,24 +63,27 @@ render() {
         <Box style={{ flexGrow: 1, margin: 0 }}>
           <h1>Password </h1>
         </Box>
-        <Box style = {{margin: 0}}>
-          <Box><TextField
-            id="outlined-size-small"
+        <Box style = {{display: "flex", margin: 0, flexDirection: "column"}}>
+          <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
+            id="outlined-password-input"
             size="small"
+            type="password"
             name = "currentPassword"
             label = "Current Password"
             onChange = {this.onChangeOld}
           /> </Box>
-          <Box><TextField
-            id="outlined-size-small"
+          <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
+            id="outlined-password-input"
             size="small"
+            type="password"
             name = "newPassword"
             label = "New Password"
             onChange = {this.onChange}
           /></Box>
-          <Box><TextField
-            id="outlined-size-small"
+          <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
+            id="outlined-password-input"
             size="small"
+            type="password"
             name = "confirmNewPassword"
             label = "Confirm New Password"
             error = {this.state.errorText}
