@@ -9,6 +9,11 @@ router.use(cookieParser(cookieSecret));
 const { idSchema, cartProductQuantitySchema } = require("./validationSchemas");
 const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart");
 
+const { sendEmail, emailBody} = require("../email")
+
+const test = "freda.hamill81@ethereal.email"
+
+//Get the cart of a user
 //GET /api/users/cart - returns the users cart
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
@@ -38,6 +43,10 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     });
     await order[0].update({ status: "FULFILLED" });
     await req.user.createOrder();
+    console.log('order', await order[0].getProducts())
+    const emailBodyHTML = emailBody(await order[0].getProducts())
+    console.log(emailBodyHTML)
+    sendEmail({to: test, html: emailBodyHTML })
     res.send(order);
   } catch (err) {
     next(err);
