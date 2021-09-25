@@ -147,8 +147,9 @@ const SingleProducts = (props) => {
           </Grid>
           {/* </Grid> */}
         </Paper>
-        {id < 22 ? (
-          <Link to={`/products/${id + 1}`}>
+        {/* NOTE - NEED TO FETCH PRODUCT LENGTH FOR LINE BELOW */}
+        {id < 23 ? (
+          <Link to={`/products/${+id + 1}`}>
             <NavigateNextRoundedIcon
               style={{ fontSize: 60 }}
               color="action"
