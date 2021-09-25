@@ -35,12 +35,19 @@ form div {
 }
 
 /***********************
+ All                   *
+***********************/
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+}
+
+/***********************
  Navbar                *
 ***********************/
-/* .fas {
-  margin-right: 4%;
-} */
-
 .nav-link-text {
   margin-left: 7px;
   margin-right: 7px;

@@ -6,6 +6,7 @@ import { fetchSingleProduct } from "../store/singleProduct";
 import { useParams } from "react-router-dom";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";
 import { Link } from "react-router-dom";
+import LoadingBar from "./LoadingBar";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -74,7 +75,12 @@ const SingleProducts = (props) => {
     }
   }, [id]);
 
-  if (fetchStatus === FETCH_PENDING) return <div>Loading</div>;
+  if (fetchStatus === FETCH_PENDING)
+    return (
+      <div className="loading">
+        <LoadingBar />
+      </div>
+    );
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
