@@ -34,6 +34,7 @@
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "nodemailer": "^6.6.5",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
     "yup": "^0.32.9"
