@@ -22,11 +22,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center"
   },
   editButton: {
-    margin: "10px"
+    margin: "10px",
+    border: "3px solid #009edb"
   },
   buttonBox: {
     display: "flex",
     justifyContent: "right"
+  },
+  text: {
+    fontFamily: "mario"
   }
 }));
 
@@ -50,13 +54,13 @@ const Profile = () => {
         <Box>
           <Card
           className={styles.infoRoot}>
-            <Box style={{ flexGrow: 1 }}> <h1>Name</h1> </Box>
-            <div> {user.firstName} {user.lastName} </div>
+            <Box style={{ flexGrow: 1 }}> <h1 className={styles.text}>Name</h1> </Box>
+            <p className={styles.text}>  {user.firstName} {user.lastName} </p>
           </Card>
           <Card
           className={styles.infoRoot}>
-            <Box style={{ flexGrow: 1 }}><h1>Email</h1></Box>
-            <div> {user.email}</div>
+            <Box style={{ flexGrow: 1 }}><h1 className={styles.text}>Email</h1></Box>
+            <p className={styles.text}> {user.email}</p>
           </Card>
       </Box>
       )}
@@ -64,21 +68,21 @@ const Profile = () => {
         {(!edit) &&  <Button
         className = {styles.editButton}
         onClick = {() =>
-            toggleEdit(!edit)}>Edit</Button>}
+            toggleEdit(!edit)}><h3 className={styles.text}>Edit</h3></Button>}
       </Box>
       {(editPassword) ? <EditPassword user = {user} toggleEdit = {toggleEditPassword} /> : (
           <Box>
             <Card
               className={styles.infoRoot}>
-              <Box style={{ flexGrow: 1 }}> <h1>Password</h1> </Box>
-              <div> ****** </div>
+              <Box style={{ flexGrow: 1 }}> <h1 className={styles.text} >Password</h1> </Box>
+              <div> <p className={styles.text}>******</p> </div>
           </Card>
         </Box>)}
       <Box className={styles.buttonBox}>
         {(!editPassword) &&  <Button
           className = {styles.editButton}
           onClick = {() =>
-            toggleEditPassword(!editPassword)}>Edit</Button>}
+            toggleEditPassword(!editPassword)}><h3 className={styles.text}>Edit</h3></Button>}
       </Box>
     </Grid>
   );
