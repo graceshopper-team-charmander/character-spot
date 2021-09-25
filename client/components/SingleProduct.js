@@ -5,24 +5,32 @@ import { FETCH_FAILED, FETCH_PENDING } from "../constants";
 import { fetchSingleProduct } from "../store/singleProduct";
 import { useParams } from "react-router-dom";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";
+import { Link } from "react-router-dom";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import NavigateBeforeRoundedIcon from "@material-ui/icons/NavigateBeforeRounded";
+import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    margin: "3% auto",
-    width: "90%"
+    paddingTop: "1rem"
   },
   topRow: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "stretch",
     backgroundImage: `url("/images/pokedex-background.png")`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "600px",
-    width: "100%",
+    width: "80%",
     border: "25px solid gray",
-    borderRadius: "25px"
+    borderRadius: "25px",
+    marginBottom: "1rem"
   },
   leftCol: {
     width: "45%"
@@ -38,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#e71e07",
       transition: "all .4s ease"
     }
+  },
+  transparent: {
+    color: "transparent"
+  },
+  navigator: {
+    "&:hover": {
+      // boxShadow: "0 0 10px 5px #cccccc",
+      transition: "all .4s ease",
+      // boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
+      transform: "translate3d(0px, -10px, 0px)"
+    }
   }
 }));
 
@@ -46,7 +65,6 @@ const SingleProducts = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.singleProduct.product);
   const fetchStatus = useSelector((state) => state.singleProduct.fetchStatus);
-
   const styles = useStyles();
 
   //on mount
@@ -66,47 +84,79 @@ const SingleProducts = (props) => {
       direction="column"
       justifyContent="center"
       alignItems="center">
+      <div className="all-products-header" id="single-product-header">
+        <div className="all-products-title">Choose Your Character</div>
+      </div>
+
       {/* top row */}
-      <Grid
-        container
-        direction="row"
-        className={styles.topRow}
-        justifyContent="center"
-        alignItems="stretch">
-        {/* left column */}
-
-        <Grid container className={styles.leftCol} justifyContent="center" alignItems="center">
-          <img className="single-product-img" src={product.imageUrl} alt={product.name}></img>
-        </Grid>
-        {/* right column */}
-        <Grid
+      <Grid container justifyContent="space-around" alignItems="center">
+        {id > 1 ? (
+          <Link to={`/products/${id - 1}`}>
+            <NavigateBeforeRoundedIcon
+              style={{ fontSize: 60 }}
+              color="action"
+              className={styles.navigator}
+            />
+          </Link>
+        ) : (
+          <NavigateBeforeRoundedIcon style={{ fontSize: 60 }} className={styles.transparent} />
+        )}
+        <Paper elevation={5} className={styles.topRow}>
+          {/* <Grid
           container
-          className={styles.rightCol}
-          direction="column"
-          justifyContent="space-around"
-          alignItems="center">
-          {/* top of right column */}
-          <Grid container direction="column" justifyContent="center" alignItems="center">
-            <div className="single-product-title">{product.name}</div>
-          </Grid>
+          direction="row"
+          className={styles.topRow}
+          justifyContent="center"
+          alignItems="stretch"> */}
+          {/* left column */}
 
-          {/* middle of right column */}
-          <Grid container direction="column" justifyContent="center" alignItems="center">
-            <div>{product.description}</div>
-            <div>$ {product.price / 100}</div>
+          <Grid container className={styles.leftCol} justifyContent="center" alignItems="center">
+            <img className="single-product-img" src={product.imageUrl} alt={product.name}></img>
           </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              onClick={() => dispatch(addToCartThunk(id))}
-              className={styles.button}>
-              ADD TO CART
-            </Button>
+          {/* right column */}
+          <Grid
+            container
+            className={styles.rightCol}
+            direction="column"
+            justifyContent="space-around"
+            alignItems="center">
+            {/* top of right column */}
+            <Grid container direction="column" justifyContent="center" alignItems="center">
+              <div className="single-product-title">{product.name}</div>
+            </Grid>
+
+            {/* middle of right column */}
+            <Grid container direction="column" justifyContent="center" alignItems="center">
+              <div>{product.description}</div>
+              <div>$ {product.price / 100}</div>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                onClick={() => dispatch(addToCartThunk(id))}
+                className={styles.button}>
+                ADD TO CART
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+          {/* </Grid> */}
+        </Paper>
+        {id < 22 ? (
+          <Link to={`/products/${id + 1}`}>
+            <NavigateNextRoundedIcon
+              style={{ fontSize: 60 }}
+              color="action"
+              className={styles.navigator}
+            />
+          </Link>
+        ) : (
+          <NavigateBeforeRoundedIcon style={{ fontSize: 60 }} className={styles.transparent} />
+        )}
       </Grid>
-      {/* <hr className="divider" />
-      {/* bottom row */}
+      <div className="all-products-header" id="single-product-header">
+        <div className="all-products-title"></div>
+      </div>
+      {/* bottom row  */}
       {/* <Grid container direction="column" justifyContent="flex-start" alignItems="center">
         <div className="single-product-sub-title">Reviews Or Something</div>
       </Grid> */}

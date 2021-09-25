@@ -45,21 +45,21 @@ const AllProducts = (props) => {
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
-    <div className="page">
+    <div className="all-products-page">
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Paper elevation={1} className={styles.paperRoot}>
-            <div className="all-products-header">
-              <h4 className="all-products-title">Products</h4>
-              <CategoryFilter location={location} history={history} />
-            </div>
+          {/* <Paper elevation={1} className={styles.paperRoot}> */}
+          <div className="all-products-header">
+            <h4 className="all-products-title">Characters</h4>
+            <CategoryFilter location={location} history={history} />
+          </div>
 
-            <Grid item xs={12} className="all-products-container">
-              {products.map((product) => (
-                <ProductRow key={product.id} product={product} />
-              ))}
-            </Grid>
-          </Paper>
+          <Grid item xs={12} className="all-products-container">
+            {products.map((product) => (
+              <ProductRow key={product.id} product={product} />
+            ))}
+          </Grid>
+          {/* </Paper> */}
         </Grid>
       </Grid>
     </div>

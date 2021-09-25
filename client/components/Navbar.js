@@ -25,47 +25,42 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "5px",
     paddingBottom: "5px",
     paddingLeft: "1%",
-    paddingRight: "1%"
+    paddingRight: "1%",
+    boxShadow: "none",
+    borderBottom: "2px solid gray"
   },
   toolBar: {
     width: "100%",
     display: "flex",
-    flexDirection: "row",
-    fontSize: "1.3rem"
-
+    flexDirection: "row"
+    // fontSize: "1.3rem"
   },
   link: {
     color: "#484848",
     margin: "2%",
+    marginRight: "3%",
     "&:hover": {
       color: "#e71e07",
       textDecoration: "none",
       transition: "all .4s ease"
     },
-    width: "25%"
-  },
-  link2: {
-    color: "#484848",
-    margin: "2%",
-    "&:hover": {
-      color: "#e71e07",
-      textDecoration: "none",
-      transition: "all .4s ease"
-    },
-    width: "25%",
-    flexGrow: 1
+    // width: "35%",
+    display: "flex",
+    flexFlow: "row nowrap",
+    whiteSpace: "nowrap"
   },
   links: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    zIndex: 2
   },
   linkLeft: {
     display: "flex",
-    width: "50%",
-    justifyContent: "flex-start",
-    alignItems:"center"
+    width: "40%",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   logo: {
     width: "35%",
@@ -73,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
   },
   linkRight: {
     display: "flex",
-    width: "50%",
-    justifyContent: "flex-end",
-    alignItems:"center"
+    width: "40%",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   badge: {
     marginRight: "4%",
@@ -138,11 +133,11 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
             <div className={styles.linkLeft}>
               <Link component={RouterLink} to="/" className={styles.link}>
                 <i className="fas fa-home icon"></i>
-                Home
+                <div className="nav-link-text">Home</div>
               </Link>
-              <Link component={RouterLink} to="/products" className={styles.link2}>
+              <Link component={RouterLink} to="/products" className={styles.link}>
                 <i className="fas fa-gamepad"></i>
-                Products
+                <div className="nav-link-text">Products</div>
               </Link>
             </div>
             {isLoggedIn ? (
@@ -157,7 +152,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                     }}
                     className={styles.badge}></Badge>
                   <i className="fas fa-shopping-cart"></i>
-                  Cart
+                  <div className="nav-link-text">Cart</div>
                 </Link>
                 <NavbarMenu />
               </div>
@@ -165,18 +160,21 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
               <div className={styles.linkRight}>
                 <Link component={RouterLink} to="/login" className={styles.link}>
                   <i className="fas fa-sign-in-alt"></i>
-                  Login
+                  <div className="nav-link-text">Login</div>
                 </Link>
 
                 <Link component={RouterLink} to="/signup" className={styles.link}>
                   <i className="fas fa-user-plus"></i>
-                  Sign Up
+                  <div className="nav-link-text">Sign Up</div>
                 </Link>
               </div>
             )}
           </div>
         </ToolBar>
       </AppBar>
+      <div className="poke-walk-box">
+        <img className="poke-walk" src="/images/pokemon-walk.png" alt="pokemon-walk" />
+      </div>
     </Box>
   );
 };

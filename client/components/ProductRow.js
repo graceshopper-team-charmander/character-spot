@@ -15,15 +15,17 @@ import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: "10px",
-    marginBottom: "40px",
+    margin: "0 20px 50px 20px",
+    // marginBottom: "40px",
     height: "280px",
     width: "200px",
     border: "8px solid #fcd000",
     borderRadius: "10px",
     "&:hover": {
-      boxShadow: "0 0 10px 5px #cccccc",
-      transition: "all .4s ease"
+      // boxShadow: "0 0 10px 5px #cccccc",
+      transition: "all .4s ease",
+      boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
+      transform: "translate3d(0px, -10px, 0px)"
     },
     display: "flex",
     flexDirection: "column",
@@ -101,15 +103,18 @@ const ProductRow = (props) => {
                 alt={name}
               />
               <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
-                ${(price/100).toFixed(2)}
+                ${(price / 100).toFixed(2)}
               </Typography>
             </div>
           </CardContent>
         </Link>
-        <Button variant="contained" onClick={ () => {
-          setSnackBarOpen(true);
-          dispatch(addToCartThunk(id));
-        }} className={styles.button}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setSnackBarOpen(true);
+            dispatch(addToCartThunk(id));
+          }}
+          className={styles.button}>
           ADD TO CART
         </Button>
       </Card>
