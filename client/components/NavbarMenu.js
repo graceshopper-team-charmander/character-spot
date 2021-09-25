@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: "#484848",
     margin: "2%",
+    marginRight: "3%",
     "&:hover": {
       color: "#e71e07",
       textDecoration: "none",
@@ -36,9 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
     textTransform: "none",
     display: "flex",
+    flexFlow: "row nowrap",
+    whiteSpace: "nowrap",
     justifyContent: "flex-start",
     alignItems: "center",
-    margin: "2%"
+    cursor: "pointer"
   }
 }));
 
@@ -46,6 +49,8 @@ export function NavbarMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const name = useSelector((state) => state.auth.firstName);
+  console.log(name);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const isLoggedIn = useSelector(state => state.auth.loggedIn);
@@ -88,7 +93,7 @@ export function NavbarMenu() {
         onClick={handleToggle}
         className={classes.link}>
         <i className="fas fa-user-circle"></i>
-        Account
+        <div className="nav-link-text">{name}</div>
       </Link>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
@@ -98,15 +103,20 @@ export function NavbarMenu() {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose} className={classes.link}>
-                    <i className="fas fa-user"></i>Profile
+
+                  <MenuItem onClick={handleClose} className={classes.link}
+                  component = {RouterLink}
+                  to="/profile">
+                    <i className="fas fa-user"></i>
+                    <div className="nav-link-text">Profile</div>
                   </MenuItem>
                   <MenuItem
                     component={RouterLink}
                     to="/orders"
                     onClick={handleClose}
                     className={classes.link}>
-                    <i className="fas fa-history"></i>Order History
+                    <i className="fas fa-history"></i>
+                    <div className="nav-link-text">Order History</div>
                   </MenuItem>
                   <MenuItem
                     component={RouterLink}
@@ -114,7 +124,7 @@ export function NavbarMenu() {
                     onClick={() => dispatch(logout())}
                     className={classes.link}>
                     <i className="fas fa-sign-out-alt"></i>
-                    Logout
+                    <div className="nav-link-text">Logout</div>
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

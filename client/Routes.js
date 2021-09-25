@@ -13,6 +13,7 @@ import { fetchProductCategories } from "./store/products";
 import Orders from "./components/Orders";
 import { clearLocalCart, saveLocalCartOnUnload, setLocalCart } from "./store/localCart";
 import { fetchCart, setCartThunk } from "./store/cart";
+import Profile from "./components/Profile";
 
 /**
  * COMPONENT
@@ -66,6 +67,9 @@ class Routes extends Component {
           </Route>
           <Route path="/orders">
             <Orders />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           {isLoggedIn ? (
             <Redirect to="/" />
