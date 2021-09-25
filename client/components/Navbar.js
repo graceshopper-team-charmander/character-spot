@@ -12,10 +12,7 @@ import Link from "@material-ui/core/Link";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { alpha } from "@material-ui/core/styles/";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
@@ -36,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     flexDirection: "row"
-    // fontSize: "1.3rem"
   },
   link: {
     color: "#484848",
@@ -47,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
       transition: "all .4s ease"
     },
-    // width: "35%",
     display: "flex",
     flexFlow: "row nowrap",
     whiteSpace: "nowrap"
@@ -83,17 +78,12 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    // backgroundColor: alpha(theme.palette.common.white, 0.15),
-    // "&:hover": {
-    //   backgroundColor: alpha(theme.palette.common.white, 0.25)
-    // },
     backgroundColor: "#484848",
     opacity: ".8",
     "&:hover": {
       backgroundColor: "#484848",
       opacity: ".7"
     },
-    // marginLeft: "3%",
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
@@ -115,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -126,22 +115,6 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   }
-  // search: {
-  //   width: "50%",
-  //   display: "flex",
-  //   alignItems: "center",
-  //   flexShrink: 1
-  // },
-  // searchButton: {
-  //   backgroundColor: "#e71e07",
-  //   height: "40px",
-  //   width: "40px",
-  //   alignSelf: "flex-end",
-  //   boxShadow: "none",
-  //   padding: 0,
-  //   borderTopLeftRadius: 0,
-  //   borderBottomLeftRadius: 0
-  // }
 }));
 
 const Navbar = ({ handleClick, isLoggedIn, cart }) => {
@@ -187,12 +160,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          {/* <div className={styles.search}>
-            <TextField id="standard-basic" label="Search" variant="standard" />
-            <Button variant="contained" className={styles.searchButton}>
-              <i className="fas fa-search"></i>
-            </Button>
-          </div> */}
           <div className={styles.links}>
             <div className={styles.linkLeft}>
               {/* <Link component={RouterLink} to="/" className={styles.link}>
