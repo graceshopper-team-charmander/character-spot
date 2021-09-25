@@ -6,12 +6,18 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import { getInfo, updateInfoThunk } from "../store/auth";
+import { Link } from "react-router-dom";
 
 class EditInfo extends React.Component {
   constructor(props){
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCancel= this.handleCancel.bind(this)
   }
+
+handleCancel (evt) {
+  this.props.toggleEdit()
+}
 
 handleSubmit (evt) {
   evt.preventDefault()
@@ -25,7 +31,7 @@ handleSubmit (evt) {
 render() {
   let user = this.props.user.user
   return(
-    <div>
+    <Box>
       <form onSubmit= {
         this.handleSubmit} name = "info">
         <Card
@@ -39,16 +45,22 @@ render() {
           <Box style={{ flexGrow: 1, margin: 0 }}>
             <h1>Name </h1>
           </Box>
-          <div>
-          <input
+          <Box style = {{margin: 0}}>
+          <TextField
+            id="outlined-size-small"
+            size="small"
             name = "firstName"
+            label = "First Name"
             defaultValue = {(user) ? user.firstName : ""}
           />
-          <input
+          <TextField
+            id="outlined-size-small"
+            size="small"
             name = "lastName"
+            label = "Last Name"
             defaultValue = { (user) ? user.lastName : "" }
            />
-          </div>
+          </Box>
         </Card>
         <Card
           style = {{
@@ -59,18 +71,31 @@ render() {
             borderRadius: "10px",
           }}>
           <Box style={{ flexGrow: 1, margin: 0}}>
-            <h1>Email </h1>
+            <h1 >Email </h1>
           </Box>
-          <div>
-          <input name = "email"
+          <Box style = {{margin: 0}}>
+          <TextField
+            id="outlined-size-small"
+            size="small"
+            name = "email"
+            label = "Email"
             defaultValue = {(user) ? user.email : ""}
           />
-          </div>
+          </Box>
         </Card>
-        <Button onSubmit = {this.handleSubmit} type = "submit" >Submit</Button>
+        <Box style ={{display: "flex", justifyContent: "right"}}>
+          <Button
+            onSubmit = {this.handleSubmit}
+            type = "submit"
+            >Submit</Button>
+          <Button
+            onClick = {this.handleCancel}
+            type = "button"
+            >Cancel</Button>
+        </Box>
       </form>
 
-  </div>
+  </Box>
   );
 }
 };
