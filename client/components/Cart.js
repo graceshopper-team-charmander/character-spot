@@ -56,45 +56,47 @@ const Cart = () => {
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
-    <Grid item xs={12} style={{ margin: "10px" }}>
-      <div className="form-header">
-        <div className="form-title">Your New Friends (Cart)</div>
+    <Grid item xs={12} className="cart-page">
+      <div className="cart-header">
+        <div className="cart-title">Your New Friends (Cart)</div>
       </div>
-      <div>
-        {cart.map((product) => {
-          return <SingleCartProduct key={product.id} product={product} />;
-        })}
-      </div>
-      <Card
-        variant="outlined"
-        style={{ margin: "10px", textAlign: "right" }}
-        className={muiClasses.totalRoot}>
-        <Box sx={{ m: 2 }}>
-          <Typography className={muiClasses.smallText}>
-            Subtotal ({numItems} {numItems === 1 ? "item" : "items"}): $
-            {(subTotal / 100).toLocaleString("en")}
-          </Typography>
-          <Typography className={muiClasses.smallText}>
-            Shipping: ${(shipping / 100.0).toFixed(2)}
-          </Typography>
-          <Typography className={muiClasses.total}>
-            Total: ${((subTotal + shipping) / 100).toLocaleString("en")}
-          </Typography>
-        </Box>
-      </Card>
-      <Box style={{ margin: "10px", textAlign: "right" }}>
+      <div className="cart-body">
         <div>
-          <Link to={`/checkout`}>
-            <Button
-              size="large"
-              variant="contained"
-              color="secondary"
-              className={muiClasses.buttonRoot}>
-              Checkout
-            </Button>
-          </Link>
+          {cart.map((product) => {
+            return <SingleCartProduct key={product.id} product={product} />;
+          })}
         </div>
-      </Box>
+        <Card
+          variant="outlined"
+          style={{ margin: "10px", textAlign: "right" }}
+          className={muiClasses.totalRoot}>
+          <Box sx={{ m: 2 }}>
+            <Typography className={muiClasses.smallText}>
+              Subtotal ({numItems} {numItems === 1 ? "item" : "items"}): $
+              {(subTotal / 100).toLocaleString("en")}
+            </Typography>
+            <Typography className={muiClasses.smallText}>
+              Shipping: ${(shipping / 100.0).toFixed(2)}
+            </Typography>
+            <Typography className={muiClasses.total}>
+              Total: ${((subTotal + shipping) / 100).toLocaleString("en")}
+            </Typography>
+          </Box>
+        </Card>
+        <Box style={{ margin: "10px", textAlign: "right" }}>
+          <div>
+            <Link to={`/checkout`}>
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                className={muiClasses.buttonRoot}>
+                Checkout
+              </Button>
+            </Link>
+          </div>
+        </Box>
+      </div>
     </Grid>
   );
 };

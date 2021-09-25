@@ -26,6 +26,12 @@ const useRowStyles = makeStyles({
     "& > *": {
       borderBottom: "unset"
     }
+  },
+  orderTable: {
+    marginLeft: "40px",
+    marginRight: "1em",
+    marginTop: "1rem",
+    width: "75%"
   }
 });
 
@@ -118,8 +124,9 @@ function Row(props) {
 }
 
 export default function OrderTable({ orders }) {
+  const styles = useRowStyles();
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} elevation={3} className={styles.orderTable}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

@@ -49,6 +49,8 @@ export function NavbarMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const name = useSelector((state) => state.auth.firstName);
+  console.log(name);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -91,7 +93,7 @@ export function NavbarMenu() {
         onClick={handleToggle}
         className={classes.link}>
         <i className="fas fa-user-circle"></i>
-        <div className="nav-link-text">Account</div>
+        <div className="nav-link-text">{name}</div>
       </Link>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (

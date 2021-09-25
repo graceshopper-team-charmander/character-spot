@@ -40,13 +40,13 @@ const Orders = () => {
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
-    <Grid item xs={12} className="page">
-      <Paper elevation={1} className={styles.paperRoot}>
-        <div className="all-products-header">
-          <h4 className="all-products-title">Order History</h4>
+    <Grid item xs={12} className="orders-page">
+      <div className={styles.paperRoot}>
+        <div className="orders-header">
+          <h4 className="orders-title">Order History</h4>
         </div>
         <OrderTable orders={orders} />
-      </Paper>
+      </div>
     </Grid>
   );
 };
