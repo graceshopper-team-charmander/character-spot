@@ -180,8 +180,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                 <i className="fas fa-shopping-cart"></i>
                 <div className="nav-link-text">Cart</div>
               </Link>
-            </div>
-            <div className={styles.linkRight}>
               {isLoggedIn ? (
                 <NavbarMenu />
               ) : (
