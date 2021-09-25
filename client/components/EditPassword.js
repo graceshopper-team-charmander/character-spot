@@ -65,7 +65,6 @@ render() {
         </Box>
         <Box style = {{display: "flex", margin: 0, flexDirection: "column"}}>
           <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
-            id="outlined-password-input"
             size="small"
             type="password"
             name = "currentPassword"
@@ -73,7 +72,6 @@ render() {
             onChange = {this.onChangeOld}
           /> </Box>
           <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
-            id="outlined-password-input"
             size="small"
             type="password"
             name = "newPassword"
@@ -81,7 +79,6 @@ render() {
             onChange = {this.onChange}
           /></Box>
           <Box style = {{marginTop: '-3px', marginBottom: '-.5em'}}><TextField
-            id="outlined-password-input"
             size="small"
             type="password"
             name = "confirmNewPassword"

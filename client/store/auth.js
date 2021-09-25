@@ -92,7 +92,10 @@ export const updateInfoThunk = (update) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put("/auth/update", update);
-      dispatch(updateInfo(data));
+      if(data) {
+        alert("Info changed")
+        dispatch(updateInfo(data));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -109,6 +112,7 @@ export const changePasswordThunk = (pw) => {
       if(response.status == 204){
         alert("Current password is incorrect")
       } else {
+        alert("Password changed")
         dispatch(changePassword(response.data))
       }
     } catch (err) {
