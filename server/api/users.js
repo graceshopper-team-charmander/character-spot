@@ -11,8 +11,6 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 
 const { sendEmail, emailBody} = require("../email")
 
-const { idSchema } = require("./validationSchemas");
-
 const test = "freda.hamill81@ethereal.email"
 
 //Get the cart of a user
