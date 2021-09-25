@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
 
 function emailBody(order) {
-  console.log('----email body----')
   let products = []
   for(let i = 0; i < order.length; i++){
     products.push([order[i].name, order[i].imageUrl, order[i].price])
   }
-  return products.map( (product) => `<h1>${product[0]}</h1> <p>$${product[2]/100}</p><img src = ${product[1]}/>`).join('')
+  return products.map( (product) => `<h1>${product[0]}</h1> <p>$${product[2]/100}</p><img src = "${product[1]}"/>`).join('')
 }
 async function sendEmail({to, html}) {
   const transporter = nodemailer.createTransport({
