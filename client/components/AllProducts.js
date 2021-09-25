@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
 import { FETCH_FAILED, FETCH_PENDING } from "../constants";
 import ProductRow from "./ProductRow";
+import { useHistory, useLocation } from "react-router-dom";
+import CategoryFilter from "./CategoryFilter";
+import LoadingBar from "./LoadingBar";
+
 import Paper from "@material-ui/core/Paper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -12,10 +16,6 @@ import Input from "@material-ui/core/Input";
 import Chip from "@material-ui/core/Chip";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { useHistory, useLocation } from "react-router-dom";
-import { getQueryParam, setQueryParam } from "../utility-funcs/query";
-import { snakeCase } from "../../utility-funcs/string-manip";
-import CategoryFilter from "./CategoryFilter";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -41,25 +41,30 @@ const AllProducts = (props) => {
     dispatch(fetchProducts(location));
   }, []);
 
-  if (fetchStatus === FETCH_PENDING) return <div>Loading</div>;
+  if (fetchStatus === FETCH_PENDING)
+    return (
+      <div className="loading">
+        <LoadingBar />
+      </div>
+    );
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
-    <div className="page">
+    <div className="all-products-page">
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Paper elevation={1} className={styles.paperRoot}>
-            <div className="all-products-header">
-              <h4 className="all-products-title">Products</h4>
-              <CategoryFilter location={location} history={history} />
-            </div>
+          {/* <Paper elevation={1} className={styles.paperRoot}> */}
+          <div className="all-products-header">
+            <h4 className="all-products-title">Characters</h4>
+            <CategoryFilter location={location} history={history} />
+          </div>
 
-            <Grid item xs={12} className="all-products-container">
-              {products.map((product) => (
-                <ProductRow key={product.id} product={product} />
-              ))}
-            </Grid>
-          </Paper>
+          <Grid item xs={12} className="all-products-container">
+            {products.map((product) => (
+              <ProductRow key={product.id} product={product} />
+            ))}
+          </Grid>
+          {/* </Paper> */}
         </Grid>
       </Grid>
     </div>
