@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'mario';
-  src: url('./fonts/mario2.ttf') format('woff');
+  font-family: "mario";
+  src: url("./fonts/mario2.ttf") format("woff");
 }
-
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: mario;
+  /* font-family: mario; */
+  font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -16,18 +16,14 @@ body {
   background-color: ghostwhite;
 }
 
-a {
-  text-decoration: none;
-}
-
 label {
   display: block;
 }
 
-nav a {
+/* nav a {
   display: inline-block;
   margin: 1em;
-}
+} */
 
 form div {
   margin: 1em;
@@ -35,10 +31,63 @@ form div {
 }
 
 /***********************
+ All                   *
+***********************/
+a {
+  text-decoration: none;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+}
+
+.button-font {
+  font-family: "mario";
+  font-size: 1em;
+}
+
+/***********************
  Navbar                *
 ***********************/
-.fas {
-  margin-right: 4%;
+.nav-link-text {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.navbar-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: ghostwhite;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.poke-walk-box {
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 2px gray;
+}
+
+.poke-walk {
+  width: auto;
+  height: 200%;
+  position: relative;
+  top: -20px;
+  z-index: 1;
+}
+
+.logo-image {
+  width: 100%;
 }
 
 /***********************
@@ -53,29 +102,36 @@ form div {
 /***********************
  All Products          *
 ***********************/
+.all-products-page {
+  padding-top: 1rem;
+}
+
 .all-products-header {
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
-  height: 65px;
-  padding: 16px 24px;
+  height: 80px;
+  padding: 16px 40px;
   color: white;
   background-color: #009edb;
   justify-content: space-between;
   align-items: center;
-
 }
 
-.all-products-title {
+.all-products-title,
+.orders-title,
+.checkout-title,
+.cart-title {
   font-weight: bold;
-  font-size: 1.7rem;
+  font-size: 2rem;
   display: flex;
   align-items: center;
+  font-family: "mario";
   /*color: #fcd000;*/
 }
 
 .all-products-container {
-  padding: 16px 24px;
+  padding: 1rem 24px;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -90,6 +146,7 @@ form div {
 /***********************
  Single Product        *
 ***********************/
+
 .single-product-img {
   width: 350px;
   height: auto;
@@ -115,6 +172,56 @@ form div {
   margin: 2% auto;
 }
 
+#single-product-header {
+  background-color: #e71e07;
+  margin-bottom: 1rem;
+}
+
+/***********************
+ Orders                *
+***********************/
+.orders-page,
+.checkout-page {
+  padding-top: 1rem;
+}
+
+.orders-header,
+.checkout-header {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 80px;
+  padding: 16px 40px;
+  color: white;
+  background-color: #44af35;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/***********************
+ Cart                  *
+***********************/
+.cart-page {
+  padding-top: 1rem;
+}
+
+.cart-header {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 80px;
+  padding: 16px 40px;
+  color: white;
+  background-color: #009edb;
+  justify-content: center;
+}
+
+.cart-body {
+  /* width: 80%; */
+  margin: 0;
+  padding: 10px 40px;
+}
+
 /***********************
  Page                 *
 ***********************/
@@ -122,6 +229,8 @@ form div {
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  /* width: 80%; */
+  margin: 0 auto;
 }
 
 /***********************
@@ -183,17 +292,15 @@ form div {
   width: 100%;
   border-bottom: 2px solid #44af35;
   height: 0;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
-
-
 
 /***********************
  Multi Select          *
 ***********************/
 .multi-select-container {
-  display:inline-block;
-  flex-grow:0
+  display: inline-block;
+  flex-grow: 0;
 }
 
 .multi-select-placeholder-text {
@@ -203,13 +310,13 @@ form div {
 }
 
 .multi-select-container > *:first-child {
-  margin-right:5px;
+  margin-right: 5px;
 }
 
 .multi-select-chip-container > div {
-  margin-right:3px;
+  margin-right: 3px;
 }
 
 .multi-select-chip-container > div:last-child {
-  margin-right:3px;
+  margin-right: 3px;
 }

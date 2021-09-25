@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCartThunk } from "../store/cart";
+import { addToLocalCartThunk } from "../store/localCart";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Card from "@material-ui/core/Card";
@@ -15,15 +16,15 @@ import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: "10px",
-    marginBottom: "40px",
+    margin: "0 20px 50px 20px",
     height: "280px",
     width: "200px",
     border: "8px solid #fcd000",
     borderRadius: "10px",
     "&:hover": {
-      boxShadow: "0 0 10px 5px #cccccc",
-      transition: "all .4s ease"
+      transition: "all .4s ease",
+      boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
+      transform: "translate3d(0px, -10px, 0px)"
     },
     display: "flex",
     flexDirection: "column",
@@ -75,14 +76,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductRow = (props) => {
+  const styles = useStyles();
   const { product } = props;
   const { id, name, description, price, imageUrl } = product;
-
-  const styles = useStyles();
-
   const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   return (
     <div>
@@ -101,16 +101,20 @@ const ProductRow = (props) => {
                 alt={name}
               />
               <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
-                ${(price/100).toFixed(2)}
+                ${(price / 100).toFixed(2)}
               </Typography>
             </div>
           </CardContent>
         </Link>
-        <Button variant="contained" onClick={ () => {
-          setSnackBarOpen(true);
-          dispatch(addToCartThunk(id));
-        }} className={styles.button}>
-          ADD TO CART
+        <Button
+          variant="contained"
+          onClick={() => {
+            setSnackBarOpen(true);
+            isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCartThunk(product));
+          }}
+          className={styles.button}>
+          <span className="button-font">ADD TO CART</span>
+
         </Button>
       </Card>
       <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>

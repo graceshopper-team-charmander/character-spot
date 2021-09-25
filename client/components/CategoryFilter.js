@@ -79,7 +79,6 @@ class CategoryFilter extends React.Component {
           onChange={this.handleChange}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => {
-            console.log("selected", selected.length);
             return (
               selected.length ?
               (<div className="multi-select-chip-container">

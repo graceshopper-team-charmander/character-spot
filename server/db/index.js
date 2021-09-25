@@ -6,7 +6,7 @@ const User = require("./models/User");
 const { Product, categoryFilter } = require("./models/Product");
 const { ProductCategory } = require("./models/ProductCategory");
 
-const Cart = require('./models/Cart')
+const {Cart} = require('./models/Cart')
 const Order = require('./models/Order')
 
 
@@ -31,6 +31,7 @@ module.exports = {
     Product,
     ProductCategory,
     Cart,
+    Order,
     categoryFilter
   }
 };

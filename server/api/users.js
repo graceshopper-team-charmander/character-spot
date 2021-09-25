@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const {
-  models: { User, Product, Cart }
+  models: { Cart }
 } = require("../db");
-const { requireTokenMiddleware, isAdminMiddleware } = require("../auth-middleware");
+const { requireTokenMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
 const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
+const { idSchema, cartProductQuantitySchema } = require("./validationSchemas");
+const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart");
 
 const { sendEmail, emailBody} = require("../email")
 
@@ -14,21 +16,26 @@ const { idSchema } = require("./validationSchemas");
 const test = "freda.hamill81@ethereal.email"
 
 //Get the cart of a user
+//GET /api/users/cart - returns the users cart
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const order = await req.user.getOrders({
-      where: {
-        status: "PENDING"
-      }
-    });
-    const products = await order[0].getProducts();
-    res.send(products);
+    res.json(refactorCartItems(await Cart.getUserCartItems(req.user)));
   } catch (err) {
     next(err);
   }
 });
 
-//Checkout a cart
+//POST /api/users/cart - sets the users cart with items, and returns the updated cart
+router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    const mergedCart = refactorCartItems(await Cart.addProducts(req.user, req.body))
+    res.send(mergedCart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT /api/users/cart - checks the users cart out
 router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   try {
     const order = await req.user.getOrders({
@@ -48,74 +55,32 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
-//update quantity of an item in the cart
+//PUT /api/users/cart/:id - update quantity of an item in the cart for a logged in user with a given productId
 router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     // need to validate userId with middleware
     await idSchema.validate(req.params);
-    const productId = req.params.id;
-    const newQuantity = req.body.quantity;
-
-    const order = await req.user.getOrders({
-      where: {
-        status: "PENDING"
-      }
-    });
-
-    const cartProduct = await order[0].getProducts({
-      where: {
-        id: productId
-      }
-    });
-    // If product is not in the cart, we need to send some sort of error
-    if (cartProduct[0]) {
-      await cartProduct[0].cart.update({ quantity: newQuantity });
-    }
-
-    res.send(cartProduct[0]);
+    await cartProductQuantitySchema.validate(req.body);
+    res.send(Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity));
   } catch (err) {
     next(err);
   }
 });
 
-//Add a product into a user's cart
+//POST /api/users/cart/:id - adds a product into a user's cart
 router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);
-    const user = req.user;
-    const productId = req.params.id;
-    const product = await Product.findByPk(productId);
-
-    const order = await req.user.getOrders({
-      where: {
-        status: "PENDING"
-      }
-    });
-    if (product) {
-      //does order have the product?
-      const cartProduct = await order[0].getProducts({
-        where: {
-          id: productId
-        }
-      });
-      if (cartProduct[0]) {
-        await cartProduct[0].cart.update({ quantity: cartProduct[0].cart.quantity + 1 });
-      } else {
-        await order[0].addProduct(product);
-      }
-    }
-    const cart = await order[0].getProducts();
-    res.send(cart);
+    res.send(refactorSingleCartItem(await Cart.updateCartQuantity(req.user, req.params.id)));
   } catch (err) {
     next(err);
   }
 });
 
-//Delete a product from a user's cart
+//DELETE /api/users/cart/:id  deletes a product from a user's cart
 router.delete("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);
-
     const order = await req.user.getOrders({
       where: {
         status: "PENDING"

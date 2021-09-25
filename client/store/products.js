@@ -16,7 +16,7 @@ export const fetchProducts = (location) => {
   return async (dispatch) => {
     try {
       dispatch(setFetchProductsStatus(FETCH_PENDING));
-      const { data } = await axios.get(`/api/products${location ? location.search : ''}`);
+      const { data } = await axios.get(`/api/products${location ? location.search : ""}`);
       dispatch(setProducts(data));
       dispatch(setFetchProductsStatus(FETCH_SUCCESS));
     } catch (err) {

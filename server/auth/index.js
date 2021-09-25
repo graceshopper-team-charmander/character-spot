@@ -38,6 +38,26 @@ router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
+//get info of user
+router.get("/info", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    res.send({user: req.user});
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+//change info (first name, last name, email) of user
+router.put("/update", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    console.log('PUT ROUTE')
+    const user = await req.user.update(req.body)
+    res.send({user});
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 //log the user in, generate a token and set it as a cookie
 router.post("/login", async (req, res, next) => {
   try {
@@ -55,6 +75,21 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
+
+//see if current password is correct
+router.post("/change", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    if(await req.user.correctPassword(req.body.currentPassword)){
+      await req.user.update({password: req.body.newPassword})
+      res.status(200).send(req.user);
+    } else {
+      res.sendStatus(204)
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 router.get("/logout", (req, res, next) => {
   try {
