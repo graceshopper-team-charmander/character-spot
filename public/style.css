@@ -16,9 +16,9 @@ body {
   background-color: ghostwhite;
 }
 
-/* a {
+a {
   text-decoration: none;
-} */
+}
 
 label {
   display: block;

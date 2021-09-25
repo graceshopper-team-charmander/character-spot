@@ -15,7 +15,10 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { alpha } from "@material-ui/core/styles/";
 import Badge from "@material-ui/core/Badge";
+import SearchIcon from "@material-ui/icons/Search";
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -50,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap"
   },
   links: {
-    width: "100%",
+    width: "75%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -58,12 +61,13 @@ const useStyles = makeStyles((theme) => ({
   },
   linkLeft: {
     display: "flex",
-    width: "40%",
+    width: "30%",
     justifyContent: "space-around",
     alignItems: "center"
   },
   logo: {
-    zIndex: 3
+    zIndex: 3,
+    marginRight: "3%"
   },
   linkRight: {
     display: "flex",
@@ -75,7 +79,53 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "4%",
     marginBottom: "15px"
   },
-  total: {}
+  total: {},
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    // backgroundColor: alpha(theme.palette.common.white, 0.15),
+    // "&:hover": {
+    //   backgroundColor: alpha(theme.palette.common.white, 0.25)
+    // },
+    backgroundColor: "#484848",
+    opacity: ".8",
+    "&:hover": {
+      backgroundColor: "#484848",
+      opacity: ".7"
+    },
+    // marginLeft: "3%",
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto"
+    },
+    zIndex: 4
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  inputRoot: {
+    color: "inherit"
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch"
+      }
+    }
+  }
   // search: {
   //   width: "50%",
   //   display: "flex",
@@ -124,6 +174,19 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
               className="logo-image"
             />
           </RouterLink>
+          <div className={styles.search}>
+            <div className={styles.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: styles.inputRoot,
+                input: styles.inputInput
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
           {/* <div className={styles.search}>
             <TextField id="standard-basic" label="Search" variant="standard" />
             <Button variant="contained" className={styles.searchButton}>
@@ -132,10 +195,10 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
           </div> */}
           <div className={styles.links}>
             <div className={styles.linkLeft}>
-              <Link component={RouterLink} to="/" className={styles.link}>
+              {/* <Link component={RouterLink} to="/" className={styles.link}>
                 <i className="fas fa-home icon"></i>
                 <div className="nav-link-text">Home</div>
-              </Link>
+              </Link> */}
               <Link component={RouterLink} to="/products" className={styles.link}>
                 <i className="fas fa-gamepad"></i>
                 <div className="nav-link-text">Products</div>
