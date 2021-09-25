@@ -1,5 +1,7 @@
 import axios from "axios";
 import history from "../history";
+import { fetchCart, initCart, setCartThunk } from "./cart";
+import { clearLocalCart, setLocalCart } from "./localCart";
 
 /***********************
  * STATES        *
@@ -11,7 +13,7 @@ export const NOT_LOGGED_IN = false;
  * ACTION TYPES        *
  ***********************/
 const LOGIN = "LOGIN";
-const LOGOUT = "LOGOUT";
+export const LOGOUT = "LOGOUT";
 
 /***********************
  * ACTION CREATORS     *
@@ -28,12 +30,21 @@ export const authenticate = (method, credentials) => {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
         dispatch(setLoggedIn(response.data.firstName));
+        if (localStorage.getItem("characterStopCart")) {
+          //merge carts
+          const state = getState();
+          dispatch(setCartThunk(state.cart.cart));
+        } else {
+          dispatch(fetchCart());
+        }
       } else {
         console.log("Failed to authenticate");
         //@todo failed to authenticate
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      initCart(dispatch, getState());
     }
   };
 };
@@ -66,6 +77,8 @@ export const whoAmI = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      initCart(dispatch, getState());
     }
   };
 };

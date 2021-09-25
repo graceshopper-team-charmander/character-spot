@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 const { Product } = require("./Product");
+const { cartProductQuantitySchema, idSchema } = require("../../api/validationSchemas");
 
 const Cart = db.define("cart", {
   cartQuantity: {
@@ -56,6 +57,35 @@ const refactorCartItems = (items) => {
 /**
  *
  * @param {Sequelize.Model} user
+ * @param {[{}]} products
+ */
+Cart.addProducts = async (user, products) => {
+  let order = await user.getOrders({
+    where: {
+      status: "PENDING"
+    }
+  });
+  order = order[0];
+  for (let i = 0; i < products.length; i++) {
+    await cartProductQuantitySchema.validate(products[i]);
+    await idSchema.validate(products[i]);
+    const { id, cartQuantity } = products[i];
+    const dbProduct = await Product.findByPk(id);
+    let hasProduct = await order.getProducts({ where: { id } });
+    if (hasProduct.length) {
+      hasProduct[0].cart.update({
+        cartQuantity: hasProduct[0].cart.cartQuantity + cartQuantity
+      });
+    } else {
+      await order.addProduct(dbProduct);
+    }
+  }
+  return order.getProducts();
+};
+
+/**
+ *
+ * @param {Sequelize.Model} user
  * @param {number|undefined} productId - if specified returns a specific item
  * @returns {Promise<Sequelize.Model[]>}
  *
@@ -66,7 +96,7 @@ Cart.getUserCartItems = async (user, productId) => {
       status: "PENDING"
     }
   });
-  return order[0].getProducts((productId ? {where: {id: productId}} : {}));
+  return order[0].getProducts(productId ? { where: { id: productId } } : {});
 };
 
 /**
@@ -91,7 +121,7 @@ Cart.updateCartQuantity = async (user, productId, newQuantity = 1) => {
     await cartProduct[0].cart.update({ cartQuantity: newQuantity });
     return cartProduct[0];
   } else {
-    console.log('else*****************');
+    console.log("else*****************");
     const product = await Product.findByPk(productId);
     await order[0].addProduct(product);
     return Cart.getUserCartItems(user, productId);

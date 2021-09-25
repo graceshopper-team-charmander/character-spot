@@ -1,4 +1,7 @@
 import axios from "axios";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { setFetchSingleProductStatus, setSingleProduct } from "./singleProduct";
+import { addToCart } from "./cart";
 
 const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
@@ -6,30 +9,42 @@ const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
 
-const setCart = (cart) => {
+export const setLocalCart = () => {
+  const cart = localStorage.getItem("characterStopCart")
+    ? JSON.parse(localStorage.getItem("characterStopCart"))
+    : [];
   return {
     type: SET_CART,
     cart
   };
 };
 
-export const fetchLocalCart = () => {
-  //load cart from localStorage
+export const clearLocalCart = () => {
+  localStorage.setItem("characterStopCart", JSON.stringify([]));
 };
 
-//fetch the item so we can put it in the on state
-export const addToLocalCartThunk = (product) => {};
+export const saveLocalCartOnUnload = (cart) => {
+  localStorage.setItem("characterStopCart", JSON.stringify(cart));
+};
 
-//we're not calling a backend for this, just increase the quantity on state
-const updateLocalCartQuantity = (product) => {
+export const addToLocalCartThunk = (product) => {
+  product.cartQuantity = 1;
+  return {
+    type: ADD_TO_CART,
+    product
+  };
+};
+
+export const updateLocalCartQuantity = (product, quantity) => {
+  if (!quantity) return deleteLocalCartProduct(product);
+  product.cartQuantity = quantity;
   return {
     type: UPDATE_QUANTITY,
     product
   };
 };
 
-//not calling the backend, just delete from state
-const deleteLocalCartProduct = (product) => {
+export const deleteLocalCartProduct = (product) => {
   return {
     type: DELETE_PRODUCT,
     product

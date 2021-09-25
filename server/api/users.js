@@ -1,15 +1,15 @@
 const router = require("express").Router();
 const {
-  models: { User, Product, Cart, Order }
+  models: { Cart }
 } = require("../db");
-const { requireTokenMiddleware} = require("../auth-middleware");
+const { requireTokenMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
 const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
+const { idSchema, cartProductQuantitySchema } = require("./validationSchemas");
+const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart");
 
-const { idSchema, cartProductSchema } = require("./validationSchemas");
-const { updateCartQuantity, refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart");
-
+//GET /api/users/cart - returns the users cart
 router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
     res.json(refactorCartItems(await Cart.getUserCartItems(req.user)));
@@ -18,7 +18,17 @@ router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
-//Checkout a cart
+//POST /api/users/cart - sets the users cart with items, and returns the updated cart
+router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
+  try {
+    const mergedCart = refactorCartItems(await Cart.addProducts(req.user, req.body))
+    res.send(mergedCart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT /api/users/cart - checks the users cart out
 router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   try {
     const order = await req.user.getOrders({
@@ -39,14 +49,14 @@ router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     // need to validate userId with middleware
     await idSchema.validate(req.params);
-    await cartProductSchema.validate(req.body);
+    await cartProductQuantitySchema.validate(req.body);
     res.send(Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity));
   } catch (err) {
     next(err);
   }
 });
 
-//Add a product into a user's cart
+//POST /api/users/cart/:id - adds a product into a user's cart
 router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);
@@ -56,7 +66,7 @@ router.post("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   }
 });
 
-//Delete a product from a user's cart
+//DELETE /api/users/cart/:id  deletes a product from a user's cart
 router.delete("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
   try {
     await idSchema.validate(req.params);

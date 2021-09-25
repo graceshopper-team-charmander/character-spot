@@ -29,8 +29,6 @@ const Orders = () => {
     dispatch(fetchOrders());
   }, []);
 
-  // console.log(orders);
-
   return (
     <Grid item xs={12} className="page">
       <Paper elevation={1} className={styles.paperRoot}>

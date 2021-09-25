@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Orders from "./Orders";
@@ -48,6 +48,7 @@ export function NavbarMenu() {
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const isLoggedIn = useSelector(state => state.auth.loggedIn);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -70,15 +71,14 @@ export function NavbarMenu() {
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
 
-  return (
+  return !isLoggedIn ? null : (
     <div className={classes.root}>
       {/* <div> */}
       <Link

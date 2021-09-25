@@ -1,10 +1,55 @@
 import axios from "axios";
+import { LOGOUT } from "./auth";
+import { clearLocalCart, setLocalCart } from "./localCart";
 
 const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
+
+export const initCart = (dispatch, state) => {
+  console.log("=======finally==========");
+  //happens on load
+  //check local cart, if anything merge it, otherwise load from db
+  const localCart = JSON.parse(localStorage.getItem("characterStopCart"));
+  if (!state.auth.loggedIn) {
+    //load from local
+    console.log("not logged in");
+    //if has state merge state
+    if (state.cart.cart.length) {
+      console.log("set cart from redux");
+      dispatch(setCartThunk(state.cart.cart));
+    } else if (localCart.length) {
+      console.log("set cart from local");
+      dispatch(setLocalCart(localCart));
+    }
+  } else {
+    console.log("logged in");
+    if (localCart.length) {
+      console.log("merge local cart into db");
+      dispatch(setCartThunk(localCart));
+      clearLocalCart();
+    } else if (state.cart.cart.length) {
+      console.log("merge redux into db");
+      dispatch(setCartThunk(localCart));
+    } else {
+      console.log("fetch cart");
+      dispatch(fetchCart());
+    }
+  }
+};
+
+export const setCartThunk = (cart) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`/api/users/cart`, cart);
+      dispatch(setCart(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 const setCart = (cart) => {
   return {
@@ -24,7 +69,7 @@ export const fetchCart = () => {
   };
 };
 
-const addToCart = (product) => {
+export const addToCart = (product) => {
   return {
     type: ADD_TO_CART,
     product
@@ -108,24 +153,22 @@ export default (state = initialState, action) => {
     case SET_CART:
       return { ...state, cart: action.cart };
     case ADD_TO_CART:
-      console.log("product", action.product);
       return {
         ...state,
         cart: [...state.cart, action.product]
       };
     case UPDATE_QUANTITY:
-      const updatedProducts = state.cart.map((product) => {
-        if (product.id === action.product.id) {
-          return action.product;
-        } else {
-          return product;
-        }
-      });
+      const updatedProducts = state.cart.map((product) =>
+        product.id === action.product.id ? action.product : product
+      );
       return { ...state, cart: updatedProducts };
     case DELETE_PRODUCT:
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
     case SUBMIT_ORDER:
+      return { ...state, cart: [] };
+    case LOGOUT:
+      localStorage.setItem("characterStopCart", JSON.stringify([]));
       return { ...state, cart: [] };
     default:
       return state;

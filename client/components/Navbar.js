@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     fontSize: "1.3rem"
-
   },
   link: {
     color: "#484848",
@@ -65,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "50%",
     justifyContent: "flex-start",
-    alignItems:"center"
+    alignItems: "center"
   },
   logo: {
     width: "35%",
@@ -75,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "50%",
     justifyContent: "flex-end",
-    alignItems:"center"
+    alignItems: "center"
   },
   badge: {
     marginRight: "4%",
@@ -103,17 +102,15 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchCart());
+  // }, []);
 
   let total = 0;
-  console.log('cart', cart);
   if (!cart.length) {
     total = 0;
   } else {
     let quantity = cart.map((item) => {
-      console.log(item);
       return item.cartQuantity;
     });
     total = quantity.reduce((accum, current) => accum + current);
@@ -147,34 +144,32 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                 Products
               </Link>
             </div>
-            {isLoggedIn ? (
-              <div className={styles.linkRight}>
-                <Link component={RouterLink} to="/cart" className={styles.link}>
-                  <Badge
-                    badgeContent={total}
-                    color="secondary"
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "left"
-                    }}
-                    className={styles.badge}></Badge>
-                  <i className="fas fa-shopping-cart"></i>
-                  Cart
-                </Link>
-                <NavbarMenu />
-              </div>
-            ) : (
-              <div className={styles.linkRight}>
-                <Link component={RouterLink} to="/login" className={styles.link}>
-                  <i className="fas fa-sign-in-alt"></i>
-                  Login
-                </Link>
+            <div className={styles.linkRight}>
+              <Link component={RouterLink} to="/cart" className={styles.link}>
+                <Badge
+                  badgeContent={total}
+                  color="secondary"
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left"
+                  }}
+                  className={styles.badge}></Badge>
+                <i className="fas fa-shopping-cart"></i>
+                Cart
+              </Link>
+              {!isLoggedIn || <NavbarMenu />}
+            </div>
+            <div className={styles.linkRight}>
+              <Link component={RouterLink} to="/login" className={styles.link}>
+                <i className="fas fa-sign-in-alt"></i>
+                Login
+              </Link>
 
-                <Link component={RouterLink} to="/signup" className={styles.link}>
-                  <i className="fas fa-user-plus"></i>
-                  Sign Up
-                </Link>
-              </div>
+              <Link component={RouterLink} to="/signup" className={styles.link}>
+                <i className="fas fa-user-plus"></i>
+                Sign Up
+              </Link>
+            </div>
             )}
           </div>
         </ToolBar>

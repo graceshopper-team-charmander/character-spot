@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartThunk, addToLocalCart } from "../store/cart";
+import { addToCartThunk } from "../store/cart";
+import { addToLocalCartThunk } from "../store/localCart";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Card from "@material-ui/core/Card";
@@ -81,7 +82,7 @@ const ProductRow = (props) => {
   const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
-  const isLoggedIn = useSelector(state => state.auth.loggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   return (
     <div>
@@ -100,15 +101,18 @@ const ProductRow = (props) => {
                 alt={name}
               />
               <Typography sx={{ mb: 1.5 }} className={styles.cardPrice}>
-                ${(price/100).toFixed(2)}
+                ${(price / 100).toFixed(2)}
               </Typography>
             </div>
           </CardContent>
         </Link>
-        <Button variant="contained" onClick={ () => {
-          setSnackBarOpen(true);
-          isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
-        }} className={styles.button}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setSnackBarOpen(true);
+            isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCartThunk(product));
+          }}
+          className={styles.button}>
           ADD TO CART
         </Button>
       </Card>

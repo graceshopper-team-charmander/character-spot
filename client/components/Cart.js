@@ -34,9 +34,9 @@ const Cart = () => {
   const muiClasses = useStyles();
   const cart = useSelector((state) => state.cart.cart) || [];
 
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchCart());
+  // }, []);
   const shipping = 500.
   const numItems = (cart.length > 0) ? (cart.reduce((acc, ele) => acc + ele.cartQuantity, 0)) : (0)
 
