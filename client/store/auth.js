@@ -87,7 +87,7 @@ export const getInfo = () => {
 export const updateInfoThunk = (update) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/auth/update", update);
+      const { data } = await axios.put("/auth/update", update);
       dispatch(updateInfo(data));
     } catch (err) {
       console.log(err);

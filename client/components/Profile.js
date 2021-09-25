@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import { getInfo, updateInfoThunk } from "../store/auth";
+import EditInfo from "./EditInfo";
 
 const useStyles = makeStyles((theme) => ({
   infoRoot: {
@@ -24,6 +25,7 @@ const Profile = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user.user) || [];
+  const [edit, toggleEdit] = useState(false);
 
   useEffect(() => {
     dispatch(getInfo());
@@ -34,26 +36,30 @@ const Profile = () => {
       <div className="all-products-header">
         <h4 className="all-products-title">Profile</h4>
       </div>
-      <Card
-        className={styles.infoRoot}>
-        <Box style={{ flexGrow: 1 }}>
-          <h1>Name </h1>
-        </Box>
-        <div>
-        {user.firstName} {user.lastName}
-        <Button>Edit</Button>
-        </div>
-      </Card>
-      <Card
-        className={styles.infoRoot}>
-        <Box style={{ flexGrow: 1 }}>
-          <h1>Email </h1>
-        </Box>
-        <div>
-        {user.email}
-          <Button>Edit</Button>
-        </div>
-      </Card>
+      {(edit) ? <EditInfo user = {user}  toggleEdit = {toggleEdit}/>: (
+          <div>
+          <Card
+          className={styles.infoRoot}>
+            <Box style={{ flexGrow: 1 }}>
+            <h1>Name</h1>
+            </Box>
+            <div>
+            {user.firstName} {user.lastName}
+            </div>
+          </Card>
+          <Card
+          className={styles.infoRoot}>
+            <Box style={{ flexGrow: 1 }}>
+              <h1>Email</h1>
+            </Box>
+            <div>
+            {user.email}
+            </div>
+          </Card>
+      </div>
+      )}
+      {(!edit) &&  <Button className = {styles.editButton} onClick = {() =>
+          toggleEdit(!edit)}>Edit</Button>}
       <Card
         className={styles.infoRoot}>
         <Box style={{ flexGrow: 1 }}>
@@ -61,9 +67,10 @@ const Profile = () => {
         </Box>
         <div>
         ******
-          <Button>Edit</Button>
         </div>
       </Card>
+      <Button onClick = {() =>
+          toggleEdit(!edit)}>Edit</Button>
     </Grid>
   );
 };

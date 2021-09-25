@@ -50,6 +50,7 @@ router.get("/info", requireTokenMiddleware, async (req, res, next) => {
 //change info (first name, last name, email) of user
 router.put("/update", requireTokenMiddleware, async (req, res, next) => {
   try {
+    console.log('PUT ROUTE')
     const user = await req.user.update(req.body)
     res.send({user});
   } catch (ex) {
