@@ -24,10 +24,10 @@ export const fetchCart = () => {
   };
 };
 
-const addToCart = (cart) => {
+const addToCart = (product) => {
   return {
     type: ADD_TO_CART,
-    cart
+    product
   };
 };
 
@@ -108,7 +108,11 @@ export default (state = initialState, action) => {
     case SET_CART:
       return { ...state, cart: action.cart };
     case ADD_TO_CART:
-      return { ...state, cart: action.cart };
+      console.log("product", action.product);
+      return {
+        ...state,
+        cart: [...state.cart, action.product]
+      };
     case UPDATE_QUANTITY:
       const updatedProducts = state.cart.map((product) => {
         if (product.id === action.product.id) {

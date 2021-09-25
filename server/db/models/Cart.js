@@ -1,8 +1,9 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const { Product } = require("./Product");
 
 const Cart = db.define("cart", {
-  quantity: {
+  cartQuantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 1,
@@ -12,4 +13,93 @@ const Cart = db.define("cart", {
   }
 });
 
-module.exports = Cart;
+// const getUserCart = (userId, productId) => {
+//   return db.query(`
+//       SELECT orders.id as "orderId",
+//              products.id,
+//              products.name,
+//              products.price,
+//              products."imageUrl",
+//              products.quantity,
+//              carts."cartQuantity"
+//       FROM orders
+//                JOIN carts on orders.id = carts."orderId"
+//                JOIN products on carts."productId" = ${productId || "products.id"}
+//       WHERE orders.status = 'PENDING'
+//         AND orders."userId" = ${userId}
+//   `);
+// };
+
+const refactorSingleCartItem = (item) => {
+  item = Array.isArray(item) ? item[0] : item;
+  return {
+    id: item["id"],
+    name: item["name"],
+    imageUrl: item["imageUrl"],
+    price: item["price"],
+    quantity: item["quantity"],
+    cartQuantity: item.cart.cartQuantity
+  };
+};
+
+const refactorCartItems = (items) => {
+  const results = [];
+  items.forEach((item) => {
+    results.push(refactorSingleCartItem(item));
+  });
+  return results;
+};
+
+/*********************
+ * Model Methods     *
+ *********************/
+/**
+ *
+ * @param {Sequelize.Model} user
+ * @param {number|undefined} productId - if specified returns a specific item
+ * @returns {Promise<Sequelize.Model[]>}
+ *
+ */
+Cart.getUserCartItems = async (user, productId) => {
+  const order = await user.getOrders({
+    where: {
+      status: "PENDING"
+    }
+  });
+  return order[0].getProducts((productId ? {where: {id: productId}} : {}));
+};
+
+/**
+ *
+ * @param {number} user
+ * @param {number} productId
+ * @param {undefined|number} newQuantity
+ * @returns {Promise<{quantity, price, imageUrl, name, id, cartQuantity}>}
+ */
+Cart.updateCartQuantity = async (user, productId, newQuantity = 1) => {
+  const order = await user.getOrders({
+    where: {
+      status: "PENDING"
+    }
+  });
+  const cartProduct = await order[0].getProducts({
+    where: {
+      id: productId
+    }
+  });
+  if (cartProduct[0]) {
+    await cartProduct[0].cart.update({ cartQuantity: newQuantity });
+    return cartProduct[0];
+  } else {
+    console.log('else*****************');
+    const product = await Product.findByPk(productId);
+    await order[0].addProduct(product);
+    return Cart.getUserCartItems(user, productId);
+  }
+};
+
+module.exports = {
+  Cart,
+  refactorCartItems,
+  refactorSingleCartItem
+};

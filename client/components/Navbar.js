@@ -113,7 +113,8 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
     total = 0;
   } else {
     let quantity = cart.map((item) => {
-      return item.cart.quantity;
+      console.log(item);
+      return item.cartQuantity;
     });
     total = quantity.reduce((accum, current) => accum + current);
   }

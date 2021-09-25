@@ -41,14 +41,14 @@ const SingleCartProduct = (props) => {
           <Typography style={{ fontWeight: 600, fontSize: 20 }}>{product.name}</Typography>
           <Typography>{product.description}</Typography>
           <CardActions style={{ padding: "0px" }}>
-            <div onClick={() => dispatch(updateQuantityThunk(product, product.cart.quantity - 1))}>
+            <div onClick={() => dispatch(updateQuantityThunk(product, product.cartQuantity - 1))}>
               <Button
                 className={muiClasses.buttonRoot}>
                 -
               </Button>
             </div>
-            {product.cart.quantity}
-            <div onClick={() => dispatch(updateQuantityThunk(product, product.cart.quantity + 1))}>
+            {product.cartQuantity}
+            <div onClick={() => dispatch(updateQuantityThunk(product, product.cartQuantity + 1))}>
               <Button
                 className={muiClasses.buttonRoot}>
                 +
@@ -63,7 +63,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cart.quantity / 100).toLocaleString('en')}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cartQuantity / 100).toLocaleString('en')}</Typography>
         </Box>
       </Box>
     </Card>

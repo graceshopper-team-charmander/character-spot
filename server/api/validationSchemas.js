@@ -14,7 +14,14 @@ const productSchema = Yup.object().shape({
     .min(0, "Quantity must be greater than or equal to 0")
 });
 
+const cartProductSchema = Yup.object().shape({
+  quantity: Yup.number()
+    .integer("Quantity must a whole number")
+    .min(0, "Quantity must be greater than or equal to 0")
+});
+
 module.exports = {
   idSchema,
-  productSchema
+  productSchema,
+  cartProductSchema
 };
