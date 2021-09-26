@@ -2,6 +2,7 @@ import axios from "axios";
 import { LOGOUT } from "./auth";
 import { clearLocalCart, setLocalCart } from "./localCart";
 import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+
 export const SET_CART_FETCH_STATUS = "SET_CART_FETCH_STATUS";
 const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
@@ -10,33 +11,23 @@ const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
 
 export const initCart = (dispatch, state) => {
-  console.log("=======finally==========");
-  //happens on load
-  //check local cart, if anything merge it, otherwise load from db
-  const localCart = JSON.parse(localStorage.getItem("characterStopCart"));
+  const localCart = JSON.parse(localStorage.getItem("characterSpotCart"));
   if (!state.auth.loggedIn) {
-    //load from local
-    console.log("not logged in");
-    //if has state merge state
-    if (state.cart.cart.length) {
-      console.log("set cart from redux");
-      dispatch(setCartThunk(state.cart.cart));
-    } else if (localCart.length) {
-      console.log("set cart from local");
-      dispatch(setLocalCart(localCart));
-    }
-  } else {
-    console.log("logged in");
+    //user not logged in
     if (localCart.length) {
-      console.log("merge local cart into db");
-      dispatch(setCartThunk(localCart));
+      dispatch(setLocalCart(localCart)); //set redux cart from localStorage
+    }
+    dispatch(setFetchCartStatus(FETCH_SUCCESS));
+    //when not logged in, and the user has nothing in local storage
+  } else {
+    //user logged in
+    if (localCart.length) {
+      dispatch(setCartThunk(localCart)); //merge localStorage with DB
       clearLocalCart();
     } else if (state.cart.cart.length) {
-      console.log("merge redux into db");
-      dispatch(setCartThunk(localCart));
+      dispatch(setCartThunk(state.cart.cart)); //merge redux with DB
     } else {
-      console.log("fetch cart");
-      dispatch(fetchCart());
+      dispatch(fetchCart()); //fetch cart from DB
     }
   }
 };
@@ -44,13 +35,16 @@ export const initCart = (dispatch, state) => {
 export const setCartThunk = (cart) => {
   return async (dispatch) => {
     try {
+      dispatch(setFetchCartStatus(FETCH_PENDING));
       const { data } = await axios.post(`/api/users/cart`, cart);
       dispatch(setCart(data));
+      dispatch(setFetchCartStatus(FETCH_SUCCESS));
     } catch (err) {
+      dispatch(setFetchCartStatus(FETCH_FAILED));
       console.log(err);
     }
-  }
-}
+  };
+};
 export const setFetchCartStatus = (status) => {
   return {
     type: SET_CART_FETCH_STATUS,
@@ -178,7 +172,7 @@ export default (state = initialState, action) => {
     case SUBMIT_ORDER:
       return { ...state, cart: [] };
     case LOGOUT:
-      localStorage.setItem("characterStopCart", JSON.stringify([]));
+      localStorage.setItem("characterSpotCart", JSON.stringify([]));
       return { ...state, cart: [] };
     case SET_CART_FETCH_STATUS:
       return { ...state, fetchStatus: action.status };
