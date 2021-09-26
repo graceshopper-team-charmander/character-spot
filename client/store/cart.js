@@ -144,8 +144,11 @@ export const submitOrderThunk = () => {
     try {
       const { data } = await axios.put(`/api/users/checkout`);
       dispatch(submitOrder(data));
+      history.push("/thankyou");
+      return true;
     } catch (err) {
       console.log(err);
+      return false;
     }
   };
 };

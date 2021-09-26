@@ -14,6 +14,7 @@ import Orders from "./components/Orders";
 import { clearLocalCart, saveLocalCartOnUnload, setLocalCart } from "./store/localCart";
 import { fetchCart, setCartThunk } from "./store/cart";
 import Profile from "./components/Profile";
+import Thankyou from "./components/Thankyou";
 
 /**
  * COMPONENT
@@ -21,24 +22,12 @@ import Profile from "./components/Profile";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    //save the users cart if they reload or navigate away
     addEventListener("beforeunload", () => {
       if (!this.props.isLoggedIn) {
-        console.log('*********SAVE**********');
         saveLocalCartOnUnload(this.props.cart);
       }
     });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    //user went from not logged in -> logged in
-    // if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
-    //   //update the backend cart
-    //   //clear local storage to default state
-    //   this.props.setCartThunk(this.props.cart);
-    //   console.log("setting cart");
-    // } else if (prevProps.isLoggedIn && !this.props.isLoggedIn) {
-    //   clearLocalCart();
-    // }
   }
 
   render() {
@@ -71,6 +60,10 @@ class Routes extends Component {
           <Route path="/profile">
             <Profile />
           </Route>
+          <Route path="/thankyou">
+            <Thankyou/>
+          </Route>
+
           {isLoggedIn ? (
             <Redirect to="/" />
           ) : (
