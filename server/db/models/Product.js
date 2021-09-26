@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const { Op } = require("sequelize");
 const { DEFAULT_PAGESIZE } = require("../../../constants");
+const { properCase } = require("../../../utility-funcs/string-manip");
 
 const Product = db.define("product", {
   name: {
@@ -72,10 +73,11 @@ Product.updateInventory = async (orderedProducts) => {
  */
 const categoryFilter = ({ categories }) => {
   if (categories) {
+    categories = categories.split("|");
     return {
       where: {
-        id: {
-          [Op.in]: [1, 2, 3]
+        name: {
+          [Op.in]: categories.map((cat) => properCase(cat))
         }
       }
     };
@@ -114,6 +116,7 @@ const paginate = ({ page }, pageSize = DEFAULT_PAGESIZE) => {
   return {};
 };
 
+//requires that you enable pg_trgm extension on this database via CREATE EXTENSION pg_trgm
 const productSearch = (table, field, { search }) => {
   if (search) {
     return {
@@ -127,5 +130,19 @@ const productSearch = (table, field, { search }) => {
   }
   return {};
 };
+
+/*
+
+CREATE TABLE  AS SELECT word FROM ts_stat('SELECT to_tsvector(''simple'', name) FROM products');
+CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);
+CREATE INDEX CONCURRENTLY trgm_index_product_names ON products USING gin (lower(name) gin_trgm_ops);
+
+https://about.gitlab.com/blog/2016/03/18/fast-search-using-postgresql-trigram-indexes/
+ALTER TABLE products ADD COLUMN ts tsvector GENERATED ALWAYS AS (to_tsvector('english', name)) STORED;
+CREATE INDEX ts_idx ON products USING GIN (ts gin_trgm_ops);
+
+
+CREATE INDEX product_name_idx ON products USING gin (name gin_trgm_ops);
+ */
 
 module.exports = { Product, categoryFilter, productSort, paginate, productSearch };

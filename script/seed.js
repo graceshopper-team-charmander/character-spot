@@ -7,6 +7,7 @@ const {
 /** creating fake data */
 const faker = require("faker");
 const Order = require("../server/db/models/Order");
+const dbpg = require('../server/db/dbpg');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -18,17 +19,29 @@ async function seed() {
 
   let amtOfFakeData = 22;
   //Create Fake Users
-  const fakeUsers = await Promise.all(Array(amtOfFakeData).fill('').map(product => User.create({
-    email: faker.internet.email(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    password: faker.internet.password()
-  })));
+  const fakeUsers = await Promise.all(
+    Array(amtOfFakeData)
+      .fill("")
+      .map((product) =>
+        User.create({
+          email: faker.internet.email(),
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+          password: faker.internet.password()
+        })
+      )
+  );
 
   //Create Fake Categories
-  const categories = await Promise.all(Array(10).fill('').map(item => ProductCategory.create({
-    name: faker.random.word()
-  })));
+  const categories = await Promise.all(
+    Array(10)
+      .fill("")
+      .map((item) =>
+        ProductCategory.create({
+          name: faker.random.word()
+        })
+      )
+  );
 
   //Give the users 'pending' orders
   const createdFakeOrders = [];
@@ -39,17 +52,21 @@ async function seed() {
   }
 
   //Create Fake Products
-  const fakeProducts = await Promise.all(Array(amtOfFakeData).fill('').map(product => {
-    const name = faker.random.word();
-    return Product.create({
-      name,
-      imageUrl: faker.image.food(),
-      description: faker.lorem.sentence(),
-      price: faker.datatype.number(),
-      quantity: 5,
-      fullTextSearch: name
-    })
-  }));
+  const fakeProducts = await Promise.all(
+    Array(amtOfFakeData)
+      .fill("")
+      .map((product) => {
+        const name = faker.random.word();
+        return Product.create({
+          name,
+          imageUrl: faker.image.food(),
+          description: faker.lorem.sentence(),
+          price: faker.datatype.number(),
+          quantity: 5,
+          fullTextSearch: name
+        });
+      })
+  );
 
   //Add Categories to products
   for (let i = 0; i < amtOfFakeData; i++) {
@@ -71,7 +88,7 @@ async function seed() {
       firstName: "Cody",
       lastName: "Turtle",
       password: "123"
-    }),
+    })
   ]);
 
   const cody = users[0];
@@ -91,7 +108,7 @@ async function seed() {
 
   return {
     users: {
-      cody: users[0],
+      cody: users[0]
     }
   };
 }
@@ -105,6 +122,7 @@ async function runSeed() {
   console.log("seeding...");
   try {
     await seed();
+    await dbpg.query('CREATE EXTENSION pg_trgm');
   } catch (err) {
     console.error(err);
     process.exitCode = 1;

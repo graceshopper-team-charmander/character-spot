@@ -15,14 +15,12 @@ router.get("/", async (req, res, next) => {
         {
           model: ProductCategory,
           as: "categories",
-          ...categoryFilter(req.query),
-          ...productSearch('category', 'name', req.body)
+          ...categoryFilter(req.query)
         }
       ],
       ...productSort(req.query),
       ...paginate(req.query, DEFAULT_PAGESIZE),
-      ...productSearch('product', 'name', req.body),
-      logging: console.log
+      ...productSearch("product", "name", req.query),
     });
 
     res.json({ products, totalItems });
@@ -31,22 +29,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/*
 
-CREATE TABLE  AS SELECT word FROM ts_stat('SELECT to_tsvector(''simple'', name) FROM products');
-
-        CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);
-
-        CREATE INDEX CONCURRENTLY trgm_index_product_names ON products USING gin (lower(name) gin_trgm_ops);
-
-
-        https://about.gitlab.com/blog/2016/03/18/fast-search-using-postgresql-trigram-indexes/
-ALTER TABLE products ADD COLUMN ts tsvector GENERATED ALWAYS AS (to_tsvector('english', name)) STORED;
-CREATE INDEX ts_idx ON products USING GIN (ts gin_trgm_ops);
-
-
-CREATE INDEX product_name_idx ON products USING gin (name gin_trgm_ops);
- */
 
 //GET /products/categories - returns all categories
 router.get("/categories", async (req, res, next) => {
