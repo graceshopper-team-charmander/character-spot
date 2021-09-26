@@ -11,7 +11,7 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
-const { sendEmail, emailBody} = require("../email/email")
+const { sendConfirmEmail, emailBody} = require("../email/email")
 const test = "freda.hamill81@ethereal.email"
 
 //Get the cart of a user
@@ -53,7 +53,7 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     const emailBodyHTML = await emailBody(name, products, orderNumber, date)
 
     //send email
-    sendEmail({to: test, html: emailBodyHTML })
+    sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
     res.send(order);
   } catch (err) {
     next(err);

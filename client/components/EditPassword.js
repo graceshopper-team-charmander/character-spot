@@ -22,7 +22,6 @@ const styles = (theme) => ({
     outline: "2px solid #fcd000",
     fontSize: "1rem",
     flexGrow: 1,
-    direction: "rtl",
     padding: "2px",
   },
   submitButton: {

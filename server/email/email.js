@@ -28,7 +28,7 @@ function emailBody(name, order, orderNumber, date) {
 }
 
 //need to look into Oauth tomorrow
-async function sendEmail({to, html}) {
+async function sendConfirmEmail({to, html}) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -52,9 +52,8 @@ async function sendEmail({to, html}) {
       console.log('error', err)
     }
     console.log('message sent: %s', info.messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
 }
 
 
-module.exports = { sendEmail, emailBody };
+module.exports = { sendConfirmEmail, emailBody };
