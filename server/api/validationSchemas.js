@@ -6,6 +6,15 @@ const idSchema = Yup.object().shape({
     .required("Id is required")
 });
 
+const userSignupSchema = Yup.object().shape({
+  firstName: Yup.string().trim().required("First name is required"),
+  email: Yup.string()
+    .trim()
+    .required("An email address is required to checkout")
+    .email("Must be a valid email address"),
+  password: Yup.string().required("Password is required")
+});
+
 const productSchema = Yup.object().shape({
   name: Yup.string().trim().required("Name is required"),
   imageUrl: Yup.string(),
@@ -27,6 +36,7 @@ const cartProductQuantitySchema = Yup.object().shape({
 
 module.exports = {
   idSchema,
+  userSignupSchema,
   productSchema,
   cartProductQuantitySchema
 };

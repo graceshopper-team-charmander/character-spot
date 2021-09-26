@@ -4,12 +4,14 @@ const {
 } = require("../db");
 const { requireTokenMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
+const { userSignupSchema } = require("../api/validationSchemas");
 const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
 
 router.post("/signup", async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
+    await userSignupSchema.validate(req.body);
+    const user = await User.makeOrFind(req.body);
     const token = await user.generateToken();
     res.cookie("token", token, {
       sameSite: "strict",
@@ -80,17 +82,16 @@ router.post("/login", async (req, res, next) => {
 //see if current password is correct
 router.post("/change", requireTokenMiddleware, async (req, res, next) => {
   try {
-    if(await req.user.correctPassword(req.body.currentPassword)){
-      await req.user.update({password: req.body.newPassword})
+    if (await req.user.correctPassword(req.body.currentPassword)) {
+      await req.user.update({ password: req.body.newPassword });
       res.status(200).send(req.user);
     } else {
-      res.sendStatus(204)
+      res.sendStatus(204);
     }
   } catch (err) {
     next(err);
   }
 });
-
 
 router.get("/logout", (req, res, next) => {
   try {

@@ -6,16 +6,8 @@ import ProductRow from "./ProductRow";
 import { useHistory, useLocation } from "react-router-dom";
 import CategoryFilter from "./CategoryFilter";
 import LoadingBar from "./LoadingBar";
-
-import Paper from "@material-ui/core/Paper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {

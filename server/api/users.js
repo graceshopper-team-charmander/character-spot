@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Cart }
+  models: { Cart, User }
 } = require("../db");
 const { requireTokenMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
@@ -8,6 +8,8 @@ const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
 const { idSchema, cartProductQuantitySchema } = require("./validationSchemas");
 const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart");
+const { userSignupSchema } = require("../api/validationSchemas");
+const faker = require("faker");
 
 const { sendEmail, emailBody} = require("../email/email")
 
@@ -26,7 +28,7 @@ router.get("/cart", requireTokenMiddleware, async (req, res, next) => {
 //POST /api/users/cart - sets the users cart with items, and returns the updated cart
 router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const mergedCart = refactorCartItems(await Cart.addProducts(req.user, req.body))
+    const mergedCart = refactorCartItems(await Cart.addProducts(req.user, req.body));
     res.send(mergedCart);
   } catch (err) {
     next(err);
@@ -48,6 +50,25 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     console.log('email body html', emailBodyHTML)
     // sendEmail({to: test, html: emailBodyHTML })
     res.send(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT /api/users/guest-checkout - checks the users cart out
+router.put("/guest-checkout", async (req, res, next) => {
+  try {
+    req.body.password = '123';
+      // faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
+    console.log(req.body);
+    await userSignupSchema.validate(req.body);
+    //creates or finds the user by their email and creats an order for them if necessary
+    const guestUser = await User.makeOrFind(req.body);
+    const order = (await guestUser.getOrders({ where: { status: "PENDING" } }))[0];
+    const productIds = req.body.cart.map((product) => product.id);
+    await order.addProducts(productIds);
+    await order.update({ status: "FULFILLED" });
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

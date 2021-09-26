@@ -58,11 +58,19 @@ const submitGuestOrder = (cart) => {
   };
 };
 
-export const submitGuestOrderThunk = () => {
-  return async (dispatch) => {
+export const submitGuestOrderThunk = (history, {firstName, lastName, guestEmailAddress}) => {
+  return async (dispatch, getState) => {
+    const state = getState();
     try {
-      const { data } = await axios.put(`/api/users/guest-checkout`);
+      const body = {
+        firstName,
+        lastName,
+        email: guestEmailAddress,
+        cart: state.cart.cart
+      }
+      const { data } = await axios.put(`/api/users/guest-checkout`, body);
       dispatch(submitGuestOrder(data));
+      // history.push("/thankyou");
     } catch (err) {
       console.log(err);
     }

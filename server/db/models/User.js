@@ -1,13 +1,14 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt');
-const axios = require('axios');
+const Sequelize = require("sequelize");
+const db = require("../db");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const axios = require("axios");
 const { JsonWebTokenError, TokenExpiredError } = require("jsonwebtoken");
+const Order = require("./Order");
 
 const SALT_ROUNDS = 5;
 
-const User = db.define('user', {
+const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -38,29 +39,26 @@ const User = db.define('user', {
   fullName: {
     type: Sequelize.VIRTUAL,
     get() {
-      return this.firstName + ' ' + this.lastName;
+      return this.firstName + " " + this.lastName;
     }
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-})
-
-module.exports = User
+});
 
 /***********************
  * Instance Methods    *
  ***********************/
-User.prototype.correctPassword = function(candidatePwd) {
+User.prototype.correctPassword = function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
   return bcrypt.compare(candidatePwd, this.password);
-}
+};
 
-User.prototype.generateToken = function() {
-  return jwt.sign({id: this.id}, process.env.JWT)
-}
-
+User.prototype.generateToken = function () {
+  return jwt.sign({ id: this.id }, process.env.JWT);
+};
 
 /***********************
  * Model Methods       *
@@ -72,17 +70,16 @@ User.prototype.generateToken = function() {
  * @param password
  * @returns {Promise<{user: *, token: *}>}
  */
-User.authenticate = async ({email, password}) => {
-  const user = await User.findOne({where: {email}});
-  if(!user || (!await user.correctPassword(password))) {
-    const error = Error('Bad credentials');
+User.authenticate = async ({ email, password }) => {
+  const user = await User.findOne({ where: { email } });
+  if (!user || !(await user.correctPassword(password))) {
+    const error = Error("Bad credentials");
     error.status = 401;
     throw error;
   }
   const token = await user.generateToken();
-  return {user, token};
-}
-
+  return { user, token };
+};
 
 /**
  *
@@ -94,25 +91,40 @@ User.findByToken = async (token) => {
   try {
     const verifiedToken = await jwt.verify(token, process.env.JWT);
     const user = User.findByPk(verifiedToken.id);
-    if(!user) {
-      throw new UserNotFoundError('Unable to find user');
+    if (!user) {
+      throw new UserNotFoundError("Unable to find user");
     }
     return user;
-  }
-  catch(err) {
-    if(err instanceof JsonWebTokenError) {
+  } catch (err) {
+    if (err instanceof JsonWebTokenError) {
       console.log(err);
-    }
-    else if(err instanceof TokenExpiredError) {
+    } else if (err instanceof TokenExpiredError) {
       console.log(err);
-    }
-    else {
+    } else {
       console.log(err);
       err.status = 401;
     }
     throw err;
   }
-}
+};
+
+//creates or finds the user by their email and creates a 'PENDING' order for them if necessary
+User.makeOrFind = async function ({ firstName, email, password }) {
+  console.log("email", email);
+  const user = await User.findOrCreate({
+    where: { email },
+    defaults: {
+      firstName,
+      email,
+      password
+    }
+  });
+  const order = await user[0].getOrders({ where: { status: "PENDING" } });
+  if (!order.length) {
+    await user[0].createOrder();
+  }
+  return user[0];
+};
 
 /******************
  * Custom Error   *
@@ -120,20 +132,32 @@ User.findByToken = async (token) => {
 class UserNotFoundError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'UserNotFoundError'
+    this.name = "UserNotFoundError";
   }
 }
 
 /******************
  * Hooks          *
  * ****************/
-const hashPassword = async(user) => {
+const hashPassword = async (user) => {
   //in case the password has been changed, we want to encrypt it with bcrypt
-  if (user.changed('password')) {
+  if (user.changed("password")) {
     user.password = await bcrypt.hash(user.password, SALT_ROUNDS);
   }
-}
+};
 
-User.beforeCreate(hashPassword)
-User.beforeUpdate(hashPassword)
-User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+const lowerCaseEmail = (user) => {
+  if (user.changed("email")) {
+    user.email = user.email.toLowerCase();
+  }
+};
+
+User.beforeCreate(hashPassword);
+User.beforeUpdate(hashPassword);
+User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+
+User.beforeCreate(lowerCaseEmail);
+User.beforeUpdate(lowerCaseEmail);
+User.beforeBulkCreate((users) => Promise.all(users.map(lowerCaseEmail)));
+
+module.exports = User;
