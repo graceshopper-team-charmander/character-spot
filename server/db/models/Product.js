@@ -41,9 +41,6 @@ const Product = db.define("product", {
       min: 0
     }
   },
-  fullTextSearch: {
-    type: Sequelize.TSVECTOR
-  }
 });
 
 /************************
