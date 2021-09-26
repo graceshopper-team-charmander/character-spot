@@ -134,6 +134,7 @@ class EditPassword extends React.Component {
                     error={this.state.errorText}
                     helperText={"Passwords must match"}
                     classes={{ root: muiClasses.textRoot }}
+                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
                     InputProps={{ disableUnderline: true }}
                     onChange={this.onChangeConfirm}
                   />

@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "right"
   },
   text: {
-    fontFamily: "mario"
+    fontFamily: "mario",
   }
 }));
 
@@ -50,39 +50,58 @@ const Profile = () => {
       <div className="all-products-header">
         <h4 className="all-products-title">Profile</h4>
       </div>
-      {(edit) ? <EditInfo user = {user}  toggleEdit = {toggleEdit}/>: (
+      {edit ? (
+        <EditInfo user={user} toggleEdit={toggleEdit} />
+      ) : (
         <Box>
-          <Card
-          className={styles.infoRoot}>
-            <Box style={{ flexGrow: 1 }}> <h1 className={styles.text}>Name</h1> </Box>
-            <p className={styles.text}>  {user.firstName} {user.lastName} </p>
+          <Card className={styles.infoRoot}>
+            <Box style={{minWidth: "13rem" }}>
+              {" "}
+              <h1 className={styles.text} >Name</h1>{" "}
+            </Box>
+            <Box style = {{flexGrow: 1, textAlign: "center"}}>
+            <p className={styles.text}>
+              {user.firstName} {user.lastName}
+            </p>
+            </Box>
           </Card>
-          <Card
-          className={styles.infoRoot}>
-            <Box style={{ flexGrow: 1 }}><h1 className={styles.text}>Email</h1></Box>
+          <Card className={styles.infoRoot}>
+            <Box style={{ minWidth: "13rem"}}>
+              <h1 className={styles.text}>Email</h1>
+            </Box>
+            <Box style = {{flexGrow: 1, textAlign: "center"}}>
             <p className={styles.text}> {user.email}</p>
+            </Box>
           </Card>
-      </Box>
+        </Box>
       )}
       <Box className={styles.buttonBox}>
-        {(!edit) &&  <Button
-        className = {styles.editButton}
-        onClick = {() =>
-            toggleEdit(!edit)}><h3 className={styles.text}>Edit</h3></Button>}
+        {!edit && (
+          <Button className={styles.editButton} onClick={() => toggleEdit(!edit)}>
+            <h3 className={styles.text}>Edit</h3>
+          </Button>
+        )}
       </Box>
-      {(editPassword) ? <EditPassword user = {user} toggleEdit = {toggleEditPassword} /> : (
-          <Box>
-            <Card
-              className={styles.infoRoot}>
-              <Box style={{ flexGrow: 1 }}> <h1 className={styles.text} >Password</h1> </Box>
-              <div> <p className={styles.text}>******</p> </div>
+      {editPassword ? (
+        <EditPassword user={user} toggleEdit={toggleEditPassword} />
+      ) : (
+        <Box>
+          <Card className={styles.infoRoot}>
+            <Box style={{minWidth: "13rem"}}>
+              <h1 className={styles.text}>Password</h1>{" "}
+            </Box>
+            <Box style = {{flexGrow: 1, textAlign: "center"}}>
+              <p className={styles.text}>******</p>{" "}
+              </Box>
           </Card>
-        </Box>)}
+        </Box>
+      )}
       <Box className={styles.buttonBox}>
-        {(!editPassword) &&  <Button
-          className = {styles.editButton}
-          onClick = {() =>
-            toggleEditPassword(!editPassword)}><h3 className={styles.text}>Edit</h3></Button>}
+        {!editPassword && (
+          <Button className={styles.editButton} onClick={() => toggleEditPassword(!editPassword)}>
+            <h3 className={styles.text}>Edit</h3>
+          </Button>
+        )}
       </Box>
     </Grid>
   );
