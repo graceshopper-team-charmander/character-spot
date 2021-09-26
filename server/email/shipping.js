@@ -16,7 +16,7 @@ const shippingInfo = () => {
               <tr>
                 <td align='left' style='font-size:0px;padding:0px;word-break:break-word;'>
                   <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:23px;text-align:left;'>
-                    J Oxygen 123 Street Victoria, BC Canada
+                    J Oxygen </br> 123 Street Victoria,</br> BC Canada
                   </div>
                 </td>
               </tr>

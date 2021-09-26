@@ -12,7 +12,6 @@ const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
 const { sendEmail, emailBody} = require("../email/email")
-
 const test = "freda.hamill81@ethereal.email"
 
 //Get the cart of a user

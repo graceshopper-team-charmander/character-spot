@@ -7,7 +7,10 @@ var orderInfo = require('./orderInfo')
 
 function emailBody(name, order, orderNumber, date) {
   //html for each item
-  const items = order.reduce( (acc, product) => acc + item(product), "")
+  const items = order.map( (product) => item(product))
+  const allItems = items.join(`<tr style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif; color:#777777;background-color: #000000'">
+  <td> &nbsp;  </td>
+  </tr>`)
 
   //subtotal for items and shipping in pennis
   const subtotal = order.reduce( (acc, product) => acc + (product.cart.cartQuantity * product.price), 0)
@@ -18,7 +21,7 @@ function emailBody(name, order, orderNumber, date) {
   const orderSummary = orderInfo(date, orderNumber)
 
   //final email
-  const email = body(name, items, costSummary, shippingInfo, orderSummary)
+  const email = body(name, allItems, costSummary, shippingInfo, orderSummary)
 
   return email
 
