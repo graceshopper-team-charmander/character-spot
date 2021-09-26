@@ -1,18 +1,12 @@
 const nodemailer = require('nodemailer');
 var body = require('./emailBody')
+var item = require('./item')
 
-function emailBody(order) {
-  // let products = []
-  // for(let i = 0; i < order.length; i++){
-  //   products.push([order[i].name, order[i].imageUrl, order[i].price])
-  // }
-  // const header = "<h1>Thank you for your order from the Character Shop! </h1> <br>"
+function emailBody(name, order) {
+  const items = order.reduce( (acc, product) => acc + item(product), "")
+  const email = body(name, items)
+  return email
 
-  // return products.map( (product) => `
-  // <h3>${product[0]}</h3>
-  // <p>$${product[2]/100}</p>
-  // <img src = "${product[1]}"/>`).join('')
-  // return file
 }
 
 async function sendEmail({to, html}) {

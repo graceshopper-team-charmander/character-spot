@@ -1,4 +1,5 @@
-const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+const body = (name, items) => {
+  return (`<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title>
     </title>
@@ -155,7 +156,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                 <div style='color:#4d4d4d;font-family:Oxygen, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
-                                  Thank you for your order!
+                                  Thank you for your order, ${name}!
                                 </div>
                               </td>
                             </tr>
@@ -204,7 +205,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                         </table>
                       </td>
                     </tr>
-                    /* product here */
+                    ${items}
                   </table>
                 </div>
               </td>
@@ -262,6 +263,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
       </table>
     </div>
   </body>
-</html>`
+</html>`)
+}
 
 module.exports = body
