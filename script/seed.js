@@ -92,6 +92,11 @@ async function seed() {
   await order.setUser(cody);
   await order.addProduct(createdFakeProducts[0]);
 
+  const murphy = users[1];
+  const murphyOrder = await Order.create({ status: "PENDING" });
+  await murphyOrder.setUser(murphy);
+  await murphyOrder.addProduct(createdFakeProducts[0]);
+
   await Product.create({
     name: "Luigi",
     imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",

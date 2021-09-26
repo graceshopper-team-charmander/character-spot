@@ -43,7 +43,8 @@ router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
 //get info of user
 router.get("/info", requireTokenMiddleware, async (req, res, next) => {
   try {
-    res.send({ user: req.user });
+    const { firstName, lastName, email } = req.user
+    res.send({user: { firstName, lastName, email} });
   } catch (ex) {
     next(ex);
   }
@@ -52,9 +53,9 @@ router.get("/info", requireTokenMiddleware, async (req, res, next) => {
 //change info (first name, last name, email) of user
 router.put("/update", requireTokenMiddleware, async (req, res, next) => {
   try {
-    console.log("PUT ROUTE");
-    const user = await req.user.update(req.body);
-    res.send({ user });
+    const { firstName, lastName, email} = req.body
+    await req.user.update( { firstName, lastName, email} )
+    res.send({ user: {firstName, lastName, email}});
   } catch (ex) {
     next(ex);
   }

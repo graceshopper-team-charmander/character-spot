@@ -15,6 +15,7 @@ import { clearLocalCart, saveLocalCartOnUnload, setLocalCart } from "./store/loc
 import { fetchCart, setCartThunk } from "./store/cart";
 import Profile from "./components/Profile";
 import Thankyou from "./components/Thankyou";
+import NotFound from "./components/NotFound";
 
 /**
  * COMPONENT
@@ -63,14 +64,18 @@ class Routes extends Component {
           <Route path="/thankyou">
             <Thankyou/>
           </Route>
-
           {isLoggedIn ? (
-            <Redirect to="/" />
-          ) : (
             <>
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
+              <Redirect to="/" component={Home} />
+              {/* Figure out how to get to not found with a redirect?? */}
+              <Route component={NotFound} />
             </>
+          ) : (
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route component={NotFound} />
+            </Switch>
           )}
         </Switch>
       </div>

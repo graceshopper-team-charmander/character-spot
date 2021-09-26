@@ -26,7 +26,7 @@ label {
 } */
 
 form div {
-  margin: 1em;
+  /* margin: 1em; */
   display: inline-block;
 }
 
@@ -56,6 +56,11 @@ a {
 .nav-link-text {
   margin-left: 7px;
   margin-right: 7px;
+}
+
+.nav-link-title {
+  margin-left: 7px;
+  /* margin-right: 3px; */
 }
 
 .navbar-message {
@@ -265,6 +270,71 @@ a {
   flex-flow: row nowrap;
   justify-content: flex-end;
   padding-top: 0.5rem;
+}
+
+/***********************
+ Not Found Page        *
+***********************/
+.not-found-page {
+  padding-top: 1rem;
+}
+
+.not-found-header {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 80px;
+  padding: 16px 40px;
+  color: white;
+  background-color: #e71e07;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.not-found-title {
+  font-weight: bold;
+  font-size: 4rem;
+  display: flex;
+  align-items: center;
+  font-family: "mario";
+}
+
+.not-found-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+}
+
+.not-found-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.not-found-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "mario";
+}
+
+.not-found-button {
+  font-family: "mario";
+  font-size: 1.7rem;
+}
+
+.title-404 {
+  font-family: "mario";
+  font-size: 14rem;
+}
+
+.title-oops {
+  font-family: "mario";
+  font-size: 2rem;
+  white-space: nowrap;
 }
 
 /***********************
