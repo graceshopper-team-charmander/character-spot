@@ -76,6 +76,7 @@ class Routes extends Component {
           {isLoggedIn ? (
             <>
               <Redirect to="/" component={Home} />
+              {/* Figure out how to get to not found with a redirect?? */}
               <Route component={NotFound} />
             </>
           ) : (
@@ -85,7 +86,6 @@ class Routes extends Component {
               <Route component={NotFound} />
             </Switch>
           )}
-          <Route component={NotFound} />
         </Switch>
       </div>
     );
