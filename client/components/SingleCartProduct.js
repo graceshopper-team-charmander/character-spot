@@ -67,7 +67,7 @@ const SingleCartProduct = (props) => {
           </CardActions>
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
-          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cartQuantity / 100).toLocaleString('en')}</Typography>
+          <Typography style={{ textAlign: "right" }}>Price: ${(product.price * product.cartQuantity / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</Typography>
         </Box>
       </Box>
     </Card>

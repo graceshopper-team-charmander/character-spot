@@ -70,13 +70,13 @@ const Cart = () => {
           <Box sx={{ m: 2 }}>
             <Typography className={muiClasses.smallText}>
               Subtotal ({numItems} {numItems === 1 ? "item" : "items"}): $
-              {(subTotal / 100).toLocaleString("en")}
+              {(subTotal / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
             </Typography>
             <Typography className={muiClasses.smallText}>
-              Shipping: ${(shipping / 100.0).toFixed(2)}
+              Shipping: ${(shipping / 100.0).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
             </Typography>
             <Typography className={muiClasses.total}>
-              Total: ${((subTotal + shipping) / 100).toLocaleString("en")}
+              Total: ${((subTotal + shipping) / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
             </Typography>
           </Box>
         </Card>

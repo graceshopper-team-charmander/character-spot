@@ -36,7 +36,7 @@ const item = (item) => {
           ${item.cart.cartQuantity}
         </td>
         <td style='text-align:right; ' width='10%'>
-          $${item.price / 100}
+          $${(item.price / 100).toLocaleString('en')}
         </td>
       </tr>
       </table>

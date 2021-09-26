@@ -23,7 +23,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
       			  		@-ms-viewport {width: 320px;}
       			  		@viewport {	width: 320px; }
       				}
-      @font-face { font-family: mario; src: url("../../public/fonts/mario2.ttf") format("woff"); }
+      @font-face { font-family: mario; src: url("./public/fonts/mario2.ttf") format("woff"); }
     </style>
     <!--<![endif]-->
     <!--[if mso]>
@@ -112,7 +112,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                                             <tr>
                                               <td align='center'>
                                                 <a href='#'>
-                                                  <img align='center' alt='Logo' padding='5px' src='https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png' width='300' />
+                                                  <img align='center' alt='Logo' padding='5px' src='https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png' width='400' />
                                                 </a>
                                               </td>
                                             </tr>
@@ -157,7 +157,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                <div style='color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
+                                <div style='color:#ffffff;font-family: mario, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
                                   Thank you for your order, ${name}!
                                 </div>
                               </td>

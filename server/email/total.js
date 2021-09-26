@@ -20,7 +20,7 @@ const total = (subtotal, shipping) =>{
         </td>
         <td style='text-align: right; border-top: 0px solid #cccccc;'>
           <span style='padding:8px 0px; display: inline-block;'>
-            $${(subtotal / 100).toLocaleString('en')}
+            $${(subtotal / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
           </span>
           <br />
           <span style='padding-bottom:8px; display: inline-block;'>
@@ -28,7 +28,7 @@ const total = (subtotal, shipping) =>{
           </span>
           <br />
           <span style='display: inline-block;font-weight: bold; color: #4d4d4d'>
-           $${((subtotal + shipping)/100).toLocaleString('en')}
+           $${((subtotal + shipping)/100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
           </span>
         </td>
       </tr>
