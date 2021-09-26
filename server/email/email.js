@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
-var path = require('path')
-var fs = require('fs')
+var body = require('./emailBody')
 
 function emailBody(order) {
   // let products = []
@@ -9,15 +8,6 @@ function emailBody(order) {
   // }
   // const header = "<h1>Thank you for your order from the Character Shop! </h1> <br>"
 
-  const file = fs.readFileSync('server/email/emailBody.html', function read(err, data) {
-    if (err) {
-        throw err;
-    }
-    const content = data;
-    return content
-  });
-  console.log('file, ', file)
-  return file
   // return products.map( (product) => `
   // <h3>${product[0]}</h3>
   // <p>$${product[2]/100}</p>

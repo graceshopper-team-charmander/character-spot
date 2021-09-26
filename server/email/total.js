@@ -1,4 +1,4 @@
-<tr>
+const total = `<tr>
   <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
     <table border='0' cellpadding='0' cellspacing='0' style='cellpadding:0;cellspacing:0;color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;' width='100%'>
       <tr style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif; color:#777777">
@@ -41,4 +41,4 @@
       </tr>
     </table>
   </td>
-</tr>
+</tr>`
