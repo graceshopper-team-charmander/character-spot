@@ -8,6 +8,7 @@ import CategoryFilter from "./CategoryFilter";
 import LoadingBar from "./LoadingBar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
+import Sort from "./Sort";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -47,6 +48,7 @@ const AllProducts = (props) => {
         <Grid item xs={12}>
           {/* <Paper elevation={1} className={styles.paperRoot}> */}
           <div className="all-products-header">
+            <Sort />
             <h4 className="all-products-title">Characters</h4>
             <CategoryFilter location={location} history={history} />
           </div>
