@@ -14,6 +14,7 @@ import Orders from "./components/Orders";
 import { clearLocalCart, saveLocalCartOnUnload, setLocalCart } from "./store/localCart";
 import { fetchCart, setCartThunk } from "./store/cart";
 import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
 
 /**
  * COMPONENT
@@ -23,7 +24,7 @@ class Routes extends Component {
     this.props.loadInitialData();
     addEventListener("beforeunload", () => {
       if (!this.props.isLoggedIn) {
-        console.log('*********SAVE**********');
+        console.log("*********SAVE**********");
         saveLocalCartOnUnload(this.props.cart);
       }
     });
@@ -71,13 +72,19 @@ class Routes extends Component {
           <Route path="/profile">
             <Profile />
           </Route>
+
           {isLoggedIn ? (
-            <Redirect to="/" />
-          ) : (
             <>
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
+              <Redirect to="/" component={Home} />
+              {/* Figure out how to get to not found with a redirect?? */}
+              <Route component={NotFound} />
             </>
+          ) : (
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route component={NotFound} />
+            </Switch>
           )}
         </Switch>
       </div>
@@ -85,6 +92,9 @@ class Routes extends Component {
   }
 }
 
+{
+  /* <Redirect to="/" /> */
+}
 /**
  * CONTAINER
  */
