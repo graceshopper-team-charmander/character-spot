@@ -14,6 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ export function NavbarMenu() {
   console.log(name);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const isLoggedIn = useSelector(state => state.auth.loggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -82,8 +83,8 @@ export function NavbarMenu() {
     }
     prevOpen.current = open;
   }, [open]);
-
-  return !isLoggedIn ? null : (
+  // !isLoggedIn ? null :
+  return (
     <div className={classes.root}>
       {/* <div> */}
       <Link
@@ -93,7 +94,8 @@ export function NavbarMenu() {
         onClick={handleToggle}
         className={classes.link}>
         <i className="fas fa-user-circle"></i>
-        <div className="nav-link-text">{name}</div>
+        <div className="nav-link-title">{name}</div>
+        <ExpandMoreRoundedIcon />
       </Link>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
@@ -102,31 +104,56 @@ export function NavbarMenu() {
             style={{ transformOrigin: placement === "bottom" ? "center top" : "center bottom" }}>
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-
-                  <MenuItem onClick={handleClose} className={classes.link}
-                  component = {RouterLink}
-                  to="/profile">
-                    <i className="fas fa-user"></i>
-                    <div className="nav-link-text">Profile</div>
-                  </MenuItem>
-                  <MenuItem
-                    component={RouterLink}
-                    to="/orders"
-                    onClick={handleClose}
-                    className={classes.link}>
-                    <i className="fas fa-history"></i>
-                    <div className="nav-link-text">Order History</div>
-                  </MenuItem>
-                  <MenuItem
-                    component={RouterLink}
-                    to="/"
-                    onClick={() => dispatch(logout())}
-                    className={classes.link}>
-                    <i className="fas fa-sign-out-alt"></i>
-                    <div className="nav-link-text">Logout</div>
-                  </MenuItem>
-                </MenuList>
+                {isLoggedIn ? (
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem
+                      onClick={handleClose}
+                      className={classes.link}
+                      component={RouterLink}
+                      to="/profile">
+                      <i className="fas fa-user"></i>
+                      <div className="nav-link-text">Profile</div>
+                    </MenuItem>
+                    <MenuItem
+                      component={RouterLink}
+                      to="/orders"
+                      onClick={handleClose}
+                      className={classes.link}>
+                      <i className="fas fa-history"></i>
+                      <div className="nav-link-text">Order History</div>
+                    </MenuItem>
+                    <MenuItem
+                      component={RouterLink}
+                      to="/"
+                      onClick={() => {
+                        dispatch(handleClose);
+                        dispatch(logout());
+                      }}
+                      className={classes.link}>
+                      <i className="fas fa-sign-out-alt"></i>
+                      <div className="nav-link-text">Logout</div>
+                    </MenuItem>
+                  </MenuList>
+                ) : (
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem
+                      onClick={handleClose}
+                      component={RouterLink}
+                      to="/login"
+                      className={classes.link}>
+                      <i className="fas fa-sign-in-alt"></i>
+                      <div className="nav-link-text">Login</div>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleClose}
+                      component={RouterLink}
+                      to="/signup"
+                      className={classes.link}>
+                      <i className="fas fa-user-plus"></i>
+                      <div className="nav-link-text">Sign Up</div>
+                    </MenuItem>
+                  </MenuList>
+                )}
               </ClickAwayListener>
             </Paper>
           </Grow>

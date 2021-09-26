@@ -180,11 +180,9 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                 <i className="fas fa-shopping-cart"></i>
                 <div className="nav-link-text">Cart</div>
               </Link>
-            </div>
-            <div className={styles.linkRight}>
-              {isLoggedIn ? (
-                <NavbarMenu />
-              ) : (
+              {/* {isLoggedIn ? ( */}
+              <NavbarMenu />
+              {/* ) : (
                 <>
                   <Link component={RouterLink} to="/login" className={styles.link}>
                     <i className="fas fa-sign-in-alt"></i>
@@ -196,7 +194,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                     <div className="nav-link-text">Sign Up</div>
                   </Link>
                 </>
-              )}
+              )} */}
             </div>
           </div>
         </ToolBar>
