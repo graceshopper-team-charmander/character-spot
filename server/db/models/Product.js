@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 const { Op } = require("sequelize");
+const { DEFAULT_PAGESIZE } = require("../../../constants");
 
 const Product = db.define("product", {
   name: {
@@ -50,11 +51,13 @@ const Product = db.define("product", {
  * @returns {Promise<void>}
  */
 Product.updateInventory = async (orderedProducts) => {
-  for(let i = 0; i < orderedProducts.length; i++) {
+  for (let i = 0; i < orderedProducts.length; i++) {
     let orderedProduct = orderedProducts[i];
-    await orderedProduct.update({quantity: orderedProduct.quantity - orderedProduct.cart.cartQuantity});
+    await orderedProduct.update({
+      quantity: orderedProduct.quantity - orderedProduct.cart.cartQuantity
+    });
   }
-}
+};
 
 /************************
  Sequelize Helpers      *
@@ -78,4 +81,39 @@ const categoryFilter = ({ categories }) => {
   return {};
 };
 
-module.exports = { Product, categoryFilter };
+/**
+ * returns a sequelize fragment for student sorting operations
+ * @param {string|null} sort
+ * @param {string|null} dir
+ * @returns {{}|{order: (sequelize.literal|*|string)[][]}}
+ */
+const productSort = ({ sort, dir = "asc" }) => {
+  if (sort && sort !== "none") {
+    return {
+      order: [[sort, dir.toUpperCase()]]
+    };
+  }
+  return {};
+};
+
+/**
+ * returns a sequelize fragment for pagination
+ * @param {string} page
+ * @param {number}pageSize
+ * @returns {{offset: number, limit: number}|{}}
+ */
+const paginate = ({ page }, pageSize = DEFAULT_PAGESIZE) => {
+  if (page) {
+    return {
+      limit: pageSize,
+      offset: (page - 1) * pageSize
+    };
+  }
+  return {};
+};
+
+const search = ({ search }) => {
+  return {};
+};
+
+module.exports = { Product, categoryFilter, productSort, paginate };

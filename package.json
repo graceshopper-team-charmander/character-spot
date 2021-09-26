@@ -36,7 +36,8 @@
     "morgan": "^1.9.1",
     "nodemailer": "^6.6.5",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5",
+    "query-string": "^7.0.1",
+    "sequelize": "^6.6.5",
     "yup": "^0.32.9"
   },
   "devDependencies": {

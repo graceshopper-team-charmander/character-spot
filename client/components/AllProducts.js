@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
-import { FETCH_FAILED, FETCH_PENDING } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import ProductRow from "./ProductRow";
 import { useHistory, useLocation } from "react-router-dom";
 import CategoryFilter from "./CategoryFilter";
@@ -9,6 +9,8 @@ import LoadingBar from "./LoadingBar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Sort from "./Sort";
+import Pagination from "./Pagination";
+import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -29,9 +31,17 @@ const AllProducts = (props) => {
   const fetchStatus = useSelector((state) => state.products.fetchStatus);
   const location = useLocation();
   const history = useHistory();
+  const totalItems = useSelector(state => state.products.totalItems);
   //on mount
   useEffect(() => {
-    dispatch(fetchProducts(location));
+    const page = getQueryParam(location, 'page');
+    if (!page) {
+      const query = setQueryParam(location, 'page', 1);
+      history.replace(`${location.pathname}?${query}`);
+    }
+    else {
+      dispatch(fetchProducts(location));
+    }
   }, []);
 
   if (fetchStatus === FETCH_PENDING)
@@ -49,6 +59,7 @@ const AllProducts = (props) => {
           {/* <Paper elevation={1} className={styles.paperRoot}> */}
           <div className="all-products-header">
             <Sort />
+            <Pagination totalItems={totalItems}/>
             <h4 className="all-products-title">Characters</h4>
             <CategoryFilter location={location} history={history} />
           </div>

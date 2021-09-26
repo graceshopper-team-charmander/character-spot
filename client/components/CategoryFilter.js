@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { getQueryParam, setQueryParam } from "../utility-funcs/query";
+import {
+  deleteFromQueryParam,
+  deleteFromQueryParamArr,
+  getQueryParam,
+  setQueryParam
+} from "../utility-funcs/query";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -11,14 +16,13 @@ import { snakeCase } from "../../utility-funcs/string-manip";
 import { fetchProducts } from "../store/products";
 import { connect } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
-import FilterListIcon from "@material-ui/icons/FilterList";
 
 const styles = (theme) => ({
   chipRoot: {
     backgroundColor: "#fcd000",
     color: "#e71e07",
     fontWeight: "bold",
-    fontSize:"1.25rem",
+    fontSize: "1.25rem",
     borderRadius: "5px"
   },
   selectRoot: {
@@ -38,8 +42,6 @@ class CategoryFilter extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -52,8 +54,24 @@ class CategoryFilter extends React.Component {
 
   handleChange(evt) {
     const { location, history } = this.props;
-    const query = setQueryParam(location, evt.target.name, evt.target.value.join(","));
+    const query = setQueryParam(location, evt.target.name, evt.target.value.join("|"));
     history.push(location.pathname + "?" + query.toString());
+  }
+
+  onDelete(evt) {
+    const catName = evt.currentTarget.parentNode.innerText;
+    const { location, history } = this.props;
+    const newSearch = deleteFromQueryParamArr(location, "categories", catName);
+    history.push(location.pathname + "?" + newSearch);
+  }
+
+  chipMouseDown(evt) {
+    if (
+      ["path", "svg"].includes(evt.target.tagName) ||
+      Array.from(evt.target.parentNode.classList).includes("MuiChip-deleteIcon")
+    ) {
+      evt.stopPropagation();
+    }
   }
 
   render() {
@@ -66,7 +84,7 @@ class CategoryFilter extends React.Component {
     ));
 
     const urlCategories = getQueryParam(location, "categories");
-    const selectedCategories = urlCategories ? urlCategories.split(",") : [];
+    const selectedCategories = urlCategories ? urlCategories.split("|") : [];
     return (
       <div className="multi-select-container">
         <Select
@@ -79,21 +97,22 @@ class CategoryFilter extends React.Component {
           onChange={this.handleChange}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => {
-            return (
-              selected.length ?
-              (<div className="multi-select-chip-container">
+            return selected.length ? (
+              <div className="multi-select-chip-container">
                 {selected.map((category) => (
                   <Chip
-                    key={category.id}
+                    onMouseDown={this.chipMouseDown}
                     classes={{ root: muiClasses.chipRoot }}
+                    deletable="true"
                     label={category}
                     key={category}
+                    onDelete={(data) => this.onDelete(data)}
                   />
                 ))}
-              </div>)
-                : <div className="multi-select-placeholder-text">Categories</div>
-            )
-
+              </div>
+            ) : (
+              <div className="multi-select-placeholder-text">Categories</div>
+            );
           }}>
           {menuItems}
         </Select>

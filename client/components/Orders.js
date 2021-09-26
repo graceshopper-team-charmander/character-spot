@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../store/orders";
-import { FETCH_FAILED, FETCH_PENDING } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import OrderTable from "./OrderTable";
 import LoadingBar from "./LoadingBar";
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../constants";
 import { setFetchProductsStatus } from "./products";
 
 export const SET_ORDERS_FETCH_STATUS = "SET_ORDERS_FETCH_STATUS";
