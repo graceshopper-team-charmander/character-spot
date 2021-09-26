@@ -10,8 +10,8 @@ const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
 
 export const setLocalCart = () => {
-  const cart = localStorage.getItem("characterStopCart")
-    ? JSON.parse(localStorage.getItem("characterStopCart"))
+  const cart = localStorage.getItem("characterSpotCart")
+    ? JSON.parse(localStorage.getItem("characterSpotCart"))
     : [];
   return {
     type: SET_CART,
@@ -20,14 +20,14 @@ export const setLocalCart = () => {
 };
 
 export const clearLocalCart = () => {
-  localStorage.setItem("characterStopCart", JSON.stringify([]));
+  localStorage.setItem("characterSpotCart", JSON.stringify([]));
 };
 
 export const saveLocalCartOnUnload = (cart) => {
-  localStorage.setItem("characterStopCart", JSON.stringify(cart));
+  localStorage.setItem("characterSpotCart", JSON.stringify(cart));
 };
 
-export const addToLocalCartThunk = (product) => {
+export const addToLocalCart = (product) => {
   product.cartQuantity = 1;
   return {
     type: ADD_TO_CART,
