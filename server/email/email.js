@@ -1,14 +1,30 @@
 const nodemailer = require('nodemailer');
 var body = require('./emailBody')
 var item = require('./item')
+var total = require('./total')
+var shippingInfo = require('./shipping')
+var orderInfo = require('./orderInfo')
 
-function emailBody(name, order) {
+function emailBody(name, order, orderNumber, date) {
+  //html for each item
   const items = order.reduce( (acc, product) => acc + item(product), "")
-  const email = body(name, items)
+
+  //subtotal for items and shipping in pennis
+  const subtotal = order.reduce( (acc, product) => acc + (product.cart.cartQuantity * product.price), 0)
+  const shipping = 500
+
+  //cost and order summary
+  const costSummary = total(subtotal, shipping)
+  const orderSummary = orderInfo(date, orderNumber)
+
+  //final email
+  const email = body(name, items, costSummary, shippingInfo, orderSummary)
+
   return email
 
 }
 
+//need to look into Oauth tomorrow
 async function sendEmail({to, html}) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',

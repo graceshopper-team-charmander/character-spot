@@ -1,4 +1,4 @@
-const body = (name, items) => {
+const body = (name, items, costSummary, shipping, orderInfo) => {
   return (`<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title>
@@ -210,6 +210,7 @@ const body = (name, items) => {
                 </div>
               </td>
             </tr>
+            ${costSummary}
           </tbody>
         </table>
       </div>
@@ -252,6 +253,20 @@ const body = (name, items) => {
                   <tbody>
                     <tr>
                       <td style='direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;'>
+                      ${shipping}
+                      <div class='dys-column-per-5 outlook-group-fix' style='direction:ltr;display:inline-block;font-size:13px;text-align:left;vertical-align:top;width:100%;'>
+                          <table border='0' cellpadding='0' cellspacing='0' role='presentation' width='100%'>
+                            <tbody>
+                              <tr>
+                                <td style='background-color:#FFFFFF;padding:0;vertical-align:top;'>
+                                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='' width='100%'>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      ${orderInfo}
                       </td>
                     </tr>
                   </tbody>

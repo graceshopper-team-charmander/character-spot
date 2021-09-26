@@ -46,12 +46,16 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     await order[0].update({ status: "FULFILLED" });
     await req.user.createOrder();
 
+    //create email to send
     const name = req.user.firstName
     const products = await order[0].getProducts()
-    console.log('name, prod', name, products)
-    const emailBodyHTML = await emailBody(name, products)
+    const orderNumber = order[0].id
+    const date = order[0].createdAt
+    const emailBodyHTML = await emailBody(name, products, orderNumber, date)
+
+    //send email
     sendEmail({to: test, html: emailBodyHTML })
-    // res.send(order);
+    res.send(order);
   } catch (err) {
     next(err);
   }
