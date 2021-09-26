@@ -39,13 +39,17 @@ async function seed() {
   }
 
   //Create Fake Products
-  const fakeProducts = await Promise.all(Array(amtOfFakeData).fill('').map(product => Product.create({
-    name: faker.random.word(),
-    imageUrl: faker.image.food(),
-    description: faker.lorem.sentence(),
-    price: faker.datatype.number(),
-    quantity: 5
-  })));
+  const fakeProducts = await Promise.all(Array(amtOfFakeData).fill('').map(product => {
+    const name = faker.random.word();
+    return Product.create({
+      name,
+      imageUrl: faker.image.food(),
+      description: faker.lorem.sentence(),
+      price: faker.datatype.number(),
+      quantity: 5,
+      fullTextSearch: name
+    })
+  }));
 
   //Add Categories to products
   for (let i = 0; i < amtOfFakeData; i++) {

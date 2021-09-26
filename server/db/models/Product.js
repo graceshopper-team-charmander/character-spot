@@ -39,6 +39,9 @@ const Product = db.define("product", {
       notEmpty: true,
       min: 0
     }
+  },
+  fullTextSearch: {
+    type: Sequelize.TSVECTOR
   }
 });
 
@@ -68,7 +71,6 @@ Product.updateInventory = async (orderedProducts) => {
  * @returns {{where: sequelize.where}|{}}
  */
 const categoryFilter = ({ categories }) => {
-  console.log("categories", categories);
   if (categories) {
     return {
       where: {
@@ -112,8 +114,18 @@ const paginate = ({ page }, pageSize = DEFAULT_PAGESIZE) => {
   return {};
 };
 
-const search = ({ search }) => {
+const productSearch = (table, field, { search }) => {
+  if (search) {
+    return {
+      where: Sequelize.literal(`similarity(${table}.${field}, '${search}') > 0.3`)
+      // where: {
+      //   // name: {
+      //   //   [Op.match]: Sequelize.fn("to_tsquery", search)
+      //   // }
+      // }
+    };
+  }
   return {};
 };
 
-module.exports = { Product, categoryFilter, productSort, paginate };
+module.exports = { Product, categoryFilter, productSort, paginate, productSearch };
