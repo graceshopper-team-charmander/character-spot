@@ -18,58 +18,47 @@ async function seed() {
 
   let amtOfFakeData = 22;
   //Create Fake Users
-  const fakeUsers = [];
-  for (let i = 0; i < amtOfFakeData; i++) {
-    fakeUsers.push({
-      email: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      password: faker.internet.password()
-    });
-  }
-
-  const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
+  const fakeUsers = await Promise.all(Array(amtOfFakeData).fill('').map(product => User.create({
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: faker.internet.password()
+  })));
 
   //Create Fake Categories
-  const categories = Array(10).fill('').map(item => ProductCategory.create({
+  const categories = await Promise.all(Array(10).fill('').map(item => ProductCategory.create({
     name: faker.random.word()
-  }));
+  })));
 
-  await Promise.all(categories);
-
+  //Give the users 'pending' orders
   const createdFakeOrders = [];
-
-  for (let i = 0; i < createdFakeUsers.length; i++) {
+  for (let i = 0; i < fakeUsers.length; i++) {
     const order = await Order.create({ status: "PENDING" });
     createdFakeOrders.push(order);
-    await order.setUser(createdFakeUsers[i]);
+    await order.setUser(fakeUsers[i]);
   }
 
   //Create Fake Products
-  const fakeProducts = [];
-  for (let i = 0; i < amtOfFakeData; i++) {
-    fakeProducts.push({
-      name: faker.random.word(),
-      imageUrl: faker.image.food(),
-      description: faker.lorem.sentence(),
-      price: faker.datatype.number(),
-      quantity: faker.datatype.number()
-    });
-  }
-  const createdFakeProducts = await Promise.all(
-    fakeProducts.map((product) => Product.create(product))
-  );
+  const fakeProducts = await Promise.all(Array(amtOfFakeData).fill('').map(product => Product.create({
+    name: faker.random.word(),
+    imageUrl: faker.image.food(),
+    description: faker.lorem.sentence(),
+    price: faker.datatype.number(),
+    quantity: 5
+  })));
 
-  createdFakeProducts.forEach(product => {
-    product.addCategory(Math.floor(Math.random() * 10) + 1);
-  });
+  //Add Categories to products
+  for (let i = 0; i < amtOfFakeData; i++) {
+    const product = fakeProducts[i];
+    await product.addCategory(categories[Math.floor(Math.random() * 10) + 1]);
+  }
 
   //Map Products to Users
-  createdFakeOrders[0].addProduct(createdFakeProducts[0]);
-  createdFakeOrders[0].addProduct(createdFakeProducts[1]);
-  createdFakeOrders[0].addProduct(createdFakeProducts[2]);
-  createdFakeOrders[0].addProduct(createdFakeProducts[3]);
-  createdFakeOrders[21].addProduct(createdFakeProducts[0]);
+  createdFakeOrders[0].addProduct(fakeProducts[0]);
+  createdFakeOrders[0].addProduct(fakeProducts[1]);
+  createdFakeOrders[0].addProduct(fakeProducts[2]);
+  createdFakeOrders[0].addProduct(fakeProducts[3]);
+  createdFakeOrders[21].addProduct(fakeProducts[0]);
 
   // Original Code: Creating Users
   const users = await Promise.all([
@@ -79,23 +68,12 @@ async function seed() {
       lastName: "Turtle",
       password: "123"
     }),
-    User.create({
-      email: "murphy@charm.com",
-      firstName: "Murphy",
-      lastName: "Law",
-      password: "123"
-    })
   ]);
 
   const cody = users[0];
   const order = await Order.create({ status: "PENDING" });
   await order.setUser(cody);
-  await order.addProduct(createdFakeProducts[0]);
-
-  const murphy = users[1];
-  const murphyOrder = await Order.create({ status: "PENDING" });
-  await murphyOrder.setUser(murphy);
-  await murphyOrder.addProduct(createdFakeProducts[0]);
+  // await order.addProduct(fakeProducts[0]);
 
   await Product.create({
     name: "Luigi",
@@ -110,7 +88,6 @@ async function seed() {
   return {
     users: {
       cody: users[0],
-      murphy: users[1]
     }
   };
 }
