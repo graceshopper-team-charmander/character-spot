@@ -73,7 +73,7 @@ Cart.addProducts = async (user, products) => {
     const dbProduct = await Product.findByPk(id);
     let hasProduct = await order.getProducts({ where: { id } });
     if (hasProduct.length) {
-      hasProduct[0].cart.update({
+      await hasProduct[0].cart.update({
         cartQuantity: hasProduct[0].cart.cartQuantity + cartQuantity
       });
     } else {

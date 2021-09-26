@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import NavigateBeforeRoundedIcon from "@material-ui/icons/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import { addToLocalCart } from "../store/localCart";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -67,6 +68,7 @@ const SingleProducts = (props) => {
   const product = useSelector((state) => state.singleProduct.product);
   const fetchStatus = useSelector((state) => state.singleProduct.fetchStatus);
   const styles = useStyles();
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   //on mount
   useEffect(() => {
@@ -139,7 +141,9 @@ const SingleProducts = (props) => {
             <Grid item>
               <Button
                 variant="contained"
-                onClick={() => dispatch(addToCartThunk(id))}
+                onClick={() => {
+                  isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+                }}
                 className={styles.button}>
                 ADD TO CART
               </Button>
