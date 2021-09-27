@@ -53,7 +53,6 @@ async function seed() {
     finalFantasyCat,
     sailorMoonCat
   ] = await ProductCategory.bulkCreate(categories);
-  console.log("marioCat", marioCat);
 
   //Create Orders
   const createdFakeOrders = [];
@@ -65,7 +64,6 @@ async function seed() {
 
   //Create Products
   const mario = await Product.bulkCreate(marioProducts);
-  // console.log("mario", mario);
   const dbz = await Product.bulkCreate(dbzProducts);
   const pokemon = await Product.bulkCreate(pokemonProducts);
   const kirby = await Product.bulkCreate(kirbyProducts);
@@ -74,50 +72,58 @@ async function seed() {
   const sailor = await Product.bulkCreate(sailorMoonProducts);
 
   //Product Category Associations
-  for(let i = 0; i < mario.length; i++) {
+  for (let i = 0; i < mario.length; i++) {
     const marioProduct = mario[i];
     await marioProduct.setCategories([marioCat, nintendoCat]);
   }
 
-  // dbz.forEach((product) => {
-  //   product.setCategories([dragonballZCat, animeCat]);
-  // });
+  for (let i = 0; i < dbz.length; i++) {
+    const dbzProduct = dbz[i];
+    await dbzProduct.setCategories([dragonballZCat, animeCat]);
+  }
 
-  // pokemon.forEach((product) => {
-  //   product.setCategories([pokemonCat, nintendoCat]);
-  // });
+  for (let i = 0; i < pokemon.length; i++) {
+    const pokemonProduct = pokemon[i];
+    await pokemonProduct.setCategories([pokemonCat, nintendoCat]);
+  }
 
-  // kirby.forEach((product) => {
-  //   product.setCategories([kirbyCat, nintendoCat]);
-  // });
+  for (let i = 0; i < kirby.length; i++) {
+    const kirbyProduct = kirby[i];
+    await kirbyProduct.setCategories([kirbyCat, nintendoCat]);
+  }
 
-  // hunter.forEach((product) => {
-  //   product.setCategories([hunterXHunterCat, animeCat]);
-  // });
+  for (let i = 0; i < hunter.length; i++) {
+    const hunterProduct = hunter[i];
+    await hunterProduct.setCategories([hunterXHunterCat, animeCat]);
+  }
 
-  // final.forEach((product) => {
-  //   product.setCategories([finalFantasyCat]);
-  // });
+  for (let i = 0; i < final.length; i++) {
+    const finalProduct = final[i];
+    await finalProduct.setCategories([finalFantasyCat]);
+  }
 
-  // sailor.forEach((product) => {
-  //   product.setCategories([sailorMoonCat, animeCat]);
-  // });
+  for (let i = 0; i < sailor.length; i++) {
+    const sailorProduct = sailor[i];
+    await sailorProduct.setCategories([sailorMoonCat, animeCat]);
+  }
 
-  //Set Products on Users
-  // cody.setProducts(mario[0], mario[4]);
-  // murphy.setProducts(dbz[2]);
-  // alexandra.setProducts(sailor[1], kirby[0]);
-  // nicole.setProducts(hunter[0], pokemon[4]);
-  // amaya.setProducts(final[0]);
+  // Set Products on Users
+  const codyOrder = await cody.getOrders();
+  await codyOrder[0].setProducts([mario[0], mario[4]]);
+
+  const murphyOrder = await murphy.getOrders();
+  await murphyOrder[0].setProducts([dbz[2]]);
+
+  const alexandraOrder = await alexandra.getOrders();
+  await alexandraOrder[0].setProducts([sailor[1], kirby[0]]);
+
+  const nicoleOrder = await nicole.getOrders();
+  await nicoleOrder[0].setProducts([hunter[0], pokemon[4]]);
+
+  const amayaOrder = await amaya.getOrders();
+  await amayaOrder[0].setProducts([final[0], pokemon[5]]);
 
   console.log(`seeded successfully`);
-
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  };
 }
 
 /*
