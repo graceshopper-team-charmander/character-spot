@@ -69,11 +69,6 @@ const Cart = () => {
   const subTotal =
     cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cartQuantity, 0) : 0.0;
 
-  // useEffect(() => {
-  //   console.log("IN CART");
-  //   // dispatch(fetchProducts());
-  // });
-
   const products = useSelector((state) => state.products.products);
 
   const history = useHistory();
@@ -138,9 +133,9 @@ const Cart = () => {
               color="secondary"
               className={muiClasses.buttonRoot}
               onClick={() => {
-                if (checkProductQuantities(products, cart)) {
-                  routeChange();
-                }
+                // if (checkProductQuantities(products, cart)) {
+                routeChange();
+                // }
               }}>
               Checkout
             </Button>
