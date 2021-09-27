@@ -13,6 +13,8 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     backgroundColor: "#009edb",
@@ -32,6 +34,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function checkProductQuantities(cart) {
+  for (let i = 0; i < cart.length; i++) {
+    let product = cart[i];
+    if (product.quantity - product.cartQuantity < 0) {
+      alert(`There are only ${product.quantity} ${product.name}(s) left in stock`);
+      return false;
+    }
+  }
+  return true;
+}
+
 const Cart = () => {
   const dispatch = useDispatch();
   const muiClasses = useStyles();
@@ -43,6 +56,13 @@ const Cart = () => {
 
   const subTotal =
     cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cartQuantity, 0) : 0.0;
+
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/checkout`;
+    history.push(path);
+  };
 
   if (fetchStatus === FETCH_PENDING)
     return (
@@ -70,27 +90,41 @@ const Cart = () => {
           <Box sx={{ m: 2 }}>
             <Typography className={muiClasses.smallText}>
               Subtotal ({numItems} {numItems === 1 ? "item" : "items"}): $
-              {(subTotal / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
+              {(subTotal / 100).toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
             </Typography>
             <Typography className={muiClasses.smallText}>
-              Shipping: ${(shipping / 100.0).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
+              Shipping: $
+              {(shipping / 100.0).toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
             </Typography>
             <Typography className={muiClasses.total}>
-              Total: ${((subTotal + shipping) / 100).toLocaleString('en', {'minimumFractionDigits':2,'maximumFractionDigits':2})}
+              Total: $
+              {((subTotal + shipping) / 100).toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
             </Typography>
           </Box>
         </Card>
         <Box style={{ margin: "10px", textAlign: "right" }}>
           <div>
-            <Link to={`/checkout`}>
-              <Button
-                size="large"
-                variant="contained"
-                color="secondary"
-                className={muiClasses.buttonRoot}>
-                Checkout
-              </Button>
-            </Link>
+            <Button
+              size="large"
+              variant="contained"
+              color="secondary"
+              className={muiClasses.buttonRoot}
+              onClick={() => {
+                if (checkProductQuantities(cart)) {
+                  routeChange();
+                }
+              }}>
+              Checkout
+            </Button>
           </div>
         </Box>
       </div>

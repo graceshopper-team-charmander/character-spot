@@ -76,7 +76,7 @@ const AllProducts = (props) => {
             direction="column"
             justifyContent="space-around"
             alignItems="center"
-            classname={styles.allProducts}>
+            className={styles.allProducts}>
             <div className="all-products-cat">
               <CategoryFilter location={location} history={history} />
             </div>
