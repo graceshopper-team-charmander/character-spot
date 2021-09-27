@@ -43,6 +43,14 @@ const SingleCartProduct = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const updateQuantity = isLoggedIn ? updateQuantityThunk : updateLocalCartQuantity;
   const deleteProduct = isLoggedIn ? deleteProductThunk : deleteLocalCartProduct;
+
+  useEffect(() => {
+    if (product.id) {
+      dispatch(fetchSingleProduct(product.id));
+    }
+  });
+  const queriedProduct = useSelector((state) => state.singleProduct.product);
+
   return (
     <Card className={muiClasses.cardRoot}>
       <Box sx={{ display: "flex" }}>
@@ -61,7 +69,7 @@ const SingleCartProduct = (props) => {
             {product.cartQuantity}
             <div
               onClick={() => {
-                if (checkQuantity(props.product)) {
+                if (checkQuantity(queriedProduct)) {
                   dispatch(updateQuantity(product, product.cartQuantity + 1));
                 }
               }}>

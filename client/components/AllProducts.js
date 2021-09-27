@@ -21,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   formControlRoot: {
     width: "100%"
-  },
-  allProducts: {
-    // @todo - WIP...it doesn't want to show up -.-
-    backgroundImage: "url(/images/paper.jpeg)",
-    objectFit: "cover"
   }
+  // allProducts: {
+  //   // @todo - I don't like this specific image, will keep looking
+  //   backgroundImage: "url(/images/paper.jpeg)",
+  //   objectFit: "fill",
+  //   backgroundRepeat: "round"
+  // }
 }));
 
 const AllProducts = (props) => {

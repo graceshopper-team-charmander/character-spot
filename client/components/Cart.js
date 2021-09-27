@@ -58,6 +58,10 @@ const Cart = () => {
   const subTotal =
     cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cartQuantity, 0) : 0.0;
 
+  // useEffect(() => {
+
+  // })
+
   const history = useHistory();
 
   const routeChange = () => {
