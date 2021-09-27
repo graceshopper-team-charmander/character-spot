@@ -77,6 +77,7 @@ const SingleProducts = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const productsInCart = useSelector((state) => state.cart.cart);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
 
   //on mount
@@ -85,6 +86,20 @@ const SingleProducts = (props) => {
       dispatch(fetchSingleProduct(id));
     }
   }, [id]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
+  const handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarWarningOpen(false);
+  };
 
   if (fetchStatus === FETCH_PENDING)
     return (
@@ -155,7 +170,8 @@ const SingleProducts = (props) => {
                     setSnackBarOpen(true);
                     isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
                   } else {
-                    alert(`There are no ${product.name}'s left to add to your cart!`);
+                    setSnackBarWarningOpen(true);
+                    // alert(`There are no ${product.name}'s left to add to your cart!`);
                   }
                 }}
                 className={styles.button}>
@@ -181,9 +197,22 @@ const SingleProducts = (props) => {
       <div className="all-products-header" id="single-product-header">
         <div className="all-products-title"></div>
       </div>
-      <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>
-        <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Added to Cart!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackBarWarningOpen}
+        autoHideDuration={3000}
+        onClose={handleWarningClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleWarningClose} severity="warning" sx={{ width: "100%" }}>
+          There are no {product.name}s left to add to your cart!
         </Alert>
       </Snackbar>
       {/* bottom row  */}
