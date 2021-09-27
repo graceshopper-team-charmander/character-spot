@@ -127,7 +127,6 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
     if (evt.key === "Enter") {
       let query = setQueryParam(location, evt.target.name, evt.target.value);
       query = setQueryParam(query.toString(), "page", 1);
-      console.log('query***************', query);
       history.push("/products" + "?" + query.toString());
     }
   };

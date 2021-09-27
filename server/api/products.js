@@ -30,8 +30,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
-
 //GET /products/categories - returns all categories
 router.get("/categories", async (req, res, next) => {
   try {

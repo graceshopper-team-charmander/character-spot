@@ -41,7 +41,9 @@ const AllProducts = (props) => {
   useEffect(() => {
     const page = getQueryParam(location, "page");
     if (!page) {
-      const query = setQueryParam(location, "page", 1);
+      let query = setQueryParam(location, "page", 1);
+      query = setQueryParam(query, 'sort', 'name');
+      query = setQueryParam(query, 'dir', 'asc');
       history.replace(`${location.pathname}?${query}`);
     } else {
       dispatch(fetchProducts(location));
@@ -76,7 +78,7 @@ const AllProducts = (props) => {
             direction="column"
             justifyContent="space-around"
             alignItems="center"
-            classname={styles.allProducts}>
+            className={styles.allProducts}>
             <div className="all-products-cat">
               <CategoryFilter location={location} history={history} />
             </div>

@@ -27,7 +27,6 @@ export const saveLocalCartOnUnload = (cart) => {
 };
 
 export const addToLocalCart = (product) => {
-  product.cartQuantity = 1;
   return {
     type: ADD_TO_LOCAL_CART,
     product

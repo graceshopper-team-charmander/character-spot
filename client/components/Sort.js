@@ -40,7 +40,7 @@ const Sort = (props) => {
         <Select
           labelId="sort-select"
           id="sort-select"
-          value={getQueryParam(location, "sort") || "none"}
+          value={getQueryParam(location, "sort") || "name"}
           name="sort"
           onChange={(evt) => handleChange(location, history, evt)}>
           {Object.entries(sortOptions).map(([key, val]) => (

@@ -167,16 +167,17 @@ export default (state = initialState, action) => {
         cart: [...state.cart.filter((product) => product.id !== action.product.id), action.product]
       };
     case ADD_TO_LOCAL_CART: {
-      let newProduct = [];
-      const productExists = state.cart.find((item) => item.id === action.product.id);
+      const cart = [...state.cart];
+      const productExists = state.cart.find((item) => item.id === action.product.id); //check if it exists in cart
       if (productExists) {
         productExists.cartQuantity += 1;
       } else {
-        newProduct = [action.product];
+        action.product.cartQuantity = 1;
+        cart.push(action.product);
       }
       return {
         ...state,
-        cart: [...state.cart, ...newProduct]
+        cart
       };
     }
     case UPDATE_QUANTITY:
