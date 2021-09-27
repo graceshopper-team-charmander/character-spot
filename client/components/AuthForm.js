@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { authenticate } from "../store";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
@@ -25,16 +26,22 @@ const AuthForm = (props) => {
   };
 
   return (
-    <Box>
+    <Grid item xs={12} style ={{paddingTop: "1rem",
+      /* width: 80%; */
+      margin: "0 auto"}}>
+    <div className="cart-header">
+      <h4 className="cart-title">{(name === "signup") ? "Sign Up" : "Login"}</h4>
+    </div>
+    <Box style = {{margin: 25}}>
       <form onSubmit={handleSubmit} name={name}>
         <Card style = {{
           display: "flex",
           border: "8px solid #fcd000",
           margin: "10px",
           padding: "5px",
-          borderRadius: "10px"
+          borderRadius: "10px",
         }}>
-          <Box style = {{flexGrow: 1, margin:0}} htmlFor="Email">
+          <Box style = {{margin:0, minWidth: "13rem"}} htmlFor="Email">
             <h1 style = {{fontFamily: "mario"}}>Email</h1>
           </Box>
           <TextField
@@ -45,6 +52,7 @@ const AuthForm = (props) => {
             name="email"
             type="text"
             inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+            style = {{flexGrow: 1}}
             InputProps={{ disableUnderline: true }}
           />
         </Card>
@@ -55,7 +63,7 @@ const AuthForm = (props) => {
           padding: "5px",
           borderRadius: "10px"
         }}>
-          <Box htmlFor="password">
+          <Box style = {{margin:0, minWidth: "13rem"}} htmlFor="password">
           <h1 style = {{fontFamily: "mario"}}>Password</h1>
           </Box>
           <TextField
@@ -65,6 +73,7 @@ const AuthForm = (props) => {
             }}
             inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
             InputProps={{ disableUnderline: true }}
+            style = {{flexGrow: 1}}
             name="password"
             type="password"
           />
@@ -92,7 +101,8 @@ const AuthForm = (props) => {
             />
           </Card>
         )}
-        <Box>
+        <Box style = {{display: "flex",
+          justifyContent: "right"}}>
           <Button style = {{
             margin: "10px",
             border: "3px solid #44af35"
@@ -102,6 +112,7 @@ const AuthForm = (props) => {
         {error && error.response && <Box> {error.response.data} </Box>}
       </form>
     </Box>
+    </Grid>
   );
 };
 

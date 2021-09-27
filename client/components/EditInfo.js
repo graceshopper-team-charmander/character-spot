@@ -73,7 +73,7 @@ class EditInfo extends React.Component {
     const muiClasses = this.props.classes;
     let user = this.props.user.user;
     return (
-      <Box>
+      <Box style = {{margin: 25}}>
         <form onSubmit={this.handleSubmit} name="info">
           <Card classes={{ root: muiClasses.cardRoot }}>
             <Box style={{ flexGrow: 1, margin: 0 }}>
@@ -124,7 +124,7 @@ class EditInfo extends React.Component {
               </Box>
             </Box>
           </Card>
-          <Box style={{ display: "flex", justifyContent: "right" }}>
+          <Box style={{ display: "flex", justifyContent: "right"}}>
             <Button  classes={{ root: muiClasses.submitButton }} onSubmit={this.handleSubmit} type="submit">
             <h3 style = {{fontFamily: "mario"}}>Submit</h3>
             </Button>

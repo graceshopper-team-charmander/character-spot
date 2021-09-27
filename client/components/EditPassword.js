@@ -90,7 +90,7 @@ class EditPassword extends React.Component {
   render() {
     const muiClasses = this.props.classes;
     return (
-      <Box>
+      <Box style = {{margin: 25}}>
         <form onSubmit={this.handleSubmit} name="pw">
           <Card classes={{ root: muiClasses.cardRoot }}>
             <Box style={{ flexGrow: 1, margin: 0 }}>
@@ -141,7 +141,7 @@ class EditPassword extends React.Component {
               </Box>
             </Box>
           </Card>
-          <Box style={{ display: "flex", justifyContent: "right" }}>
+          <Box style={{ display: "flex", justifyContent: "right"}}>
             <Button type="submit"  classes={{ root: muiClasses.submitButton }}  onClick={this.handleSubmit}>
               <h3 style={{ fontFamily: "mario" }}>Submit</h3>
             </Button>
