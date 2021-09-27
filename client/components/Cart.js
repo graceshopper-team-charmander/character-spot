@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from "../store/cart";
 import SingleCartProduct from "./SingleCartProduct";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
@@ -35,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function checkProductQuantities(cart) {
+  // query for that product, check quantity
+
   for (let i = 0; i < cart.length; i++) {
     let product = cart[i];
     if (product.quantity - product.cartQuantity < 0) {

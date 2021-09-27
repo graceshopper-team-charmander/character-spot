@@ -68,21 +68,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// export function checkQuantity(product, productsInCart) {
-//   const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
-//   if (productToCheck.length) {
-//     const qtyInCart = productToCheck[0].cartQuantity;
-//     if (product.quantity - qtyInCart < 1) {
-//       return false;
-//     }
-//   } else {
-//     if (product.quantity < 1) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-
 const SingleProducts = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();

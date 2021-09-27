@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function checkQuantity(product, productsInCart) {
+  console.log("PRODUCT IN PRODUCT PAGES*******", product);
   const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
   if (productToCheck.length) {
     const qtyInCart = productToCheck[0].cartQuantity;

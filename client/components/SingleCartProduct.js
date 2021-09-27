@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function checkQuantity(product) {
+  // query for that product, check quantity
+  console.log("PRODUCT IN SINGLE CART********", product);
   if (product.quantity - product.cartQuantity <= 0) {
     alert(`There are only ${product.quantity} ${product.name}(s) left in stock`);
     return false;
