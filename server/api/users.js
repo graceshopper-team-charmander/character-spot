@@ -11,9 +11,9 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
-const { sendEmail, emailBody } = require("../email/email");
+const { sendConfirmEmail, emailBody} = require("../email/email")
+const test = "freda.hamill81@ethereal.email"
 
-const test = "freda.hamill81@ethereal.email";
 
 //Get the cart of a user
 //GET /api/users/cart - returns the users cart
@@ -38,15 +38,26 @@ router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/cart - checks the users cart out
 router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   try {
-    //@todo: quantity checking needs to occur before anything else
+    const order = await req.user.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
+    //create email to send
+    const name = req.user.firstName
+    const products = await order[0].getProducts()
+    const orderNumber = order[0].id
+    const date = order[0].createdAt
+    const emailBodyHTML = await emailBody(name, products, orderNumber, date)
+
     const orderedProducts = await Order.checkout(req.user);
     await Product.updateInventory(orderedProducts);
-    // console.log("order", await order[0].getProducts());
-    // const emailBodyHTML = await emailBody(await order[0].getProducts());
-    // console.log("email body html", emailBodyHTML);
-    // // sendEmail({to: test, html: emailBodyHTML })
-    // res.send(order);
-    res.sendStatus(500);
+
+    //send email
+    sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
+    //@todo: quantity checking needs to occur before anything else
+
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

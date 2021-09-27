@@ -1,4 +1,5 @@
-const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+const body = (name, items, costSummary, shipping, orderInfo) => {
+  return (`<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title>
     </title>
@@ -14,6 +15,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
       			table, td{border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;}
       			img{border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;}
       			p{display: block; margin: 13px 0;}
+
     </style>
     <!--[if !mso]><!-->
     <style type="text/css">
@@ -21,6 +23,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
       			  		@-ms-viewport {width: 320px;}
       			  		@viewport {	width: 320px; }
       				}
+      @font-face { font-family: mario; src: url("./public/fonts/mario2.ttf") format("woff"); }
     </style>
     <!--<![endif]-->
     <!--[if mso]>
@@ -109,7 +112,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                                             <tr>
                                               <td align='center'>
                                                 <a href='#'>
-                                                  <img align='center' alt='Logo' padding='5px' src='https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png' width='300' />
+                                                  <img align='center' alt='Logo' padding='5px' src='https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png' width='400' />
                                                 </a>
                                               </td>
                                             </tr>
@@ -138,7 +141,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
           </tr>
         </tbody>
       </table>
-      <table align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='background:#f7f7f7;background-color:#f7f7f7;width:100%;'>
+      <table align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='background:#009edb;background-color:#009edb;width:100%;'>
         <tbody>
           <tr>
             <td>
@@ -154,14 +157,14 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                <div style='color:#4d4d4d;font-family:Oxygen, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
-                                  Thank you for your order!
+                                <div style='color:#ffffff;font-family: mario, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
+                                  Thank you for your order, ${name}!
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
+                                <div style='color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed nulla nibh. Ut hendrerit pellentesque justo, semper accumsan nisl venenatis ut.
                                 </div>
                               </td>
@@ -191,24 +194,25 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                       <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                         <table border='0' cellpadding='0' cellspacing='0' style="cellpadding:0;cellspacing:0;color:#777777;font-family:'Oxygen', 'Helvetica Neue', helvetica, sans-serif;font-size:14px;line-height:21px;table-layout:auto;width:100%;" width='100%'>
                           <tr>
-                            <th style='text-align: left; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='50%'>
+                            <th style='text-align: left; border-bottom: 1px solid #FFFFFF; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='50%'>
                               Item
                             </th>
-                            <th style='text-align: right; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='15%'>
+                            <th style='text-align: right; border-bottom: 1px solid #FFFFFF; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='15%'>
                               Qty
                             </th>
-                            <th style='text-align: right; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px; ' width='15%'>
+                            <th style='text-align: right; border-bottom: 1px solid #FFFFFF; color: #4d4d4d; font-weight: 700; padding-bottom: 5px; ' width='15%'>
                               Total
                             </th>
                           </tr>
                         </table>
                       </td>
                     </tr>
-                    /* product here */
+                    ${items}
                   </table>
                 </div>
               </td>
             </tr>
+            ${costSummary}
           </tbody>
         </table>
       </div>
@@ -251,6 +255,20 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                   <tbody>
                     <tr>
                       <td style='direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;'>
+                      ${shipping}
+                      <div class='dys-column-per-5 outlook-group-fix' style='direction:ltr;display:inline-block;font-size:13px;text-align:left;vertical-align:top;width:100%;'>
+                          <table border='0' cellpadding='0' cellspacing='0' role='presentation' width='100%'>
+                            <tbody>
+                              <tr>
+                                <td style='background-color:#FFFFFF;padding:0;vertical-align:top;'>
+                                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='' width='100%'>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      ${orderInfo}
                       </td>
                     </tr>
                   </tbody>
@@ -262,6 +280,7 @@ const body = `<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
       </table>
     </div>
   </body>
-</html>`
+</html>`)
+}
 
 module.exports = body

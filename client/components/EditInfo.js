@@ -31,7 +31,6 @@ const styles = (theme) => ({
     border: "none",
     fontSize: "1rem",
     flexGrow: 1,
-    direction: "rtl",
     padding: "2px",
   },
   boxRoot: {

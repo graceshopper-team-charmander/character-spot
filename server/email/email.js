@@ -1,27 +1,46 @@
 const nodemailer = require('nodemailer');
 var body = require('./emailBody')
+var item = require('./item')
+var total = require('./total')
+var shippingInfo = require('./shipping')
+var orderInfo = require('./orderInfo')
 
-function emailBody(order) {
-  // let products = []
-  // for(let i = 0; i < order.length; i++){
-  //   products.push([order[i].name, order[i].imageUrl, order[i].price])
-  // }
-  // const header = "<h1>Thank you for your order from the Character Shop! </h1> <br>"
+function emailBody(name, order, orderNumber, date) {
+  //html for each item
+  const items = order.map( (product) => item(product))
+  const allItems = items.join(`<tr style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif; color:#777777;background-color: #000000'">
+  <td> &nbsp;  </td>
+  </tr>`)
 
-  // return products.map( (product) => `
-  // <h3>${product[0]}</h3>
-  // <p>$${product[2]/100}</p>
-  // <img src = "${product[1]}"/>`).join('')
-  // return file
+  //subtotal for items and shipping in pennies
+  const subtotal = order.reduce( (acc, product) => acc + (product.cart.cartQuantity * product.price), 0)
+  const shipping = 500
+
+  //cost and order summary
+  const costSummary = total(subtotal, shipping)
+  const orderSummary = orderInfo(date, orderNumber)
+
+  //final email
+  const email = body(name, allItems, costSummary, shippingInfo, orderSummary)
+
+  return email
+
 }
 
-async function sendEmail({to, html}) {
+//need to look into Oauth tomorrow
+async function sendConfirmEmail({to, html}) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'charactershop2108@gmail.com',
-        pass: 'ember!!!'
-    }
+      type: 'OAuth2',
+      user: "charactershop2108",
+      clientId: process.env.clientId,
+      clientSecret: process.env.clientSecret,
+      refreshToken: process.env.refreshToken,
+      accessToken: process.env.accessToken
+  }
   });
   await transporter.sendMail({
     from: 'charactershop2108@gmail.com',
@@ -33,9 +52,8 @@ async function sendEmail({to, html}) {
       console.log('error', err)
     }
     console.log('message sent: %s', info.messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
 }
 
 
-module.exports = { sendEmail, emailBody };
+module.exports = { sendConfirmEmail, emailBody };
