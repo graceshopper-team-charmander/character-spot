@@ -2,9 +2,11 @@ import axios from "axios";
 import { LOGOUT } from "./auth";
 import { clearLocalCart, setLocalCart } from "./localCart";
 import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import products from "./products";
 
 export const SET_CART_FETCH_STATUS = "SET_CART_FETCH_STATUS";
 const ADD_TO_CART = "ADD_TO_CART";
+export const ADD_TO_LOCAL_CART = "ADD_TO_LOCAL_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
@@ -162,8 +164,24 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, action.product]
+        cart: [
+          ...state.cart.filter(product => product.id !== action.product.id)
+          , action.product]
       };
+    case ADD_TO_LOCAL_CART: {
+      let newProduct = [];
+      const productExists = state.cart.find((item) => item.id === action.product.id);
+      if(productExists) {
+        productExists.cartQuantity += 1;
+      }
+      else {
+        newProduct = [action.product]
+      }
+      return {
+        ...state,
+        cart: [...state.cart, ...newProduct]
+      }
+    }
     case UPDATE_QUANTITY:
       const updatedProducts = state.cart.map((product) =>
         product.id === action.product.id ? action.product : product

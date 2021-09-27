@@ -78,6 +78,10 @@ Cart.addProducts = async (user, products) => {
       });
     } else {
       await order.addProduct(dbProduct);
+      const orderedProduct = (await order.getProducts({ where: { id } }))[0];
+      await orderedProduct.cart.update({
+        cartQuantity: cartQuantity
+      });
     }
   }
   return order.getProducts();
@@ -112,16 +116,15 @@ Cart.updateCartQuantity = async (user, productId, newQuantity = 1) => {
       status: "PENDING"
     }
   });
-  const cartProduct = await order[0].getProducts({
+  const cartProduct = (await order[0].getProducts({
     where: {
       id: productId
     }
-  });
-  if (cartProduct[0]) {
-    await cartProduct[0].cart.update({ cartQuantity: newQuantity });
-    return cartProduct[0];
+  }))[0];
+  if (cartProduct) {
+    await cartProduct.cart.update({ cartQuantity: cartProduct.cart.cartQuantity + newQuantity });
+    return cartProduct;
   } else {
-    console.log("else*****************");
     const product = await Product.findByPk(productId);
     await order[0].addProduct(product);
     return Cart.getUserCartItems(user, productId);
