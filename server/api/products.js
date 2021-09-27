@@ -20,7 +20,12 @@ router.get("/", async (req, res, next) => {
       ],
       ...productSort(req.query),
       ...paginate(req.query, DEFAULT_PAGESIZE),
+<<<<<<< HEAD
       ...productSearch("product", "name", req.query)
+=======
+      ...productSearch("product", "name", req.query),
+      distinct: true
+>>>>>>> main
     });
 
     res.json({ products, totalItems });
