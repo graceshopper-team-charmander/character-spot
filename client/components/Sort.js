@@ -25,7 +25,7 @@ const Sort = (props) => {
     price: { asc: "Low to High", desc: "High to Low" }
   };
 
-  const sortKey = getQueryParam(location, "sort")
+  const sortKey = getQueryParam(location, "sort");
   const sortDirections = sortKey ? sortDirectionsKey[sortKey] : {};
 
   const handleChange = (location, history, evt) => {

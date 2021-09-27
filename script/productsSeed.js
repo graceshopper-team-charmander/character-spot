@@ -3,8 +3,7 @@
 const marioProducts = [
   {
     name: "Mario",
-    imageUrl:
-      "https://static.wikia.nocookie.net/mario/images/e/ed/1906px-Mario_Mario_Party_10.png/revision/latest?cb=20210504081623",
+    imageUrl: "https://live.staticflickr.com/65535/51524038320_b2e39536b6_o.png",
     description: "An Italian plumber. Makes great spaghetti.",
     price: 12099,
     quantity: 15
@@ -119,6 +118,13 @@ const pokemonProducts = [
     quantity: 10
   },
   {
+    name: "Chansey",
+    imageUrl: "https://cdn2.bulbagarden.net/upload/c/cd/113Chansey.png",
+    description: "Will bring joy to your life.",
+    price: 12999,
+    quantity: 10
+  },
+  {
     name: "Mac",
     imageUrl: "https://live.staticflickr.com/65535/51521308196_43775bcd7a_o.png",
     description: "Wishes he were Trainer Red",
@@ -140,8 +146,7 @@ const kirbyProducts = [
 const hunterProducts = [
   {
     name: "Gon",
-    imageUrl:
-      "https://static.wikia.nocookie.net/hxh-arena-battle/images/9/9b/0030_%28full%29.png/revision/latest?cb=20200118145754",
+    imageUrl: "https://live.staticflickr.com/65535/51524041000_fc0d70bd1a_o.png",
     description: "Not very good at math.",
     price: 13299,
     quantity: 20
