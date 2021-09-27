@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
@@ -16,7 +16,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import { setQueryParam } from "../utility-funcs/query";
+import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -125,10 +125,24 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
 
   const submitSearch = (evt) => {
     if (evt.key === "Enter") {
-      const query = setQueryParam(location, evt.target.name, evt.target.value);
-      history.push(location.pathname + "?" + query.toString());
+      let query = setQueryParam(location, evt.target.name, evt.target.value);
+      query = setQueryParam(query.toString(), "page", 1);
+      console.log('query***************', query);
+      history.push("/products" + "?" + query.toString());
     }
   };
+
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    if (location.pathname !== "/products") {
+      setSearch("");
+    } else {
+      let searchQuery = getQueryParam(location, "search");
+      if (searchQuery) {
+        setSearch(searchQuery);
+      }
+    }
+  }, [location.search, location.pathname]);
 
   let total = 0;
   if (!cart.length) {
@@ -164,6 +178,8 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
                 root: styles.inputRoot,
                 input: styles.inputInput
               }}
+              value={search}
+              onChange={(evt) => setSearch(evt.target.value)}
               onKeyPress={submitSearch}
               inputProps={{ "aria-label": "search" }}
             />
