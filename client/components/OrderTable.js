@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCartThunk } from "../store/cart";
 
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";

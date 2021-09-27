@@ -12,7 +12,7 @@ import Input from "@material-ui/core/Input";
 import Chip from "@material-ui/core/Chip";
 import Fab from "@material-ui/core/Fab";
 import MenuItem from "@material-ui/core/MenuItem";
-import { snakeCase } from "../../utility-funcs/string-manip";
+import { properCase, snakeCase, unSnakeCase } from "../../utility-funcs/string-manip";
 import { fetchProducts } from "../store/products";
 import { connect } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -59,9 +59,12 @@ class CategoryFilter extends React.Component {
   }
 
   onDelete(evt) {
-    const catName = evt.currentTarget.parentNode.innerText;
+    //get the categories from url
+    //
+    const catName = snakeCase(evt.currentTarget.parentNode.innerText);
     const { location, history } = this.props;
     const newSearch = deleteFromQueryParamArr(location, "categories", catName);
+    console.log(newSearch);
     history.push(location.pathname + "?" + newSearch);
   }
 
@@ -78,7 +81,7 @@ class CategoryFilter extends React.Component {
     const muiClasses = this.props.classes;
     const { productCategories } = this.props;
     const menuItems = productCategories.map((category) => (
-      <MenuItem key={category.id} value={snakeCase(category.name)}>
+      <MenuItem key={category.id} value={category.code}>
         {category.name}
       </MenuItem>
     ));
@@ -97,6 +100,7 @@ class CategoryFilter extends React.Component {
         onChange={this.handleChange}
         input={<Input id="select-multiple-chip" />}
         renderValue={(selected) => {
+          console.log('selected', selected);
           return selected.length ? (
             <div className="multi-select-chip-container">
               {selected.map((category) => (
@@ -104,7 +108,7 @@ class CategoryFilter extends React.Component {
                   onMouseDown={this.chipMouseDown}
                   classes={{ root: muiClasses.chipRoot }}
                   deletable="true"
-                  label={category}
+                  label={properCase(unSnakeCase(category))}
                   key={category}
                   onDelete={(data) => this.onDelete(data)}
                 />
