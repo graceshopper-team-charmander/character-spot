@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function checkQuantity(product, productsInCart) {
+export function checkQuantity(product, productsInCart) {
   console.log(product, productsInCart);
   const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
   console.log("product to check", productToCheck);
@@ -105,6 +105,7 @@ const ProductRow = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   const productsInCart = useSelector((state) => state.cart.cart);
+  console.log(productsInCart);
 
   return (
     <div>

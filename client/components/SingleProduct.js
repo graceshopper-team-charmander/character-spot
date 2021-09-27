@@ -8,6 +8,7 @@ import { updateQuantityThunk, addToCartThunk } from "../store/cart";
 import { Link } from "react-router-dom";
 import LoadingBar from "./LoadingBar";
 import NotFound from "./NotFound";
+import { checkQuantity } from "./ProductRow";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -72,6 +73,7 @@ const SingleProducts = (props) => {
   const fetchStatus = useSelector((state) => state.singleProduct.fetchStatus);
   const styles = useStyles();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  // const productsInCart = useSelector((state) => state.cart.cart);
 
   //on mount
   useEffect(() => {
