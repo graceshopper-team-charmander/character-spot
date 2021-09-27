@@ -141,12 +141,12 @@ const submitOrder = (cart) => {
   };
 };
 
-export const submitOrderThunk = () => {
+export const submitOrderThunk = (history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/users/checkout`);
       dispatch(submitOrder(data));
-      // history.push("/thankyou");
+      history.push("/thankyou");
       return true;
     } catch (err) {
       console.log(err);
