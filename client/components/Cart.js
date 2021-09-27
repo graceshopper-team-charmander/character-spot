@@ -34,23 +34,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function checkProductQuantities(products, cart) {
-  // query for that product, check quantity
-
-  let queriedProductsCart = products.filter((product) => {
-    for (let i = 0; i < cart.length; i++) {
-      if (cart[i].id === product.id) {
-        return product;
-      }
-    }
-  });
-
-  console.log(queriedProductsCart);
-
+function checkProductQuantities(cart) {
   for (let i = 0; i < cart.length; i++) {
     let product = cart[i];
     if (product.quantity - product.cartQuantity < 0) {
-      alert(`There are only ${product.quantity} ${product.name}(s) left in stock`);
+      alert(
+        `Limited stock! Unable to checkout with ${product.cartQuantity} ${product.name}s in your cart!`
+      );
       return false;
     }
   }
@@ -133,9 +123,9 @@ const Cart = () => {
               color="secondary"
               className={muiClasses.buttonRoot}
               onClick={() => {
-                // if (checkProductQuantities(products, cart)) {
-                routeChange();
-                // }
+                if (checkProductQuantities(cart)) {
+                  routeChange();
+                }
               }}>
               Checkout
             </Button>

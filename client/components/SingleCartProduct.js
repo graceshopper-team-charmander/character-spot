@@ -26,15 +26,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// ** MAY COME BACK TO THIS ** ALEX**
-// function checkQuantity(product) {
-//   console.log("PRODUCT IN SINGLE CART********", product);
-//   if (product.quantity - product.cartQuantity <= 0) {
-//     alert(`There are only ${product.quantity} ${product.name}(s) left in stock`);
-//     return false;
-//   }
-//   return true;
-// }
+function checkQuantity(product) {
+  if (product.quantity - product.cartQuantity <= 0) {
+    alert(`Limited stock! Unable to add any more ${product.name}s to your cart!`);
+    return false;
+  }
+  return true;
+}
 
 const SingleCartProduct = (props) => {
   const dispatch = useDispatch();
@@ -60,13 +58,11 @@ const SingleCartProduct = (props) => {
             </div>
             {product.cartQuantity}
             <div
-              onClick={
-                () => dispatch(updateQuantity(product, product.cartQuantity + 1))
-                // ** to be edited ** alex **
-                // if (checkQuantity(props.product)) {
-                //   dispatch(updateQuantity(product, product.cartQuantity + 1));
-                // }
-              }>
+              onClick={() => {
+                if (checkQuantity(props.product)) {
+                  dispatch(updateQuantity(product, product.cartQuantity + 1));
+                }
+              }}>
               <Button className={muiClasses.buttonRoot}>+</Button>
             </div>
             <div onClick={() => dispatch(deleteProduct(product))}>
