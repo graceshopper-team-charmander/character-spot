@@ -141,7 +141,7 @@ const submitOrder = (cart) => {
   };
 };
 
-export const submitOrderThunk = () => {
+export const submitOrderThunk = (history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/users/checkout`);
