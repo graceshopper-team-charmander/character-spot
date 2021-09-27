@@ -110,7 +110,7 @@ Cart.getUserCartItems = async (user, productId) => {
  * @param {undefined|number} newQuantity
  * @returns {Promise<{quantity, price, imageUrl, name, id, cartQuantity}>}
  */
-Cart.updateCartQuantity = async (user, productId, newQuantity = 1) => {
+Cart.updateCartQuantity = async (user, productId, newQuantity) => {
   const order = await user.getOrders({
     where: {
       status: "PENDING"
@@ -122,7 +122,7 @@ Cart.updateCartQuantity = async (user, productId, newQuantity = 1) => {
     }
   }))[0];
   if (cartProduct) {
-    await cartProduct.cart.update({ cartQuantity: cartProduct.cart.cartQuantity + newQuantity });
+    await cartProduct.cart.update({ cartQuantity: newQuantity ? newQuantity : cartProduct.cart.cartQuantity + 1});
     return cartProduct;
   } else {
     const product = await Product.findByPk(productId);

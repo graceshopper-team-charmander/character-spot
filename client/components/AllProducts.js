@@ -43,7 +43,9 @@ const AllProducts = (props) => {
     console.log("IN ALL PRODUCTS");
     const page = getQueryParam(location, "page");
     if (!page) {
-      const query = setQueryParam(location, "page", 1);
+      let query = setQueryParam(location, "page", 1);
+      query = setQueryParam(query, 'sort', 'name');
+      query = setQueryParam(query, 'dir', 'asc');
       history.replace(`${location.pathname}?${query}`);
     } else {
       dispatch(fetchProducts(location));
