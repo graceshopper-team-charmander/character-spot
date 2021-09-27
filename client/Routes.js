@@ -16,6 +16,7 @@ import { fetchCart, setCartThunk } from "./store/cart";
 import Profile from "./components/Profile";
 import Thankyou from "./components/Thankyou";
 import NotFound from "./components/NotFound";
+import StripeTest from "./components/StripeTest";
 
 /**
  * COMPONENT
@@ -63,6 +64,9 @@ class Routes extends Component {
           </Route>
           <Route path="/thankyou">
             <Thankyou/>
+          </Route>
+          <Route path="/stripetest">
+            <StripeTest/>
           </Route>
           {isLoggedIn ? (
             <>

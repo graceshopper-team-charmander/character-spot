@@ -1,3 +1,4 @@
+import { responsiveFontSizes } from "@material-ui/core";
 import axios from "axios";
 import { database } from "faker";
 import history from "../history";
@@ -18,6 +19,7 @@ export const LOGOUT = "LOGOUT";
 const SET_INFO = "GET_INFO";
 const UPDATE_INFO = "UPDATE_INFO";
 const CHANGE_PW = "CHANGE_PW";
+const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
 /***********************
  * ACTION CREATORS     *
@@ -26,7 +28,8 @@ const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
 const updateInfo = (user) => ({ type: UPDATE_INFO, user });
-const changePassword = (user) => ({ type: CHANGE_PW, user });
+const changePassword = () => ({ type: CHANGE_PW });
+export const loginSuccess = (bool) => ({ type: LOGIN_SUCCESS, bool });
 
 /**
  * THUNK CREATORS
@@ -37,11 +40,15 @@ export const authenticate = (method, credentials) => {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
         dispatch(setLoggedIn(response.data.firstName));
+        dispatch(loginSuccess(true))
       } else {
         console.log("Failed to authenticate");
+        dispatch(loginSuccess(false))
         //@todo failed to authenticate
       }
     } catch (err) {
+      // alert("Email/Password Incorrect")
+      dispatch(loginSuccess(false))
       console.log(err);
     } finally {
       initCart(dispatch, getState());
@@ -119,7 +126,7 @@ export const changePasswordThunk = (pw) => {
         alert("Current password is incorrect");
       } else {
         alert("Password changed");
-        dispatch(changePassword(response.data));
+        dispatch(changePassword());
       }
     } catch (err) {
       console.log(err);
@@ -132,6 +139,7 @@ export const changePasswordThunk = (pw) => {
 const initialState = {
   firstName: "Guest",
   loggedIn: NOT_LOGGED_IN,
+  loginSuccess: true,
   user: {},
   error: false
 };
@@ -148,6 +156,8 @@ export default (state = initialState, action) => {
       return { ...state, user: action.user };
     case CHANGE_PW:
       return { ...state };
+    case LOGIN_SUCCESS:
+      return { ...state, loginSuccess: action.bool };
     default:
       return state;
   }

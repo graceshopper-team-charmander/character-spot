@@ -1,6 +1,3 @@
-import { snakeCase } from "../../utility-funcs/string-manip";
-import queryString from "query-string";
-
 export const getQueryParam = (location, key) => {
   const query = new URLSearchParams(location.search);
   return query.get(key);
@@ -11,23 +8,48 @@ export const hasQueryParam = (location, key) => {
   return query.has(key);
 };
 
-export const deleteFromQueryParamArr = (location, keyToModify, valueToRemove) => {
-  const query = queryString.parse(location.search, {
-    arrayFormat: "separator",
-    arrayFormatSeparator: "|"
-  });
-  if (Array.isArray(query[keyToModify])) {
-    query[keyToModify] = query[keyToModify].filter((value) => value !== valueToRemove);
-  } else {
-    if (query[keyToModify]) {
-      delete query[keyToModify];
+const arrayifyQueryParams = (query) => {
+  return decodeURI(
+    query.startsWith("?") ? query.slice(1) : query
+  ).split("&");
+}
+
+const stringfyQueryArrMap = (queryArrMap) => {
+  return encodeURI(
+    Array.from(queryArrMap)
+      .map(([key, val]) => key + "=" + val)
+      .join("&")
+  );
+}
+
+export const deleteFromQuery = (location, key) => {
+  const queryParams = arrayifyQueryParams(location.search);
+  const newQueryParams = new Map();
+  queryParams.forEach((queryParam) => {
+    const [queryKey, val] = queryParam.split("=");
+    if (key !== queryKey) {
+      newQueryParams.set(key, val);
     }
-  }
-  return queryString.stringify(query);
+  });
+  return stringfyQueryArrMap(newQueryParams);
+};
+
+export const deleteFromQueryParamArr = (location, keyToModify, valueToRemove) => {
+  const queryParams = arrayifyQueryParams(location.search);
+  const newQueryParams = new Map();
+  queryParams.forEach((queryParam) => {
+    const [key, valArr] = queryParam.split("=");
+    if (key === keyToModify) {
+      const values = valArr.split("|").filter((value) => value !== valueToRemove);
+      newQueryParams.set(key, values.join("|"));
+    } else newQueryParams.set(key, valArr);
+  });
+  return stringfyQueryArrMap(newQueryParams);
 };
 
 export const setQueryParam = (location, key, val) => {
-  const query = new URLSearchParams(location.search);
+  let rawQuery = typeof location === 'object' ? location.search : location;
+  const query = new URLSearchParams(rawQuery);
   if (query.has(key)) {
     query.delete(key);
     query.append(key, val);

@@ -33,7 +33,7 @@ router.get("/", async (req, res, next) => {
 router.get("/categories", async (req, res, next) => {
   try {
     const categories = await ProductCategory.findAll({
-      attributes: ["id", "name"]
+      attributes: ["id", "name", "code"]
     });
     res.json(categories);
   } catch (err) {

@@ -14,6 +14,9 @@ app.use(express.json())
 app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))
 
+//stripe route
+app.use('/charge', require('./stripe'))
+
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '..', 'public/index.html')));
 
 // static file-serving middleware
