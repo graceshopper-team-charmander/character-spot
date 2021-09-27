@@ -19,10 +19,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = (theme) => ({
   chipRoot: {
-    backgroundColor: "ghostwhite",
+    backgroundColor: "#fc7947",
     color: "#484848",
-    // fontWeight: "bold",
-    fontSize: "1.25rem",
+    fontSize: "1.15rem",
+    // fontSize: "1rem",
     borderRadius: "5px"
   },
   selectRoot: {

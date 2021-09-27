@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
   formControlRoot: {
     width: "100%"
+  },
+  allProducts: {
+    // @todo - WIP...it doesn't want to show up -.-
+    backgroundImage: "url(/images/paper.jpeg)",
+    objectFit: "cover"
   }
 }));
 
@@ -66,16 +71,23 @@ const AllProducts = (props) => {
               <Sort />
             </div>
           </div>
-          <div className="all-products-sort">
-            <CategoryFilter location={location} history={history} />
-          </div>
-          <Grid item xs={12} className="all-products-container">
-            {products.map((product) => (
-              <ProductRow key={product.id} product={product} />
-            ))}
-          </Grid>
-          <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-            <Pagination totalItems={totalItems} />
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-around"
+            alignItems="center"
+            classname={styles.allProducts}>
+            <div className="all-products-cat">
+              <CategoryFilter location={location} history={history} />
+            </div>
+            <Grid item xs={12} className="all-products-container">
+              {products.map((product) => (
+                <ProductRow key={product.id} product={product} />
+              ))}
+            </Grid>
+            <Grid container direction="row" justifyContent="center" alignItems="flex-start">
+              <Pagination totalItems={totalItems} />
+            </Grid>
           </Grid>
           {/* </Paper> */}
         </Grid>

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#FFF3E0"
+    backgroundImage: "linear-gradient(180deg, ghostwhite, #FFF3E0)"
   },
   cardContent: {
     padding: "5px",
@@ -38,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardImage: {
     borderRadius: "2px",
-    border: "5px solid #fcd000"
+    border: "5px solid #fcd000",
+    objectFit: "contain",
+    backgroundImage: "linear-gradient(180deg, white, #fc7947)"
   },
   button: {
     backgroundColor: "#fcd000",
@@ -89,7 +91,7 @@ const ProductRow = (props) => {
       <Card className={styles.card}>
         <Link to={`/products/${id}`}>
           <CardContent className={styles.cardContent}>
-            <Typography sx={{ fontSize: 10 }} className={styles.cardTitle}>
+            <Typography sx={{ fontSize: 10 }} className={styles.cardTitle} id="card-title">
               {name}
             </Typography>
             <div className={styles.cardBody}>
@@ -114,7 +116,6 @@ const ProductRow = (props) => {
           }}
           className={styles.button}>
           <span className="button-font">ADD TO CART</span>
-
         </Button>
       </Card>
       <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>

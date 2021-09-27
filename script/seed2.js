@@ -16,7 +16,7 @@ const {
   finalFantasyProducts,
   sailorMoonProducts
 } = require("./productsSeed");
-
+const dbpg = require("../server/db/dbpg");
 const { customUsers } = require("./usersSeed");
 /**
  * seed - this function clears the database, updates tables to
@@ -135,6 +135,7 @@ async function runSeed() {
   console.log("seeding...");
   try {
     await seed();
+    await dbpg.query("CREATE EXTENSION pg_trgm");
   } catch (err) {
     console.error(err);
     process.exitCode = 1;

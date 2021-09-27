@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem"
   },
   leftCol: {
-    width: "45%"
+    width: "45%",
+    height: "100%"
   },
   rightCol: {
     width: "55%",
@@ -59,7 +60,8 @@ const useStyles = makeStyles((theme) => ({
       transition: "all .4s ease",
       // boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
       transform: "translate3d(0px, -10px, 0px)"
-    }
+    },
+    zIndex: 1
   }
 }));
 
