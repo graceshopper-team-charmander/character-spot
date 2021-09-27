@@ -11,14 +11,9 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
-<<<<<<< HEAD
 const { sendConfirmEmail, emailBody} = require("../email/email")
 const test = "freda.hamill81@ethereal.email"
-=======
-const { sendEmail, emailBody } = require("../email/email");
 
-const test = "freda.hamill81@ethereal.email";
->>>>>>> main
 
 //Get the cart of a user
 //GET /api/users/cart - returns the users cart
