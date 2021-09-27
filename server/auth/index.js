@@ -75,7 +75,7 @@ router.post("/login", async (req, res, next) => {
       firstName: user.firstName
     });
   } catch (err) {
-    next(err);
+    res.status(401).send('Failed to authenticate')
   }
 });
 
@@ -84,7 +84,7 @@ router.post("/change", requireTokenMiddleware, async (req, res, next) => {
   try {
     if (await req.user.correctPassword(req.body.currentPassword)) {
       await req.user.update({ password: req.body.newPassword });
-      res.status(200).send(req.user);
+      res.sendStatus(200);
     } else {
       res.sendStatus(204);
     }
