@@ -21,6 +21,7 @@ router.get("/", async (req, res, next) => {
       ...productSort(req.query),
       ...paginate(req.query, DEFAULT_PAGESIZE),
       ...productSearch("product", "name", req.query),
+      distinct: true
     });
 
     res.json({ products, totalItems });
@@ -28,8 +29,6 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-
-
 
 //GET /products/categories - returns all categories
 router.get("/categories", async (req, res, next) => {

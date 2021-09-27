@@ -86,7 +86,7 @@ router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
     // need to validate userId with middleware
     await idSchema.validate(req.params);
     await cartProductQuantitySchema.validate(req.body);
-    res.send(Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity));
+    res.send(refactorSingleCartItem(await Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity)));
   } catch (err) {
     next(err);
   }
