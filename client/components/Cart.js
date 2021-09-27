@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SingleCartProduct from "./SingleCartProduct";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
+import { fetchProducts } from "../store/products";
 
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -33,8 +34,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function checkProductQuantities(cart) {
+function checkProductQuantities(products, cart) {
   // query for that product, check quantity
+
+  let queriedProductsCart = products.filter((product) => {
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id === product.id) {
+        return product;
+      }
+    }
+  });
+
+  console.log(queriedProductsCart);
 
   for (let i = 0; i < cart.length; i++) {
     let product = cart[i];
@@ -59,8 +70,11 @@ const Cart = () => {
     cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.price * ele.cartQuantity, 0) : 0.0;
 
   // useEffect(() => {
+  //   console.log("IN CART");
+  //   // dispatch(fetchProducts());
+  // });
 
-  // })
+  const products = useSelector((state) => state.products.products);
 
   const history = useHistory();
 
@@ -124,7 +138,7 @@ const Cart = () => {
               color="secondary"
               className={muiClasses.buttonRoot}
               onClick={() => {
-                if (checkProductQuantities(cart)) {
+                if (checkProductQuantities(products, cart)) {
                   routeChange();
                 }
               }}>

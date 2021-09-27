@@ -40,6 +40,7 @@ const AllProducts = (props) => {
   const totalItems = useSelector((state) => state.products.totalItems);
   //on mount
   useEffect(() => {
+    console.log("IN ALL PRODUCTS");
     const page = getQueryParam(location, "page");
     if (!page) {
       const query = setQueryParam(location, "page", 1);
@@ -50,6 +51,7 @@ const AllProducts = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log("IN ALL PRODUCTS FETCH EFFECT");
     dispatch(fetchProducts(location));
   }, [location.search]);
 
