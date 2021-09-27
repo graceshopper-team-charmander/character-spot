@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
       ],
       ...productSort(req.query),
       ...paginate(req.query, DEFAULT_PAGESIZE),
-      ...productSearch("product", "name", req.query),
+      ...productSearch("product", "name", req.query)
     });
 
     res.json({ products, totalItems });
@@ -28,8 +28,6 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-
-
 
 //GET /products/categories - returns all categories
 router.get("/categories", async (req, res, next) => {
@@ -49,7 +47,7 @@ router.get("/:id", async (req, res, next) => {
     //make sure the ID is a number
     await idSchema.validate(req.params);
     const product = await Product.findByPk(req.params.id, {
-      attributes: ["id", "name", "description", "price", "imageUrl"]
+      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"]
     });
     if (product) {
       res.send(product);

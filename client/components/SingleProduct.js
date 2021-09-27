@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
@@ -16,6 +16,8 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import NavigateBeforeRoundedIcon from "@material-ui/icons/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import { addToLocalCart } from "../store/localCart";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +68,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// export function checkQuantity(product, productsInCart) {
+//   const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
+//   if (productToCheck.length) {
+//     const qtyInCart = productToCheck[0].cartQuantity;
+//     if (product.quantity - qtyInCart < 1) {
+//       return false;
+//     }
+//   } else {
+//     if (product.quantity < 1) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
+
 const SingleProducts = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -73,7 +90,9 @@ const SingleProducts = (props) => {
   const fetchStatus = useSelector((state) => state.singleProduct.fetchStatus);
   const styles = useStyles();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  // const productsInCart = useSelector((state) => state.cart.cart);
+  const productsInCart = useSelector((state) => state.cart.cart);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   //on mount
   useEffect(() => {
@@ -147,7 +166,12 @@ const SingleProducts = (props) => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+                  if (checkQuantity(product, productsInCart)) {
+                    setSnackBarOpen(true);
+                    isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+                  } else {
+                    alert(`There are no ${product.name}'s left to add to your cart!`);
+                  }
                 }}
                 className={styles.button}>
                 ADD TO CART
@@ -172,6 +196,11 @@ const SingleProducts = (props) => {
       <div className="all-products-header" id="single-product-header">
         <div className="all-products-title"></div>
       </div>
+      <Snackbar open={snackBarOpen} autoHideDuration={3000} onClose={() => setSnackBarOpen(false)}>
+        <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
+          Added to Cart!
+        </Alert>
+      </Snackbar>
       {/* bottom row  */}
       {/* <Grid container direction="column" justifyContent="flex-start" alignItems="center">
         <div className="single-product-sub-title">Reviews Or Something</div>

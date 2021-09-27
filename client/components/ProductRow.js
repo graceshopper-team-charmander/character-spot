@@ -78,12 +78,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function checkQuantity(product, productsInCart) {
-  console.log(product, productsInCart);
   const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
-  console.log("product to check", productToCheck);
   if (productToCheck.length) {
     const qtyInCart = productToCheck[0].cartQuantity;
-    console.log(qtyInCart);
     if (product.quantity - qtyInCart < 1) {
       return false;
     }
@@ -105,7 +102,6 @@ const ProductRow = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
   const productsInCart = useSelector((state) => state.cart.cart);
-  console.log(productsInCart);
 
   return (
     <div>
