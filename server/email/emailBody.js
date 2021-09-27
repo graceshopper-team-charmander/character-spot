@@ -1,4 +1,4 @@
-const body = (name, items, costSummary, shipping, orderInfo) => {
+const body = (name, items, costSummary, shipping, orderInfo, orderNumber) => {
   return (`<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title>
@@ -113,7 +113,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                                           <table border='0' cellpadding='0' cellspacing='0' style='cellpadding:0;cellspacing:0;color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;' width='100%'>
                                             <tr>
                                               <td align='center'>
-                                                <a href='#'>
+                                                <a href='https://character-spot.herokuapp.com/'>
                                                   <img align='center' alt='Logo' padding='5px' src='https://fontmeme.com/permalink/210922/7883c797940c9330ef88b87589f6212a.png' width='400' />
                                                 </a>
                                               </td>
@@ -167,7 +167,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                 <div style='color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                                Thank you for supporting Character Spot, your one stop character shop with characters that will love you lots.
+                                Thank you for supporting Character Spot, your one stop character shop with characters that will love you lots. Your order number is: <a href = "https://character-spot.herokuapp.com/orders">${orderNumber} </ a>
                                 </div>
                               </td>
                             </tr>

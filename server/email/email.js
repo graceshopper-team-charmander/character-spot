@@ -21,7 +21,7 @@ function emailBody(name, order, orderNumber, date) {
   const orderSummary = orderInfo(date, orderNumber)
 
   //final email
-  const email = body(name, allItems, costSummary, shippingInfo, orderSummary)
+  const email = body(name, allItems, costSummary, shippingInfo, orderSummary, orderNumber)
 
   return email
 
