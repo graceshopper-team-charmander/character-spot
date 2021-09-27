@@ -58,8 +58,6 @@ function Row(props) {
   const total = priceTotal(products);
   const status = row.status.toLowerCase();
 
-  console.log(products);
-
   return (
     <React.Fragment>
       <TableRow className={classes.root}>

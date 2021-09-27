@@ -64,7 +64,6 @@ class CategoryFilter extends React.Component {
     const catName = snakeCase(evt.currentTarget.parentNode.innerText);
     const { location, history } = this.props;
     const newSearch = deleteFromQueryParamArr(location, "categories", catName);
-    console.log(newSearch);
     history.push(location.pathname + "?" + newSearch);
   }
 
@@ -100,7 +99,6 @@ class CategoryFilter extends React.Component {
         onChange={this.handleChange}
         input={<Input id="select-multiple-chip" />}
         renderValue={(selected) => {
-          console.log('selected', selected);
           return selected.length ? (
             <div className="multi-select-chip-container">
               {selected.map((category) => (
