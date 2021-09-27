@@ -31,9 +31,13 @@ async function seed() {
   const createdFakeUsers = await Promise.all(fakeUsers.map((user) => User.create(user)));
 
   //Create Fake Categories
-  const categories = Array(10).fill('').map(item => ProductCategory.create({
-    name: faker.random.word()
-  }));
+  const categories = Array(10)
+    .fill("")
+    .map((item) =>
+      ProductCategory.create({
+        name: faker.random.word()
+      })
+    );
 
   await Promise.all(categories);
 
@@ -60,7 +64,7 @@ async function seed() {
     fakeProducts.map((product) => Product.create(product))
   );
 
-  createdFakeProducts.forEach(product => {
+  createdFakeProducts.forEach((product) => {
     product.addCategory(Math.floor(Math.random() * 10) + 1);
   });
 
@@ -97,7 +101,7 @@ async function seed() {
   await murphyOrder.setUser(murphy);
   await murphyOrder.addProduct(createdFakeProducts[0]);
 
-  await Product.create({
+  const luigi = await Product.create({
     name: "Luigi",
     imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
     description: "An Italian plumber's brother. Makes better spaghetti.",
@@ -105,6 +109,7 @@ async function seed() {
     quantity: 1
   });
 
+  console.log(luigi.__proto__);
   console.log(`seeded successfully`);
 
   return {
