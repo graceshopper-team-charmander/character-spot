@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { authenticate } from "../store";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 /**
  * COMPONENT
@@ -21,56 +25,83 @@ const AuthForm = (props) => {
   };
 
   return (
-    <div>
+    <Box>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="Email">
-            <small>Email</small>
-          </label>
-          <input
+        <Card style = {{
+          display: "flex",
+          border: "8px solid #fcd000",
+          margin: "10px",
+          padding: "5px",
+          borderRadius: "10px"
+        }}>
+          <Box style = {{flexGrow: 1, margin:0}} htmlFor="Email">
+            <h1 style = {{fontFamily: "mario"}}>Email</h1>
+          </Box>
+          <TextField
             value={email}
             onChange={(evt) => {
               setEmail(evt.target.value);
             }}
             name="email"
             type="text"
+            inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+            InputProps={{ disableUnderline: true }}
           />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input
+        </Card>
+        <Card style = {{
+          display: "flex",
+          border: "8px solid #fcd000",
+          margin: "10px",
+          padding: "5px",
+          borderRadius: "10px"
+        }}>
+          <Box htmlFor="password">
+          <h1 style = {{fontFamily: "mario"}}>Password</h1>
+          </Box>
+          <TextField
             value={password}
             onChange={(evt) => {
               setPassword(evt.target.value);
             }}
+            inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+            InputProps={{ disableUnderline: true }}
             name="password"
             type="password"
           />
-        </div>
+        </Card>
         {name === "signup" && (
-          <div>
-            <label htmlFor="First Name">
-              <small>First Name</small>
-            </label>
-            <input
+          <Card style = {{
+            display: "flex",
+            border: "8px solid #fcd000",
+            margin: "10px",
+            padding: "5px",
+            borderRadius: "10px"
+          }}>
+            <Box htmlFor="First Name">
+            <h1 style = {{fontFamily: "mario"}}>First Name</h1>
+            </Box>
+            <TextField
               value={firstName}
               onChange={(evt) => {
                 setFirstName(evt.target.value);
               }}
               name="firstName"
               type="text"
+              inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+              InputProps={{ disableUnderline: true }}
             />
-          </div>
+          </Card>
         )}
-
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
+        <Box>
+          <Button style = {{
+            margin: "10px",
+            border: "3px solid #44af35"
+          }} type="submit"><h3 style = {{fontFamily: "mario"}}>{displayName}</h3>
+          </Button>
+        </Box>
+        {error && error.response && <Box> {error.response.data} </Box>}
       </form>
-    </div>
+    </Box>
   );
 };
 
