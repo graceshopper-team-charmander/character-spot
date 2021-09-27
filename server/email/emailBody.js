@@ -167,7 +167,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                 <div style='color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed nulla nibh. Ut hendrerit pellentesque justo, semper accumsan nisl venenatis ut.
+                                Thank you for supporting Character Spot, your one stop character shop with characters that will love you lots.
                                 </div>
                               </td>
                             </tr>

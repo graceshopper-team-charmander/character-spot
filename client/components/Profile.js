@@ -60,7 +60,7 @@ const Profile = () => {
           <Card className={styles.infoRoot}>
             <Box style={{minWidth: "13rem" }}>
               {" "}
-              <h1 className={styles.text} >Name</h1>{" "}
+              <h1 className={styles.text} >Name</h1>
             </Box>
             <Box style = {{flexGrow: 1, textAlign: "center"}}>
             <p className={styles.text}>
