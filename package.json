@@ -38,6 +38,7 @@
     "pg": "^8.5.1",
     "query-string": "^7.0.1",
     "sequelize": "^6.6.5",
+    "react-material-ui-carousel": "^2.3.5",
     "yup": "^0.32.9"
   },
   "devDependencies": {
