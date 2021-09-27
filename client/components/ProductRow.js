@@ -77,6 +77,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function checkQuantity(product, productsInCart) {
+  console.log(product, productsInCart);
+  const productToCheck = productsInCart.filter((cartProduct) => cartProduct.id === product.id);
+  console.log("product to check", productToCheck);
+  if (productToCheck.length) {
+    const qtyInCart = productToCheck[0].cartQuantity;
+    console.log(qtyInCart);
+    if (product.quantity - qtyInCart < 1) {
+      return false;
+    }
+  } else {
+    if (product.quantity < 1) {
+      return false;
+    }
+  }
+  return true;
+}
+
 const ProductRow = (props) => {
   const styles = useStyles();
   const { product } = props;
@@ -85,6 +103,8 @@ const ProductRow = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+
+  const productsInCart = useSelector((state) => state.cart.cart);
 
   return (
     <div>
@@ -111,8 +131,12 @@ const ProductRow = (props) => {
         <Button
           variant="contained"
           onClick={() => {
-            setSnackBarOpen(true);
-            isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+            if (checkQuantity(product, productsInCart)) {
+              setSnackBarOpen(true);
+              isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+            } else {
+              alert(`There are no ${product.name}'s left to add to your cart!`);
+            }
           }}
           className={styles.button}>
           <span className="button-font">ADD TO CART</span>
