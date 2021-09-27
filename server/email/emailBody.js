@@ -23,7 +23,9 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
       			  		@-ms-viewport {width: 320px;}
       			  		@viewport {	width: 320px; }
       				}
-      @font-face { font-family: mario; src: url("./public/fonts/mario2.ttf") format("woff"); }
+    </style>
+    <style>
+    @import url('http://fonts.cdnfonts.com/css/new-super-mario-font-u');
     </style>
     <!--<![endif]-->
     <!--[if mso]>
@@ -157,7 +159,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                <div style='color:#ffffff;font-family: mario, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
+                                <div style='color:#ffffff;font-family: New Super Mario Font U, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
                                   Thank you for your order, ${name}!
                                 </div>
                               </td>
@@ -165,7 +167,7 @@ const body = (name, items, costSummary, shipping, orderInfo) => {
                             <tr>
                               <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                 <div style='color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed nulla nibh. Ut hendrerit pellentesque justo, semper accumsan nisl venenatis ut.
+                                Thank you for supporting Character Spot, your one stop character shop with characters that will love you lots.
                                 </div>
                               </td>
                             </tr>

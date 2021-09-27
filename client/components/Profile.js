@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonBox: {
     display: "flex",
-    justifyContent: "right"
+    justifyContent: "right",
+    margin: "25px"
   },
   text: {
     fontFamily: "mario",
@@ -46,18 +47,20 @@ const Profile = () => {
   }, []);
 
   return (
-    <Grid item xs={12} className="page">
+    <Grid item xs={12} style ={{paddingTop: "1rem",
+    /* width: 80%; */
+    margin: "0 auto"}}>
       <div className="all-products-header">
         <h4 className="all-products-title">Profile</h4>
       </div>
       {edit ? (
         <EditInfo user={user} toggleEdit={toggleEdit} />
       ) : (
-        <Box>
+        <Box style = {{margin: 25}}>
           <Card className={styles.infoRoot}>
             <Box style={{minWidth: "13rem" }}>
               {" "}
-              <h1 className={styles.text} >Name</h1>{" "}
+              <h1 className={styles.text} >Name</h1>
             </Box>
             <Box style = {{flexGrow: 1, textAlign: "center"}}>
             <p className={styles.text}>
@@ -85,7 +88,7 @@ const Profile = () => {
       {editPassword ? (
         <EditPassword user={user} toggleEdit={toggleEditPassword} />
       ) : (
-        <Box>
+        <Box style = {{margin: 25}}>
           <Card className={styles.infoRoot}>
             <Box style={{minWidth: "13rem"}}>
               <h1 className={styles.text}>Password</h1>{" "}
