@@ -19,9 +19,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = (theme) => ({
   chipRoot: {
-    backgroundColor: "#fcd000",
-    color: "#e71e07",
-    fontWeight: "bold",
+    backgroundColor: "ghostwhite",
+    color: "#484848",
+    // fontWeight: "bold",
     fontSize: "1.25rem",
     borderRadius: "5px"
   },
@@ -86,37 +86,37 @@ class CategoryFilter extends React.Component {
     const urlCategories = getQueryParam(location, "categories");
     const selectedCategories = urlCategories ? urlCategories.split("|") : [];
     return (
-      <div className="multi-select-container">
-        <Select
-          multiple
-          disableUnderline={true}
-          className={muiClasses.selectRoot}
-          name="categories"
-          displayEmpty={true}
-          value={selectedCategories}
-          onChange={this.handleChange}
-          input={<Input id="select-multiple-chip" />}
-          renderValue={(selected) => {
-            return selected.length ? (
-              <div className="multi-select-chip-container">
-                {selected.map((category) => (
-                  <Chip
-                    onMouseDown={this.chipMouseDown}
-                    classes={{ root: muiClasses.chipRoot }}
-                    deletable="true"
-                    label={category}
-                    key={category}
-                    onDelete={(data) => this.onDelete(data)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="multi-select-placeholder-text">Categories</div>
-            );
-          }}>
-          {menuItems}
-        </Select>
-      </div>
+      // <div className="multi-select-container">
+      <Select
+        multiple
+        disableUnderline={true}
+        className={muiClasses.selectRoot}
+        name="categories"
+        displayEmpty={true}
+        value={selectedCategories}
+        onChange={this.handleChange}
+        input={<Input id="select-multiple-chip" />}
+        renderValue={(selected) => {
+          return selected.length ? (
+            <div className="multi-select-chip-container">
+              {selected.map((category) => (
+                <Chip
+                  onMouseDown={this.chipMouseDown}
+                  classes={{ root: muiClasses.chipRoot }}
+                  deletable="true"
+                  label={category}
+                  key={category}
+                  onDelete={(data) => this.onDelete(data)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="multi-select-placeholder-text">Categories</div>
+          );
+        }}>
+        {menuItems}
+      </Select>
+      // </div>
     );
   }
 }

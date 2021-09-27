@@ -31,15 +31,14 @@ const AllProducts = (props) => {
   const fetchStatus = useSelector((state) => state.products.fetchStatus);
   const location = useLocation();
   const history = useHistory();
-  const totalItems = useSelector(state => state.products.totalItems);
+  const totalItems = useSelector((state) => state.products.totalItems);
   //on mount
   useEffect(() => {
-    const page = getQueryParam(location, 'page');
+    const page = getQueryParam(location, "page");
     if (!page) {
-      const query = setQueryParam(location, 'page', 1);
+      const query = setQueryParam(location, "page", 1);
       history.replace(`${location.pathname}?${query}`);
-    }
-    else {
+    } else {
       dispatch(fetchProducts(location));
     }
   }, []);
@@ -47,7 +46,6 @@ const AllProducts = (props) => {
   useEffect(() => {
     dispatch(fetchProducts(location));
   }, [location.search]);
-
 
   if (fetchStatus === FETCH_PENDING)
     return (
@@ -63,16 +61,21 @@ const AllProducts = (props) => {
         <Grid item xs={12}>
           {/* <Paper elevation={1} className={styles.paperRoot}> */}
           <div className="all-products-header">
-            <Sort />
-            <Pagination totalItems={totalItems}/>
             <h4 className="all-products-title">Characters</h4>
+            <div>
+              <Sort />
+            </div>
+          </div>
+          <div className="all-products-sort">
             <CategoryFilter location={location} history={history} />
           </div>
-
           <Grid item xs={12} className="all-products-container">
             {products.map((product) => (
               <ProductRow key={product.id} product={product} />
             ))}
+          </Grid>
+          <Grid container direction="row" justifyContent="center" alignItems="flex-start">
+            <Pagination totalItems={totalItems} />
           </Grid>
           {/* </Paper> */}
         </Grid>
