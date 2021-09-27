@@ -156,8 +156,7 @@ User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 
-User.beforeCreate(lowerCaseEmail);
-User.beforeUpdate(lowerCaseEmail);
+User.beforeSave(lowerCaseEmail);
 User.beforeBulkCreate((users) => Promise.all(users.map(lowerCaseEmail)));
 
 module.exports = User;
