@@ -53,10 +53,10 @@ async function seed() {
     finalFantasyCat,
     sailorMoonCat
   ] = await ProductCategory.bulkCreate(categories);
+  console.log("marioCat", marioCat);
 
   //Create Orders
   const createdFakeOrders = [];
-
   for (let i = 0; i < users.length; i++) {
     const order = await Order.create({ status: "PENDING" });
     createdFakeOrders.push(order);
@@ -65,6 +65,7 @@ async function seed() {
 
   //Create Products
   const mario = await Product.bulkCreate(marioProducts);
+  // console.log("mario", mario);
   const dbz = await Product.bulkCreate(dbzProducts);
   const pokemon = await Product.bulkCreate(pokemonProducts);
   const kirby = await Product.bulkCreate(kirbyProducts);
@@ -73,9 +74,10 @@ async function seed() {
   const sailor = await Product.bulkCreate(sailorMoonProducts);
 
   //Product Category Associations
-  // mario.forEach((product) => {
-  //   product.setCategories([marioCat, nintendoCat]);
-  // });
+  for(let i = 0; i < mario.length; i++) {
+    const marioProduct = mario[i];
+    await marioProduct.setCategories([marioCat, nintendoCat]);
+  }
 
   // dbz.forEach((product) => {
   //   product.setCategories([dragonballZCat, animeCat]);
