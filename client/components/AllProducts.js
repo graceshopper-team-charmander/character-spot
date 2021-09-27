@@ -44,6 +44,11 @@ const AllProducts = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchProducts(location));
+  }, [location.search]);
+
+
   if (fetchStatus === FETCH_PENDING)
     return (
       <div className="loading">
