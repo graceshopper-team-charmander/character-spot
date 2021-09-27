@@ -43,7 +43,7 @@ function convertDate(timestamp) {
 
 function priceTotal(products) {
   const total = products.reduce((accum, current) => {
-    return accum + current.price;
+    return accum + current.price * current.cart.cartQuantity;
   }, 0);
   return total / 100;
 }
@@ -58,6 +58,8 @@ function Row(props) {
   const date = convertDate(row.updatedAt);
   const total = priceTotal(products);
   const status = row.status.toLowerCase();
+
+  console.log(products);
 
   return (
     <React.Fragment>
@@ -105,11 +107,11 @@ function Row(props) {
                       <TableCell>
                         <Link to={`/products/${product.id}`}>{product.name}</Link>
                       </TableCell>
-
+                      <TableCell align="right">{product.cart.cartQuantity}</TableCell>
                       <TableCell align="right">${product.price / 100}</TableCell>
-                      <TableCell align="right">{product.cart.quantity}</TableCell>
+
                       <TableCell align="right">
-                        ${Math.round(product.cart.quantity * product.price) / 100}
+                        ${Math.round(product.cart.cartQuantity * product.price) / 100}
                       </TableCell>
                     </TableRow>
                   ))}

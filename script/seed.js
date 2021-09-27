@@ -18,17 +18,29 @@ async function seed() {
 
   let amtOfFakeData = 22;
   //Create Fake Users
-  const fakeUsers = await Promise.all(Array(amtOfFakeData).fill('').map(product => User.create({
-    email: faker.internet.email(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    password: faker.internet.password()
-  })));
+  const fakeUsers = await Promise.all(
+    Array(amtOfFakeData)
+      .fill("")
+      .map((product) =>
+        User.create({
+          email: faker.internet.email(),
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+          password: faker.internet.password()
+        })
+      )
+  );
 
   //Create Fake Categories
-  const categories = await Promise.all(Array(10).fill('').map(item => ProductCategory.create({
-    name: faker.random.word()
-  })));
+  const categories = await Promise.all(
+    Array(10)
+      .fill("")
+      .map((item) =>
+        ProductCategory.create({
+          name: faker.random.word()
+        })
+      )
+  );
 
   //Give the users 'pending' orders
   const createdFakeOrders = [];
@@ -39,13 +51,19 @@ async function seed() {
   }
 
   //Create Fake Products
-  const fakeProducts = await Promise.all(Array(amtOfFakeData).fill('').map(product => Product.create({
-    name: faker.random.word(),
-    imageUrl: faker.image.food(),
-    description: faker.lorem.sentence(),
-    price: faker.datatype.number(),
-    quantity: 5
-  })));
+  const fakeProducts = await Promise.all(
+    Array(amtOfFakeData)
+      .fill("")
+      .map((product) =>
+        Product.create({
+          name: faker.random.word(),
+          imageUrl: faker.image.food(),
+          description: faker.lorem.sentence(),
+          price: faker.datatype.number(),
+          quantity: 5
+        })
+      )
+  );
 
   //Add Categories to products
   for (let i = 0; i < amtOfFakeData; i++) {
@@ -67,7 +85,7 @@ async function seed() {
       firstName: "Cody",
       lastName: "Turtle",
       password: "123"
-    }),
+    })
   ]);
 
   const cody = users[0];
@@ -75,7 +93,7 @@ async function seed() {
   await order.setUser(cody);
   // await order.addProduct(fakeProducts[0]);
 
-  await Product.create({
+  const luigi = await Product.create({
     name: "Luigi",
     imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
     description: "An Italian plumber's brother. Makes better spaghetti.",
@@ -83,11 +101,12 @@ async function seed() {
     quantity: 1
   });
 
+  console.log(luigi.__proto__);
   console.log(`seeded successfully`);
 
   return {
     users: {
-      cody: users[0],
+      cody: users[0]
     }
   };
 }
