@@ -13,7 +13,7 @@ const item = (item) => {
                     <tbody>
                       <tr>
                         <td style='width:110px;'>
-                          <a href='#' target='_blank'>
+                          <a href='https://character-spot.herokuapp.com/products/${item.id}' target='_blank'>
                             <img alt='item1' height='auto' src='${item.imageUrl}' style='border: 1px solid #e6e6e6;border-radius:4px;display:block;font-size:13px;height:auto;outline:none;text-decoration:none;width:100%;' width='110' />
                           </a>
                         </td>
