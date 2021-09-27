@@ -1,4 +1,14 @@
+let test = new Map();
 
-const sortOptions = {name: "Name", price: 'Price'};
+test.set('name', 'some|values');
+test.set('stuff', 'otherthings');
 
-Object.entries(sortOptions).map( ([key, val]) => console.log(key, val));
+
+console.log(Array.from(test));
+
+let test2 = {
+  name: 'something',
+  stuff: 'other'
+}
+
+console.log(Array.from(test2));
