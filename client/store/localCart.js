@@ -1,9 +1,8 @@
 import axios from "axios";
 import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
 import { setFetchSingleProductStatus, setSingleProduct } from "./singleProduct";
-import { addToCart } from "./cart";
+import { ADD_TO_LOCAL_CART, addToCart } from "./cart";
 
-const ADD_TO_CART = "ADD_TO_CART";
 const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
@@ -30,7 +29,7 @@ export const saveLocalCartOnUnload = (cart) => {
 export const addToLocalCart = (product) => {
   product.cartQuantity = 1;
   return {
-    type: ADD_TO_CART,
+    type: ADD_TO_LOCAL_CART,
     product
   };
 };
@@ -58,7 +57,7 @@ const submitGuestOrder = (cart) => {
   };
 };
 
-export const submitGuestOrderThunk = (history, {firstName, lastName, guestEmailAddress}) => {
+export const submitGuestOrderThunk = (history, { firstName, lastName, guestEmailAddress }) => {
   return async (dispatch, getState) => {
     const state = getState();
     try {
@@ -67,7 +66,7 @@ export const submitGuestOrderThunk = (history, {firstName, lastName, guestEmailA
         lastName,
         email: guestEmailAddress,
         cart: state.cart.cart
-      }
+      };
       const { data } = await axios.put(`/api/users/guest-checkout`, body);
       dispatch(submitGuestOrder(data));
       // history.push("/thankyou");

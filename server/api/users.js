@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Cart, User }
+  models: { Cart, User, Order, Product }
 } = require("../db");
 const { requireTokenMiddleware } = require("../auth-middleware");
 const cookieParser = require("cookie-parser");
@@ -11,8 +11,14 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
+<<<<<<< HEAD
 const { sendConfirmEmail, emailBody} = require("../email/email")
 const test = "freda.hamill81@ethereal.email"
+=======
+const { sendEmail, emailBody } = require("../email/email");
+
+const test = "freda.hamill81@ethereal.email";
+>>>>>>> main
 
 //Get the cart of a user
 //GET /api/users/cart - returns the users cart
@@ -42,9 +48,6 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
         status: "PENDING"
       }
     });
-    await order[0].update({ status: "FULFILLED" });
-    await req.user.createOrder();
-
     //create email to send
     const name = req.user.firstName
     const products = await order[0].getProducts()
@@ -52,9 +55,14 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     const date = order[0].createdAt
     const emailBodyHTML = await emailBody(name, products, orderNumber, date)
 
+    const orderedProducts = await Order.checkout(req.user);
+    await Product.updateInventory(orderedProducts);
+
     //send email
     sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
-    res.send(order);
+    //@todo: quantity checking needs to occur before anything else
+
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }
@@ -63,16 +71,14 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/guest-checkout - checks the users cart out
 router.put("/guest-checkout", async (req, res, next) => {
   try {
-    req.body.password = '123';
-      // faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
-    console.log(req.body);
+    //@todo: quantity checking needs to occur before anything else
+    req.body.password =
+      faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
     await userSignupSchema.validate(req.body);
-    //creates or finds the user by their email and creats an order for them if necessary
-    const guestUser = await User.makeOrFind(req.body);
-    const order = (await guestUser.getOrders({ where: { status: "PENDING" } }))[0];
-    const productIds = req.body.cart.map((product) => product.id);
-    await order.addProducts(productIds);
-    await order.update({ status: "FULFILLED" });
+    const guestUser = await User.makeOrFind(req.body); //find or create a guest account
+    const orderedProducts = await Order.guestCheckout(guestUser, req.body.cart);
+    await Product.updateInventory(orderedProducts);
+    //@todo: send email
     res.sendStatus(200);
   } catch (err) {
     next(err);

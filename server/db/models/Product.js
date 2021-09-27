@@ -42,6 +42,21 @@ const Product = db.define("product", {
 });
 
 /************************
+ Model Methods          *
+ ***********************/
+/**
+ *
+ * @param {[Sequelize.Model]} products
+ * @returns {Promise<void>}
+ */
+Product.updateInventory = async (orderedProducts) => {
+  for(let i = 0; i < orderedProducts.length; i++) {
+    let orderedProduct = orderedProducts[i];
+    await orderedProduct.update({quantity: orderedProduct.quantity - orderedProduct.cart.cartQuantity});
+  }
+}
+
+/************************
  Sequelize Helpers      *
  ***********************/
 /**
