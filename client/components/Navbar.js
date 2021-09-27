@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { logout } from "../store";
 import { fetchCart } from "../store/cart";
 
@@ -16,6 +16,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import { setQueryParam } from "../utility-funcs/query";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -120,9 +121,14 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = ({ handleClick, isLoggedIn, cart }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchCart());
-  // }, []);
+  const history = useHistory();
+
+  const submitSearch = (evt) => {
+    if (evt.key === "Enter") {
+      const query = setQueryParam(location, evt.target.name, evt.target.value);
+      history.push(location.pathname + "?" + query.toString());
+    }
+  };
 
   let total = 0;
   if (!cart.length) {
@@ -153,10 +159,12 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => {
             </div>
             <InputBase
               placeholder="Search…"
+              name="search"
               classes={{
                 root: styles.inputRoot,
                 input: styles.inputInput
               }}
+              onKeyPress={submitSearch}
               inputProps={{ "aria-label": "search" }}
             />
           </div>

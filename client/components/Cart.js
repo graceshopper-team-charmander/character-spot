@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../store/cart";
 import SingleCartProduct from "./SingleCartProduct";
-import { FETCH_FAILED, FETCH_PENDING } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
 
 import Box from "@material-ui/core/Box";

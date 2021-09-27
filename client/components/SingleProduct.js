@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
-import { FETCH_FAILED, FETCH_PENDING } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import { fetchSingleProduct } from "../store/singleProduct";
 import { useParams } from "react-router-dom";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";

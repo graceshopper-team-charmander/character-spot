@@ -9,7 +9,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import configureMockStore from "redux-mock-store";
 import thunkMiddleware from "redux-thunk";
-import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../../client/constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../../constants";
 
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);

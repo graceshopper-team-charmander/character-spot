@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../constants";
 
 /*************************
  * Action Types          *
@@ -45,10 +45,10 @@ export const setFetchProductsStatus = (status) => {
   };
 };
 
-export const setProducts = (products) => {
+export const setProducts = (payload) => {
   return {
     type: SET_PRODUCTS,
-    products
+    payload
   };
 };
 
@@ -65,13 +65,14 @@ const setProductCategories = (categories) => {
 const initialState = {
   fetchStatus: FETCH_PENDING,
   products: [],
-  productCategories: []
+  productCategories: [],
+  totalItems: 0
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PRODUCTS:
-      return { ...state, products: [...action.products] };
+      return {...state, ...action.payload};
     case SET_PRODUCT_CATEGORIES:
       return { ...state, productCategories: action.categories };
     case SET_PRODUCTS_FETCH_STATUS:

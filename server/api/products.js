@@ -3,11 +3,13 @@ const {
   models: { Product, ProductCategory, categoryFilter }
 } = require("../db");
 const { idSchema } = require("./validationSchemas");
+const { productSort, paginate, productSearch } = require("../db/models/Product");
+const { DEFAULT_PAGESIZE } = require("../../constants");
 
 //GET /products - returns all the products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll({
+    const { rows: products, count: totalItems } = await Product.findAndCountAll({
       attributes: ["id", "name", "description", "price", "imageUrl", "quantity"],
       include: [
         {
@@ -15,13 +17,19 @@ router.get("/", async (req, res, next) => {
           as: "categories",
           ...categoryFilter(req.query)
         }
-      ]
+      ],
+      ...productSort(req.query),
+      ...paginate(req.query, DEFAULT_PAGESIZE),
+      ...productSearch("product", "name", req.query),
     });
-    res.send(products);
+
+    res.json({ products, totalItems });
   } catch (err) {
     next(err);
   }
 });
+
+
 
 //GET /products/categories - returns all categories
 router.get("/categories", async (req, res, next) => {

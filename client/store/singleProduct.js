@@ -1,7 +1,7 @@
 //Single Product
 
 import axios from "axios";
-import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../constants";
 
 /*************************
  * Action Types          *

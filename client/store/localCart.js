@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../constants";
 import { setFetchSingleProductStatus, setSingleProduct } from "./singleProduct";
 import { ADD_TO_LOCAL_CART, addToCart } from "./cart";
 
