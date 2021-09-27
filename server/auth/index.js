@@ -53,6 +53,7 @@ router.get("/info", requireTokenMiddleware, async (req, res, next) => {
 //change info (first name, last name, email) of user
 router.put("/update", requireTokenMiddleware, async (req, res, next) => {
   try {
+    console.log('****INFO CHANGE*')
     const { firstName, lastName, email} = req.body
     await req.user.update( { firstName, lastName, email} )
     res.send({ user: {firstName, lastName, email}});

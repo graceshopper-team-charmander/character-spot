@@ -27,7 +27,7 @@ const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
-const updateInfo = (user) => ({ type: UPDATE_INFO, user });
+const updateInfo = (user, firstName) => ({ type: UPDATE_INFO, user, firstName });
 const changePassword = () => ({ type: CHANGE_PW });
 export const loginSuccess = (bool) => ({ type: LOGIN_SUCCESS, bool });
 
@@ -108,6 +108,7 @@ export const updateInfoThunk = (update) => {
       if (data) {
         alert("Info changed");
         dispatch(updateInfo(data));
+        dispatch(setLoggedIn(data.firstName));
       }
     } catch (err) {
       console.log(err);
@@ -153,7 +154,7 @@ export default (state = initialState, action) => {
     case SET_INFO:
       return { ...state, user: action.user };
     case UPDATE_INFO:
-      return { ...state, user: action.user };
+      return { ...state, user: action.user};
     case CHANGE_PW:
       return { ...state };
     case LOGIN_SUCCESS:
