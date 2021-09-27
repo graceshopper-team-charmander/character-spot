@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function checkQuantity(product) {
-  // query for that product, check quantity
   console.log("PRODUCT IN SINGLE CART********", product);
   if (product.quantity - product.cartQuantity <= 0) {
     alert(`There are only ${product.quantity} ${product.name}(s) left in stock`);
@@ -43,14 +42,6 @@ const SingleCartProduct = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const updateQuantity = isLoggedIn ? updateQuantityThunk : updateLocalCartQuantity;
   const deleteProduct = isLoggedIn ? deleteProductThunk : deleteLocalCartProduct;
-
-  useEffect(() => {
-    if (product.id) {
-      dispatch(fetchSingleProduct(product.id));
-    }
-  });
-  const queriedProduct = useSelector((state) => state.singleProduct.product);
-
   return (
     <Card className={muiClasses.cardRoot}>
       <Box sx={{ display: "flex" }}>
@@ -69,7 +60,7 @@ const SingleCartProduct = (props) => {
             {product.cartQuantity}
             <div
               onClick={() => {
-                if (checkQuantity(queriedProduct)) {
+                if (checkQuantity(props.product)) {
                   dispatch(updateQuantity(product, product.cartQuantity + 1));
                 }
               }}>
