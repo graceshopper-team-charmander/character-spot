@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import { loginSuccess } from "../store/auth"
 
 /**
  * COMPONENT
@@ -15,6 +18,9 @@ const AuthForm = (props) => {
   const [email, setEmail] = useState("cody@charm.com");
   const [password, setPassword] = useState("123");
   const [firstName, setFirstName] = useState("Cody");
+
+  const loginSuccessAlert = useSelector((state) => state.auth.loginSuccess)
+
   const dispatch = useDispatch();
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -29,6 +35,11 @@ const AuthForm = (props) => {
     <Grid item xs={12} style ={{paddingTop: "1rem",
       /* width: 80%; */
       margin: "0 auto"}}>
+    <Snackbar open={!loginSuccessAlert} autoHideDuration={3000}>
+        <Alert onClose = {() => dispatch(loginSuccess(true))} severity="error" sx={{ width: "100%" }}>
+          Incorrect Email/Password
+        </Alert>
+      </Snackbar>
     <div className="cart-header">
       <h4 className="cart-title">{(name === "signup") ? "Sign Up" : "Login"}</h4>
     </div>
@@ -127,7 +138,7 @@ const mapLogin = (state) => {
   return {
     name: "login",
     displayName: "Login",
-    error: state.auth.error
+    error: state.auth.error,
   };
 };
 

@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "npm run build -- --watch --mode=development",
-    "seed": "node script/seed.js",
-    "seed2": "node script/seed2.js",
+    "seed": "node script/seed2.js",
+    "seed-old": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
     "start:dev:logger": "LOGGING=true npm run start:dev",
@@ -37,8 +37,10 @@
     "morgan": "^1.9.1",
     "nodemailer": "^6.6.5",
     "pg": "^8.5.1",
+    "query-string": "^7.0.1",
     "react-material-ui-carousel": "^2.3.5",
     "sequelize": "^6.6.5",
+    "stripe": "^8.176.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
