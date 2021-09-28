@@ -107,7 +107,15 @@ const SingleProducts = (props) => {
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <NotFound />;
+  else if (fetchStatus === FETCH_FAILED) {
+    const error = 404;
+    const message = "OOPS! PAGE NOT FOUND";
+    return (
+      <div>
+        <NotFound error={error} message={message} />
+      </div>
+    );
+  }
 
   return (
     <Grid

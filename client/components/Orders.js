@@ -4,6 +4,7 @@ import { fetchOrders } from "../store/orders";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import OrderTable from "./OrderTable";
 import LoadingBar from "./LoadingBar";
+import NotFound from "./NotFound";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Paper from "@material-ui/core/Paper";
@@ -31,13 +32,21 @@ const Orders = () => {
     dispatch(fetchOrders());
   }, []);
 
-  if (fetchStatus === FETCH_PENDING)
+  if (fetchStatus === FETCH_PENDING) {
     return (
       <div className="loading">
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
+  } else if (fetchStatus === FETCH_FAILED) {
+    const error = 500;
+    const message = "OOPS! SERVER ERROR";
+    return (
+      <div>
+        <NotFound error={error} message={message} />
+      </div>
+    );
+  }
 
   return (
     <Grid item xs={12} className="orders-page">
