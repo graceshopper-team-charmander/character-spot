@@ -8,7 +8,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
   text: {
     fontFamily: "mario",
-    textAlign: "center"
+    textAlign: "center",
+    color: "#e71e07"
   },
   base: {
     margin: "auto",
@@ -55,7 +56,6 @@ const Thankyou = (props) => {
         src = "/images/charmander.png"
         style = {{maxWidth: "50%", padding: "30px"}}/>
       </div>
-      <h1 className={muiClasses.text}>From Team Charmander</h1>
       </Box>
   </Box>
   )
