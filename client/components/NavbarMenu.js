@@ -127,6 +127,16 @@ export function NavbarMenu() {
                         <div className="nav-link-text">Admin</div>
                       </MenuItem>
                     )}
+                    {isLoggedIn && (
+                      <MenuItem
+                        component={RouterLink}
+                        to="/wishlist"
+                        onClick={handleClose}
+                        className={classes.link}>
+                        <i className="fas fa-star"></i>
+                        <div className="nav-link-text">Wishlist</div>
+                      </MenuItem>
+                    )}
                     <MenuItem
                       component={RouterLink}
                       to="/orders"
