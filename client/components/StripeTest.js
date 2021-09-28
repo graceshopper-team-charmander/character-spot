@@ -25,7 +25,7 @@ const StripeTest = () => {
      console.log('CHECKOUT BUTTON CLICKED-------')
     // setSnackbarMessage("Submitting Order...");
      // setSnackBarOpen(true);
-    dispatch(checkoutSession(cart, firstName, guestEmailAddress, lastName))
+    dispatch(checkoutSession(cart, firstName, guestEmailAddress, lastName, history))
     // dispatch(submitOrder(history));
    }
   return (

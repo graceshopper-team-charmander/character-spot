@@ -162,11 +162,13 @@ export const validateCheckoutInfo = (history, formState) => {
   };
 };
 
-export const checkoutSession = (cart, firstName, guestEmailAddress, lastName) => {
+export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, history) => {
   return async (dispatch) => {
     console.log('checkout session thunk')
     try {
-      await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName});
+      const { data } = await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName});
+      console.log('*******data, sessoin url,', data)
+      window.location.href = data
     } catch (err) {
       console.log(err);
       return false;
@@ -178,6 +180,7 @@ export const submitOrderThunk = (history) => {
   return async (dispatch) => {
     console.log('submit order thunk')
     try {
+
       const { data } = await axios.put(`/api/users/checkout`);
       dispatch(submitOrder(data));
       history.push("/thankyou");

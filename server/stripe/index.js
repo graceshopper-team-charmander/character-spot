@@ -4,8 +4,9 @@ const stripe = require('stripe')('sk_test_51JeNOmJCEzosvIpqKVCJcixnkjtGffehY9nOn
 
 //mounted on charge
 router.post("/create-checkout-session", async (req, res) => {
-  console.log('IN THE STRIPE ROUTE', req.body)
+
   try {
+    console.log('IN THE STRIPE ROUTE', req.body)
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
     // Request methods you wish to allow
@@ -30,11 +31,12 @@ router.post("/create-checkout-session", async (req, res) => {
         'card',
       ],
       mode: 'payment',
-      success_url: `https://character-spot.herokuapp.com/thankyou`,
+      //order number PUT ONTO REQ.BODY
+      success_url: `https://localhost:8080/thankyou/${req.body.orderId}`,
       cancel_url: `https://character-spot.herokuapp.com/`,
     });
 
-    res.redirect(303, session.url)
+    res.send(session.url)
   } catch (err) {
     res.send(err);
   }
