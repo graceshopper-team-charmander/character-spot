@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCartThunk } from "../store/cart";
+import { checkQuantity } from "./ProductRow";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
@@ -19,6 +20,8 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const useRowStyles = makeStyles({
   root: {
@@ -49,7 +52,11 @@ function priceTotal(products) {
 
 function Row(props) {
   const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+
+  const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
+
   const classes = useRowStyles();
   const dispatch = useDispatch();
 
@@ -57,6 +64,22 @@ function Row(props) {
   const date = convertDate(row.updatedAt);
   const total = priceTotal(products);
   const status = row.status.toLowerCase();
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
+  const handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarWarningOpen(false);
+  };
+
+  const productsInCart = useSelector((state) => state.cart.cart);
 
   return (
     <React.Fragment>
@@ -71,7 +94,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">{date}</TableCell>
         <TableCell align="right">${total}</TableCell>
-        <TableCell align="right">-name/address-</TableCell>
+
         <TableCell align="right">{status}</TableCell>
       </TableRow>
       <TableRow>
@@ -95,9 +118,39 @@ function Row(props) {
                   {products.map((product) => (
                     <TableRow key={product.id}>
                       <TableCell component="th" scope="row">
+                        <Snackbar
+                          open={snackBarOpen}
+                          autoHideDuration={3000}
+                          onClose={handleClose}
+                          anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                          <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+                            Added to Cart!
+                          </Alert>
+                        </Snackbar>
+                        <Snackbar
+                          open={snackBarWarningOpen}
+                          autoHideDuration={3000}
+                          onClose={handleWarningClose}
+                          anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                          <Alert
+                            onClose={handleWarningClose}
+                            severity="warning"
+                            sx={{ width: "100%" }}>
+                            {/* There are no {product.name}s left to add to your cart! */}
+                            There are no {product.name}s left to add to your cart!
+                          </Alert>
+                        </Snackbar>
                         <Button
                           variant="contained"
-                          onClick={() => dispatch(addToCartThunk(product.id))}>
+                          onClick={() => {
+                            if (checkQuantity(product, productsInCart)) {
+                              setSnackBarOpen(true);
+                              dispatch(addToCartThunk(product.id));
+                            } else {
+                              setSnackBarWarningOpen(true);
+                              // alert(`There are no ${product.name}'s left to add to your cart!`);
+                            }
+                          }}>
                           ADD TO CART
                         </Button>
                       </TableCell>
@@ -133,7 +186,6 @@ export default function OrderTable({ orders }) {
             <TableCell>Order Number</TableCell>
             <TableCell align="right">Order Placed</TableCell>
             <TableCell align="right">Total</TableCell>
-            <TableCell align="right">Ship To</TableCell>
             <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
