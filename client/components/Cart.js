@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SingleCartProduct from "./SingleCartProduct";
+import TotalSummary from "./TotalSummary"
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
 import { fetchProducts } from "../store/products";
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   totalRoot: {
     border: "8px solid #44af35",
     borderRadius: "10px"
+  },
+  text: {
+    fontFamily: "mario",
   }
 }));
 
@@ -57,6 +61,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart.cart) || [];
   const fetchStatus = useSelector((state) => state.cart.fetchStatus);
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
+  const [noItemsWarningOpen, setNoItemsWarningOpen] = useState(false);
 
   const shipping = 500;
   const numItems = cart.length > 0 ? cart.reduce((acc, ele) => acc + ele.cartQuantity, 0) : 0;
@@ -78,6 +83,7 @@ const Cart = () => {
       return;
     }
     setSnackBarWarningOpen(false);
+    setNoItemsWarningOpen(false)
   };
 
   if (fetchStatus === FETCH_PENDING) {
@@ -107,6 +113,15 @@ const Cart = () => {
           Limited stock! Must reduce number of {limitedProduct}s in your cart!
         </Alert>
       </Snackbar>
+      <Snackbar
+        open={noItemsWarningOpen}
+        autoHideDuration={4000}
+        onClose={handleWarningClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleWarningClose} severity="warning" sx={{ width: "100%" }}>
+          No items in your cart!
+        </Alert>
+      </Snackbar>
       <div className="cart-header">
         <div className="cart-title">Your New Friends (Cart)</div>
       </div>
@@ -116,7 +131,8 @@ const Cart = () => {
             return <SingleCartProduct key={product.id} product={product} />;
           })}
         </div>
-        <Card
+        < TotalSummary />
+        {/* <Card
           variant="outlined"
           style={{ margin: "10px", textAlign: "right" }}
           className={muiClasses.totalRoot}>
@@ -143,7 +159,7 @@ const Cart = () => {
               })}
             </Typography>
           </Box>
-        </Card>
+        </Card> */}
         <Box style={{ margin: "10px", textAlign: "right" }}>
           <div>
             <Button
@@ -152,13 +168,16 @@ const Cart = () => {
               color="secondary"
               className={muiClasses.buttonRoot}
               onClick={() => {
-                if (checkProductQuantities(cart)) {
+                if (cart.length === 0){
+                  setNoItemsWarningOpen(true)
+                }
+                else if (checkProductQuantities(cart)) {
                   routeChange();
                 } else {
                   setSnackBarWarningOpen(true);
                 }
               }}>
-              Checkout
+              <h3 className={muiClasses.text}>Checkout</h3>
             </Button>
           </div>
         </Box>

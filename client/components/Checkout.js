@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     backgroundColor: "#009edb",
     color: "white"
+  },
+  text: {
+    fontFamily: "mario",
   }
 }));
 
@@ -73,7 +76,6 @@ const Checkout = (props) => {
         newErrors[key] = false;
       }
       if(!isLoggedIn){
-        console.log("****** FORMSTATE*", newState)
         localStorage.setItem("guestFirstName", JSON.stringify(newState.firstName));
         localStorage.setItem("guestLastName", JSON.stringify(newState.lastName));
         localStorage.setItem("guestEmailAddress", JSON.stringify(newState.guestEmailAddress));
@@ -115,19 +117,11 @@ const Checkout = (props) => {
                 className={muiClasses.buttonRoot}
                 startIcon={<ShoppingCartOutlinedIcon />}
                 onClick={handleSubmit}>
-                Proceed to Payment
+              <h3 className={muiClasses.text}>Proceed To Payment</h3>
               </Button>
             </div>
           </Grid>
         </Grid>
-        {/* <Snackbar
-          open={snackBarOpen}
-          autoHideDuration={6000}
-          onClose={() => setSnackBarOpen(false)}>
-          <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
-            {snackBarMessage}
-          </Alert>
-        </Snackbar> */}
       </div>
     </div>
   );

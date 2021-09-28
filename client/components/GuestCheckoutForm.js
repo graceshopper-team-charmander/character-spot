@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     width: "100%"
+  },
+  text: {
+    fontFamily: "mario"
   }
 }));
 
@@ -27,7 +30,7 @@ const GuestCheckoutForm = (props) => {
   return (
     <Paper elevation={1} className={muiClasses.paperRoot}>
       <div className="form-header">
-        <div className="form-title">Details</div>
+        <div className="form-title"><h3 className = {muiClasses.text}>Details </h3></div>
       </div>
       <div className="form-container">
         <Grid container spacing={1}>
