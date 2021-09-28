@@ -11,7 +11,8 @@ router.use(cookieParser(cookieSecret));
 router.post("/signup", async (req, res, next) => {
   try {
     await userSignupSchema.validate(req.body);
-    const user = await User.makeOrFind(req.body);
+    const user = await User.create(req.body);
+    await user.createOrder();
     const token = await user.generateToken();
     res.cookie("token", token, {
       sameSite: "strict",
