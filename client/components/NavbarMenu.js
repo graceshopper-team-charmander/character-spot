@@ -52,6 +52,7 @@ export function NavbarMenu() {
 
   const isAdmin = useSelector((state) => state.auth.adminStatus);
   const name = useSelector((state) => state.auth.firstName);
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);

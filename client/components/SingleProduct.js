@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
@@ -8,6 +8,7 @@ import { updateQuantityThunk, addToCartThunk } from "../store/cart";
 import { Link } from "react-router-dom";
 import LoadingBar from "./LoadingBar";
 import NotFound from "./NotFound";
+import { checkQuantity } from "./ProductRow";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +16,8 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import NavigateBeforeRoundedIcon from "@material-ui/icons/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import { addToLocalCart } from "../store/localCart";
 
 const useStyles = makeStyles((theme) => ({
@@ -72,6 +75,10 @@ const SingleProducts = (props) => {
   const fetchStatus = useSelector((state) => state.singleProduct.fetchStatus);
   const styles = useStyles();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const productsInCart = useSelector((state) => state.cart.cart);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   //on mount
   useEffect(() => {
@@ -79,6 +86,20 @@ const SingleProducts = (props) => {
       dispatch(fetchSingleProduct(id));
     }
   }, [id]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
+  const handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarWarningOpen(false);
+  };
 
   if (fetchStatus === FETCH_PENDING)
     return (
@@ -145,7 +166,13 @@ const SingleProducts = (props) => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+                  if (checkQuantity(product, productsInCart)) {
+                    setSnackBarOpen(true);
+                    isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
+                  } else {
+                    setSnackBarWarningOpen(true);
+                    // alert(`There are no ${product.name}'s left to add to your cart!`);
+                  }
                 }}
                 className={styles.button}>
                 ADD TO CART
@@ -170,6 +197,24 @@ const SingleProducts = (props) => {
       <div className="all-products-header" id="single-product-header">
         <div className="all-products-title"></div>
       </div>
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Added to Cart!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackBarWarningOpen}
+        autoHideDuration={3000}
+        onClose={handleWarningClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleWarningClose} severity="warning" sx={{ width: "100%" }}>
+          There are no {product.name}s left to add to your cart!
+        </Alert>
+      </Snackbar>
       {/* bottom row  */}
       {/* <Grid container direction="column" justifyContent="flex-start" alignItems="center">
         <div className="single-product-sub-title">Reviews Or Something</div>
