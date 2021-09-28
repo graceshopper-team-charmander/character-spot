@@ -50,6 +50,8 @@ export function NavbarMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const isAdmin = useSelector((state) => state.auth.adminStatus);
+  console.log("NAVBAR", isAdmin);
   const name = useSelector((state) => state.auth.firstName);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -113,6 +115,16 @@ export function NavbarMenu() {
                       <i className="fas fa-user"></i>
                       <div className="nav-link-text">Profile</div>
                     </MenuItem>
+                    {isAdmin && (
+                      <MenuItem
+                        component={RouterLink}
+                        to="/admin"
+                        onClick={handleClose}
+                        className={classes.link}>
+                        <i className="fas fa-unlock"></i>
+                        <div className="nav-link-text">Admin</div>
+                      </MenuItem>
+                    )}
                     <MenuItem
                       component={RouterLink}
                       to="/orders"
