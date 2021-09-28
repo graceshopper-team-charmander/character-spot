@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store";
