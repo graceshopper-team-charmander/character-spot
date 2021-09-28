@@ -66,7 +66,6 @@ router.put("/update", requireTokenMiddleware, async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { user, token } = await User.authenticate(req.body);
-    // console.log("POST USER**********", user);
     res.cookie("token", token, {
       sameSite: "strict",
       httpOnly: true,

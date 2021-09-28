@@ -45,7 +45,6 @@ export const setAdminProducts = (payload) => {
 export const fetchAdminUsers = () => {
   return async (dispatch) => {
     try {
-      console.log("fetchadmin");
       dispatch(setFetchAdminUsersStatus(FETCH_PENDING));
       const { data } = await axios.get(`/api/admin/users`);
       dispatch(setAdminUsers(data));

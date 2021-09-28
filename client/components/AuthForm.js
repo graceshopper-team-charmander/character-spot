@@ -20,6 +20,22 @@ const AuthForm = (props) => {
   const [password, setPassword] = useState("123");
   const [firstName, setFirstName] = useState("Cody");
 
+  const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
+  const [snackBarErrorOpen, setSnackBarErrorOpen] = useState(false);
+
+  const handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarWarningOpen(false);
+  };
+  const handleErrorClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarErrorOpen(false);
+  };
+
   const history = useHistory();
   const routeChange = () => {
     let path = `/`;
@@ -29,14 +45,22 @@ const AuthForm = (props) => {
   const loginSuccessAlert = useSelector((state) => state.auth.loginSuccess);
 
   const dispatch = useDispatch();
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (name === "signup") {
-      dispatch(authenticate(name, { email, password, firstName }));
-      routeChange();
+      const successLogIn = await dispatch(authenticate(name, { email, password, firstName }));
+      if (successLogIn) {
+        routeChange();
+      } else {
+        setSnackBarErrorOpen(true);
+      }
     } else {
-      dispatch(authenticate(name, { email, password }));
-      routeChange();
+      const successLogIn = await dispatch(authenticate(name, { email, password }));
+      if (successLogIn) {
+        routeChange();
+      } else {
+        setSnackBarWarningOpen(true);
+      }
     }
   };
 
@@ -49,8 +73,21 @@ const AuthForm = (props) => {
         /* width: 80%; */
         margin: "0 auto"
       }}>
-      <Snackbar open={!loginSuccessAlert} autoHideDuration={3000}>
-        <Alert onClose={() => dispatch(loginSuccess(true))} severity="error" sx={{ width: "100%" }}>
+      <Snackbar
+        open={snackBarErrorOpen}
+        autoHideDuration={3000}
+        onClose={handleErrorClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleErrorClose} severity="error" sx={{ width: "100%" }}>
+          This email address is already associated with an account
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackBarWarningOpen}
+        autoHideDuration={3000}
+        onClose={handleWarningClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleWarningClose} severity="warning" sx={{ width: "100%" }}>
           Incorrect Email/Password
         </Alert>
       </Snackbar>

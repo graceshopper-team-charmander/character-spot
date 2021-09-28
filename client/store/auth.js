@@ -41,15 +41,15 @@ export const authenticate = (method, credentials) => {
     try {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
-        dispatch(setLoggedIn(response.data.firstName));
         dispatch(loginSuccess(true));
-        console.log("AUTHENTICATE", response.data.isAdmin);
+        dispatch(setLoggedIn(response.data.firstName));
         dispatch(setAdminStatus(response.data.isAdmin));
-        // console.log(response.data);
+        return true;
       } else {
         console.log("Failed to authenticate");
         dispatch(loginSuccess(false));
         //@todo failed to authenticate
+        return false;
       }
     } catch (err) {
       // alert("Email/Password Incorrect")
@@ -67,6 +67,7 @@ export const logout = () => {
       const response = await axios.get("/auth/logout");
       if (!response.data.loggedIn) {
         dispatch(setLoggedOut());
+        dispatch(loginSuccess(false));
       } else {
         console.log("Failed to logout");
         //@todo failed to logout
@@ -164,9 +165,9 @@ export default (state = initialState, action) => {
     case CHANGE_PW:
       return { ...state };
     case LOGIN_SUCCESS:
+      console.log("REDUCER", action.bool);
       return { ...state, loginSuccess: action.bool };
     case SET_ADMIN_STATUS:
-      console.log("REDUCER", action.status);
       return { ...state, adminStatus: action.status };
     default:
       return state;
