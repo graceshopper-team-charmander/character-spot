@@ -18,6 +18,9 @@ const styles = (theme) => ({
   },
   formControlRoot: {
     width: "100%"
+  },
+  text: {
+    fontFamily :"mario"
   }
 });
 
@@ -45,11 +48,11 @@ class Address extends React.Component {
     return (
       <Paper elevation={1} className={muiClasses.paperRoot}>
         <div className="form-header orange">
-          <div className="form-title">Shipping</div>
+          <div className="form-title"><h3 className = {muiClasses.text}>Shipping </h3></div>
         </div>
         <div className="form-container">
           <FormControl variant="outlined" className={muiClasses.formControlRoot} margin="dense">
-            <InputLabel id="payment_method">Payment Method</InputLabel>
+            <InputLabel id="payment_method">Shipping Method</InputLabel>
             <Grid container spacing={1}>
               <Select
                 labelId="payment_method"

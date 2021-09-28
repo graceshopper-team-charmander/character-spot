@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SingleCartProduct from "./SingleCartProduct";
+import TotalSummary from "./TotalSummary"
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
 import { fetchProducts } from "../store/products";
@@ -130,7 +131,8 @@ const Cart = () => {
             return <SingleCartProduct key={product.id} product={product} />;
           })}
         </div>
-        <Card
+        < TotalSummary />
+        {/* <Card
           variant="outlined"
           style={{ margin: "10px", textAlign: "right" }}
           className={muiClasses.totalRoot}>
@@ -157,7 +159,7 @@ const Cart = () => {
               })}
             </Typography>
           </Box>
-        </Card>
+        </Card> */}
         <Box style={{ margin: "10px", textAlign: "right" }}>
           <div>
             <Button
