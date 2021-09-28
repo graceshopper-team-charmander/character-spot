@@ -6,7 +6,6 @@ const stripe = require('stripe')('sk_test_51JeNOmJCEzosvIpqKVCJcixnkjtGffehY9nOn
 router.post("/create-checkout-session", async (req, res) => {
 
   try {
-    console.log('IN THE STRIPE ROUTE', req.body)
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
     // Request methods you wish to allow
@@ -32,7 +31,7 @@ router.post("/create-checkout-session", async (req, res) => {
       ],
       mode: 'payment',
       //order number PUT ONTO REQ.BODY
-      success_url: `https://localhost:8080/thankyou/${req.body.orderId}`,
+      success_url: `http://localhost:8080/thankyou/`,
       cancel_url: `https://character-spot.herokuapp.com/`,
     });
 

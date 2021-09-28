@@ -38,6 +38,7 @@ router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/cart - checks the users cart out
 router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   try {
+    console.log('in the put route')
     const order = await req.user.getOrders({
       where: {
         status: "PENDING"
@@ -50,8 +51,12 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     const date = order[0].createdAt
     const emailBodyHTML = await emailBody(name, products, orderNumber, date)
 
-    const orderedProducts = await Order.checkout(req.user);
-    await Product.updateInventory(orderedProducts);
+    await order[0].update({ status: "FULFILLED" })
+    console.log('updated order', order)
+    await req.user.createOrder();
+    console.log(req.user.cart)
+    // const orderedProducts = await Order.checkout(req.user);
+    await Product.updateInventory(products);
 
     //send email
     // sendConfirmEmail({to: req.user.email, html: emailBodyHTML })

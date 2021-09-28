@@ -135,10 +135,9 @@ export const deleteProductThunk = (product) => {
   };
 };
 
-const submitOrder = (cart) => {
+const submitOrder = () => {
   return {
     type: SUBMIT_ORDER,
-    cart
   };
 };
 
@@ -162,12 +161,11 @@ export const validateCheckoutInfo = (history, formState) => {
   };
 };
 
-export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, history) => {
+export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, orderId, history) => {
   return async (dispatch) => {
     console.log('checkout session thunk')
     try {
-      const { data } = await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName});
-      console.log('*******data, sessoin url,', data)
+      const { data } = await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName, orderId});
       window.location.href = data
     } catch (err) {
       console.log(err);
@@ -176,15 +174,12 @@ export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, hi
   };
 };
 
-export const submitOrderThunk = (history) => {
+export const submitOrderThunk = () => {
+  console.log('**** IN THE SUBMIT ORDER THUNK****')
   return async (dispatch) => {
-    console.log('submit order thunk')
     try {
-
-      const { data } = await axios.put(`/api/users/checkout`);
-      dispatch(submitOrder(data));
-      history.push("/thankyou");
-      return true;
+      await axios.put(`/api/users/checkout`);
+      dispatch(submitOrder());
     } catch (err) {
       console.log(err);
       return false;
@@ -226,7 +221,7 @@ export default (state = initialState, action) => {
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
     case SUBMIT_ORDER:
-      return { ...state, cart: [] };
+      return { ...state, cart: [], form: {} };
     case LOGOUT:
       localStorage.setItem("characterSpotCart", JSON.stringify([]));
       return { ...state, cart: [] };

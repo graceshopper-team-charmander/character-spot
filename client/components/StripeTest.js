@@ -1,4 +1,4 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
 import { submitOrderThunk, checkoutSession } from "../store/cart";
 import { submitGuestOrderThunk } from "../store/localCart";
 import { useHistory } from "react-router-dom";
@@ -18,21 +18,15 @@ const StripeTest = () => {
 
   const history = useHistory();
 
-   // const [snackBarMessage, setSnackbarMessage] = useState("");
 
    const handleSubmit = async (evt) => {
      evt.preventDefault()
-     console.log('CHECKOUT BUTTON CLICKED-------')
-    // setSnackbarMessage("Submitting Order...");
-     // setSnackBarOpen(true);
     dispatch(checkoutSession(cart, firstName, guestEmailAddress, lastName, history))
-    // dispatch(submitOrder(history));
    }
   return (
     <div>
       <h1> Order Summary </h1>
     <form >
-    {/* action="/charge/create-checkout-session" method="POST" */}
         <button type="submit"  onClick = {handleSubmit}id="checkout-button">Checkout</button>
     </form>
     </div>
