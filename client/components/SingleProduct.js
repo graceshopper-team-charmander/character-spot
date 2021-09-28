@@ -113,10 +113,11 @@ const SingleProducts = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const products = useSelector((state) => state.products.products);
+  console.log(products);
 
   let categories = product.categories || [];
   categories = categories.map((category) => category.name).join(", ");
-  console.log("cat", categories);
 
   //on mount
   useEffect(() => {
@@ -154,7 +155,7 @@ const SingleProducts = (props) => {
       </div>
     );
   }
-  console.log("desc", product);
+
   return (
     <Grid
       container
@@ -206,7 +207,6 @@ const SingleProducts = (props) => {
               alignItems="center"
               className="title-container">
               <div className="single-product-title">{product.name}</div>
-              <WishlistHeartToggle product={product} />
             </Grid>
 
             {/* middle of right column */}
@@ -261,6 +261,7 @@ const SingleProducts = (props) => {
                 className={styles.button}>
                 <div className="single-button">ADD TO CART</div>
               </Button>
+              <WishlistHeartToggle product={product} />
             </Grid>
           </Grid>
           {/* </Grid> */}
