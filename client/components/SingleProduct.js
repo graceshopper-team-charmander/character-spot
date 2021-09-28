@@ -19,6 +19,10 @@ import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { addToLocalCart } from "../store/localCart";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { addToWishlistThunk, deleteFromWishlistThunk } from "../store/wishlist";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import WishlistHeartToggle from "./WishlistHeartToggle";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -70,6 +74,15 @@ const useStyles = makeStyles((theme) => ({
   descContainer: {
     width: "80%",
     backgroundColor: "lightgray"
+  },
+  actions: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  favorite: {
+    alignSelf: "center",
+    height: "24px",
+    marginLeft: "10px"
   }
 }));
 
@@ -112,7 +125,15 @@ const SingleProducts = (props) => {
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <NotFound />;
+  else if (fetchStatus === FETCH_FAILED) {
+    const error = 404;
+    const message = "OOPS! PAGE NOT FOUND";
+    return (
+      <div>
+        <NotFound error={error} message={message} />
+      </div>
+    );
+  }
 
   return (
     <Grid
@@ -177,7 +198,7 @@ const SingleProducts = (props) => {
               <div className="description">{product.description}</div>
               <div className="price">$ {product.price / 100}</div>
             </Grid>
-            <Grid item>
+            <Grid item className={styles.actions}>
               <Button
                 variant="contained"
                 onClick={() => {
@@ -192,6 +213,7 @@ const SingleProducts = (props) => {
                 className={styles.button}>
                 ADD TO CART
               </Button>
+              <WishlistHeartToggle product={product} />
             </Grid>
           </Grid>
           {/* </Grid> */}

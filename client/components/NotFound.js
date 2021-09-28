@@ -37,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NotFound = () => {
+const NotFound = ({ error, message }) => {
+  console.log(error, message);
+  if (!error) error = 404;
+  if (!message) message = "OOPS! PAGE NOT FOUND";
   const styles = useStyles();
   const title = "WHO'S THAT PO-";
   return (
@@ -50,8 +53,8 @@ const NotFound = () => {
         <Paper elevation={3} className={styles.notFoundBody}>
           <div className="not-found-grid">
             <div className="not-found-right">
-              <div className="title-oops">OOPS! PAGE NOT FOUND</div>
-              <div className="title-404">404</div>
+              <div className="title-oops">{message}</div>
+              <div className="title-404">{error}</div>
               <Button
                 variant="contained"
                 component={RouterLink}
@@ -61,7 +64,10 @@ const NotFound = () => {
               </Button>
             </div>
             <div className="not-found-left">
-              <img src="/images/sailor-moon.png" />
+              <img
+                src="https://live.staticflickr.com/65535/51528776100_b5c535f3e6_o.png"
+                // onError="this.onError=null;this.src='https://live.staticflickr.com/65535/51528776100_b5c535f3e6_o.png';"
+              />
             </div>
           </div>
         </Paper>
