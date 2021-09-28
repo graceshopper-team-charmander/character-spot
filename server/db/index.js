@@ -24,6 +24,9 @@ Order.belongsTo(User)
 Product.belongsToMany(ProductCategory, {through: 'product_category_join', as: 'categories'});
 ProductCategory.belongsToMany(Product, {through: 'product_category_join', as: 'categories'});
 
+User.belongsToMany(Product, {through: 'wishlist_join', as: 'wishlistItems'});
+Product.belongsToMany(User, {through: 'wishlist_join', as: 'wishlistItems'});
+
 module.exports = {
   db,
   models: {
