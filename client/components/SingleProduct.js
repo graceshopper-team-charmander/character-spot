@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
   descContainer: {
     width: "80%",
+    height: "200px",
     backgroundColor: "lightgray"
   },
   actions: {
@@ -181,11 +182,12 @@ const SingleProducts = (props) => {
             {/* top of right column */}
             <Grid
               container
-              direction="column"
+              direction="row"
               justifyContent="center"
               alignItems="center"
               className="title-container">
               <div className="single-product-title">{product.name}</div>
+              <WishlistHeartToggle product={product} />
             </Grid>
 
             {/* middle of right column */}
@@ -213,7 +215,6 @@ const SingleProducts = (props) => {
                 className={styles.button}>
                 ADD TO CART
               </Button>
-              <WishlistHeartToggle product={product} />
             </Grid>
           </Grid>
           {/* </Grid> */}
