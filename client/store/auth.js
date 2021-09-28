@@ -19,7 +19,8 @@ export const LOGOUT = "LOGOUT";
 const SET_INFO = "GET_INFO";
 const UPDATE_INFO = "UPDATE_INFO";
 const CHANGE_PW = "CHANGE_PW";
-const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+const SET_ADMIN_STATUS = "SET_ADMIN_STATUS";
 
 /***********************
  * ACTION CREATORS     *
@@ -29,6 +30,7 @@ const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
 const updateInfo = (user) => ({ type: UPDATE_INFO, user });
 const changePassword = () => ({ type: CHANGE_PW });
+const setAdminStatus = (status) => ({ type: SET_ADMIN_STATUS, status });
 export const loginSuccess = (bool) => ({ type: LOGIN_SUCCESS, bool });
 
 /**
@@ -40,15 +42,18 @@ export const authenticate = (method, credentials) => {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
         dispatch(setLoggedIn(response.data.firstName));
-        dispatch(loginSuccess(true))
+        dispatch(loginSuccess(true));
+        console.log("AUTHENTICATE", response.data.isAdmin);
+        dispatch(setAdminStatus(response.data.isAdmin));
+        // console.log(response.data);
       } else {
         console.log("Failed to authenticate");
-        dispatch(loginSuccess(false))
+        dispatch(loginSuccess(false));
         //@todo failed to authenticate
       }
     } catch (err) {
       // alert("Email/Password Incorrect")
-      dispatch(loginSuccess(false))
+      dispatch(loginSuccess(false));
       console.log(err);
     } finally {
       initCart(dispatch, getState());
@@ -78,6 +83,7 @@ export const whoAmI = () => {
       const response = await axios.get("/auth/whoAmI");
       if (response.data.loggedIn) {
         dispatch(setLoggedIn(response.data.firstName));
+        dispatch(setAdminStatus(response.data.isAdmin));
       } else {
         console.log("Failed to authenticate");
         //@todo failed to authenticate
@@ -141,7 +147,8 @@ const initialState = {
   loggedIn: NOT_LOGGED_IN,
   loginSuccess: true,
   user: {},
-  error: false
+  error: false,
+  adminStatus: false
 };
 
 export default (state = initialState, action) => {
@@ -158,6 +165,9 @@ export default (state = initialState, action) => {
       return { ...state };
     case LOGIN_SUCCESS:
       return { ...state, loginSuccess: action.bool };
+    case SET_ADMIN_STATUS:
+      console.log("REDUCER", action.status);
+      return { ...state, adminStatus: action.status };
     default:
       return state;
   }

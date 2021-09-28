@@ -34,7 +34,7 @@ router.post("/signup", async (req, res, next) => {
 //authenticates that the user is who they say they are
 router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
   try {
-    res.send({ loggedIn: true, firstName: req.user.firstName });
+    res.send({ loggedIn: true, firstName: req.user.firstName, isAdmin: req.user.isAdmin });
   } catch (ex) {
     next(ex);
   }
@@ -43,8 +43,8 @@ router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
 //get info of user
 router.get("/info", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const { firstName, lastName, email } = req.user
-    res.send({user: { firstName, lastName, email} });
+    const { firstName, lastName, email } = req.user;
+    res.send({ user: { firstName, lastName, email } });
   } catch (ex) {
     next(ex);
   }
@@ -53,9 +53,9 @@ router.get("/info", requireTokenMiddleware, async (req, res, next) => {
 //change info (first name, last name, email) of user
 router.put("/update", requireTokenMiddleware, async (req, res, next) => {
   try {
-    const { firstName, lastName, email} = req.body
-    await req.user.update( { firstName, lastName, email} )
-    res.send({ user: {firstName, lastName, email}});
+    const { firstName, lastName, email } = req.body;
+    await req.user.update({ firstName, lastName, email });
+    res.send({ user: { firstName, lastName, email } });
   } catch (ex) {
     next(ex);
   }
@@ -65,6 +65,7 @@ router.put("/update", requireTokenMiddleware, async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { user, token } = await User.authenticate(req.body);
+    // console.log("POST USER**********", user);
     res.cookie("token", token, {
       sameSite: "strict",
       httpOnly: true,
@@ -72,10 +73,11 @@ router.post("/login", async (req, res, next) => {
     });
     res.send({
       loggedIn: true,
-      firstName: user.firstName
+      firstName: user.firstName,
+      isAdmin: user.isAdmin
     });
   } catch (err) {
-    res.status(401).send('Failed to authenticate')
+    res.status(401).send("Failed to authenticate");
   }
 });
 

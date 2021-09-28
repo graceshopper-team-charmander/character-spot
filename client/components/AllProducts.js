@@ -21,13 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
   formControlRoot: {
     width: "100%"
+  },
+  allProducts: {
+    // backgroundImage: "url(/images/paper.jpeg)",
+    // objectFit: "cover"
   }
-  // allProducts: {
-  //   // @todo - I don't like this specific image, will keep looking
-  //   backgroundImage: "url(/images/paper.jpeg)",
-  //   objectFit: "fill",
-  //   backgroundRepeat: "round"
-  // }
 }));
 
 const AllProducts = (props) => {
@@ -44,8 +42,8 @@ const AllProducts = (props) => {
     const page = getQueryParam(location, "page");
     if (!page) {
       let query = setQueryParam(location, "page", 1);
-      query = setQueryParam(query, 'sort', 'name');
-      query = setQueryParam(query, 'dir', 'asc');
+      query = setQueryParam(query, "sort", "name");
+      query = setQueryParam(query, "dir", "asc");
       history.replace(`${location.pathname}?${query}`);
     } else {
       dispatch(fetchProducts(location));
