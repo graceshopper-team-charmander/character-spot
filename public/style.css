@@ -294,10 +294,25 @@ a {
   justify-content: center;
 }
 
+#order-summary {
+  background-color: #e71e07;
+}
+
 .cart-body {
-  /* width: 80%; */
+  width: 60%;
   margin: 0;
   padding: 10px 40px;
+}
+
+.img-container {
+  width: 40%;
+  margin: 0;
+  padding: 10px 40px;
+}
+
+.img-check-out-process {
+  width: 100%;
+  height: auto;
 }
 
 /***********************
@@ -307,7 +322,7 @@ a {
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  /* width: 80%; */
+  width: 60%;
   margin: 0 auto;
 }
 
