@@ -14,6 +14,7 @@
 body {
   color: rgb(72, 72, 72);
   background-color: ghostwhite;
+  min-width: 1200px;
 }
 
 label {
@@ -138,7 +139,8 @@ a {
 .all-products-title,
 .orders-title,
 .checkout-title,
-.cart-title {
+.cart-title,
+.admin-title {
   font-weight: bold;
   font-size: 2rem;
   display: flex;
@@ -417,4 +419,19 @@ a {
 
 .multi-select-chip-container > div:last-child {
   margin-right: 3px;
+}
+
+/***********************
+ Admin                 *
+***********************/
+.admin-header {
+  /* display: flex;
+  flex-flow: row nowrap; */
+  width: 100%;
+  height: 80px;
+  padding: 16px 40px;
+  color: white;
+  background-color: #e71e07;
+  justify-content: space-between;
+  align-items: center;
 }

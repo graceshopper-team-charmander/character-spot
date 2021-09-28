@@ -23,9 +23,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   allProducts: {
-    // @todo - WIP...it doesn't want to show up -.-
-    backgroundImage: "url(/images/paper.jpeg)",
-    objectFit: "cover"
+    // backgroundImage: "url(/images/paper.jpeg)",
+    // objectFit: "cover"
   }
 }));
 
@@ -42,8 +41,8 @@ const AllProducts = (props) => {
     const page = getQueryParam(location, "page");
     if (!page) {
       let query = setQueryParam(location, "page", 1);
-      query = setQueryParam(query, 'sort', 'name');
-      query = setQueryParam(query, 'dir', 'asc');
+      query = setQueryParam(query, "sort", "name");
+      query = setQueryParam(query, "dir", "asc");
       history.replace(`${location.pathname}?${query}`);
     } else {
       dispatch(fetchProducts(location));
