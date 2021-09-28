@@ -9,6 +9,8 @@ import LoadingBar from "./LoadingBar";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import AdminTabSelector from "./AdminTabSelector";
+import WishlistProduct from "./WishlistProduct";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +77,24 @@ const Admin = () => {
     return <div>Error!</div>;
 
   return (
-    <div className={classes.root}>
+    <Grid item xs={12} className="page">
+      <div className="page-header">
+        <div className="page-title">Administration</div>
+      </div>
+      <div className="page-body">
+        <Grid container justifyContent="center">
+          <Grid item xs={12}>
+            <AdminTabSelector />
+          </Grid>
+        </Grid>
+      </div>
+    </Grid>
+  );
+};
+
+/*
+
+ <div className={classes.root}>
       <Grid container direction="row" justifyContent="flex-start" className="admin-header">
         <Grid container direction="row" justifyContent="flex-start" className="admin-title">
           Administration
@@ -87,24 +106,7 @@ const Admin = () => {
         justifyContent="center"
         alignItems="center"
         className={classes.adminPage}>
-        <Grid container direction="column" justifyContent="flex-start">
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-around"
-            alignItems="center"
-            className={classes.subHeader}>
-            <a href="#users" className={classes.adminLinks}>
-              Users
-            </a>
-            <a href="#products" className={classes.adminLinks}>
-              Products
-            </a>
-            <a href="#" className={classes.adminLinks}>
-              Promos
-            </a>
-          </Grid>
-        </Grid>
+
         <Paper elevation={3} className={classes.adminTable}>
           <Grid container direction="column" justifyContent="center">
             <Grid id="users" className={classes.tableTitle} container alignItems="center">
@@ -123,8 +125,7 @@ const Admin = () => {
         </Paper>
       </Grid>
     </div>
-  );
-};
+ */
 
 export default Admin;
 
