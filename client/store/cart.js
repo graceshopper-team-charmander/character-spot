@@ -11,6 +11,7 @@ const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
+const STORE_CHECKOUT_INFO = "STORE_CHECKOUT_INFO"
 
 export const initCart = (dispatch, state) => {
   const localCart = JSON.parse(localStorage.getItem("characterSpotCart"));
@@ -134,19 +135,24 @@ export const deleteProductThunk = (product) => {
   };
 };
 
-const submitOrder = (cart) => {
+const submitOrder = () => {
   return {
     type: SUBMIT_ORDER,
-    cart
   };
 };
 
-export const submitOrderThunk = (history) => {
+const storeCheckoutInfo = (formState) => {
+  return {
+    type: STORE_CHECKOUT_INFO,
+    formState
+  };
+};
+
+export const validateCheckoutInfo = (history, formState) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/users/checkout`);
-      dispatch(submitOrder(data));
-      history.push("/thankyou");
+      dispatch(storeCheckoutInfo(formState));
+      history.push("/payment");
       return true;
     } catch (err) {
       console.log(err);
@@ -155,7 +161,32 @@ export const submitOrderThunk = (history) => {
   };
 };
 
-let initialState = { fetchStatus: FETCH_PENDING, cart: [] };
+export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, orderId, history) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`/charge/create-checkout-session`, {cart});
+      window.location.href = data
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  };
+};
+
+export const submitOrderThunk = () => {
+  return async (dispatch, getState) => {
+    const state = getState()
+    try {
+      await axios.put(`/api/users/checkout`, {cart: state.cart.cart});
+      dispatch(submitOrder());
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  };
+};
+
+let initialState = { fetchStatus: FETCH_PENDING, cart: [], form: {} };
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -189,12 +220,14 @@ export default (state = initialState, action) => {
       const updatedCart = state.cart.filter((product) => product.id !== action.product.id);
       return { ...state, cart: updatedCart };
     case SUBMIT_ORDER:
-      return { ...state, cart: [] };
+      return { ...state, cart: [], form: {} };
     case LOGOUT:
       localStorage.setItem("characterSpotCart", JSON.stringify([]));
       return { ...state, cart: [] };
     case SET_CART_FETCH_STATUS:
       return { ...state, fetchStatus: action.status };
+    case STORE_CHECKOUT_INFO:
+      return { ...state, form: action.formState };
     default:
       return state;
   }

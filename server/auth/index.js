@@ -35,7 +35,7 @@ router.post("/signup", async (req, res, next) => {
 //authenticates that the user is who they say they are
 router.get("/whoAmI", requireTokenMiddleware, async (req, res, next) => {
   try {
-    res.send({ loggedIn: true, firstName: req.user.firstName, isAdmin: req.user.isAdmin });
+    res.send({ loggedIn: true, firstName: req.user.firstName, lastName: req.user.lastName, email: req.user.email, isAdmin: req.user.isAdmin  });
   } catch (ex) {
     next(ex);
   }

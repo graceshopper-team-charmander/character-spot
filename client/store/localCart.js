@@ -56,14 +56,19 @@ const submitGuestOrder = (cart) => {
   };
 };
 
-export const submitGuestOrderThunk = (history, { firstName, lastName, guestEmailAddress }) => {
+export const submitGuestOrderThunk = (history) => {
+  console.log('made iti to submit guest order thunk')
+  const firstName = JSON.parse(localStorage.getItem("guestFirstName"))
+  const lastName = JSON.parse(localStorage.getItem("guestLastName"))
+  const email = JSON.parse(localStorage.getItem("guestEmailAddress"))
+
   return async (dispatch, getState) => {
     const state = getState();
     try {
       const body = {
         firstName,
         lastName,
-        email: guestEmailAddress,
+        email,
         cart: state.cart.cart
       };
       const { data } = await axios.put(`/api/users/guest-checkout`, body);
