@@ -4,6 +4,7 @@ import SingleCartProduct from "./SingleCartProduct";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
 import { fetchProducts } from "../store/products";
+import NotFound from "./NotFound";
 
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -79,13 +80,21 @@ const Cart = () => {
     setSnackBarWarningOpen(false);
   };
 
-  if (fetchStatus === FETCH_PENDING)
+  if (fetchStatus === FETCH_PENDING) {
     return (
       <div className="loading">
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
+  } else if (fetchStatus === FETCH_FAILED) {
+    const error = 500;
+    const message = "OOPS! SERVER ERROR";
+    return (
+      <div>
+        <NotFound error={error} message={message} />
+      </div>
+    );
+  }
 
   return (
     <Grid item xs={12} className="cart-page">

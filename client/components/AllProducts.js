@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Sort from "./Sort";
 import Pagination from "./Pagination";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
+import NotFound from "./NotFound";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -38,7 +39,6 @@ const AllProducts = (props) => {
   const totalItems = useSelector((state) => state.products.totalItems);
   //on mount
   useEffect(() => {
-    console.log("IN ALL PRODUCTS");
     const page = getQueryParam(location, "page");
     if (!page) {
       let query = setQueryParam(location, "page", 1);
@@ -51,17 +51,24 @@ const AllProducts = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("IN ALL PRODUCTS FETCH EFFECT");
     dispatch(fetchProducts(location));
   }, [location.search]);
 
-  if (fetchStatus === FETCH_PENDING)
+  if (fetchStatus === FETCH_PENDING) {
     return (
       <div className="loading">
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
+  } else if (fetchStatus === FETCH_FAILED) {
+    const error = 500;
+    const message = "OOPS! SERVER ERROR";
+    return (
+      <div>
+        <NotFound error={error} message={message} />
+      </div>
+    );
+  }
 
   return (
     <div className="all-products-page">
