@@ -4,7 +4,6 @@ const stripe = require('stripe')('sk_test_51JeNOmJCEzosvIpqKVCJcixnkjtGffehY9nOn
 
 //mounted on charge
 router.post("/create-checkout-session", async (req, res) => {
-
   try {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
@@ -18,6 +17,9 @@ router.post("/create-checkout-session", async (req, res) => {
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true)
 
+    //create products
+
+    //create prices
 
     const session = await stripe.checkout.sessions.create({
       line_items: [

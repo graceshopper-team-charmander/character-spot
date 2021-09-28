@@ -165,7 +165,10 @@ export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, or
   return async (dispatch) => {
     console.log('checkout session thunk')
     try {
-      const { data } = await axios.post(`/charge/create-checkout-session`);
+      const body = {
+        cart,
+      }
+      const { data } = await axios.post(`/charge/create-checkout-session`, body);
       window.location.href = data
     } catch (err) {
       console.log(err);
