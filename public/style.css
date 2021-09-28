@@ -185,14 +185,35 @@ a {
   object-fit: "contain";
 }
 
+.title-container {
+  width: 100%;
+  padding: 3px 10px;
+  background-color: #484848;
+}
+
 .single-product-title {
-  font-size: 3rem;
-  color: #484848;
+  font-size: 2.5rem;
+  color: white;
+
   font-weight: bold;
+  font-family: "mario";
+}
+
+.desc-container {
+  background-color: lightgray;
+  width: 50%;
+}
+
+.description {
+  width: 75%;
+}
+
+.price {
+  width: 75%;
 }
 
 .single-product-sub-title {
-  font-size: 2rem;
+  font-size: 4rem;
   color: #484848;
   font-weight: bold;
   margin-bottom: 2%;

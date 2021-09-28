@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
   rightCol: {
     width: "55%",
-    paddingLeft: "2%"
+    paddingLeft: "2%",
+    margin: "2% 4%"
   },
   button: {
     backgroundColor: "#fcd000",
@@ -65,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
       transform: "translate3d(0px, -10px, 0px)"
     },
     zIndex: 1
+  },
+  descContainer: {
+    width: "80%",
+    backgroundColor: "lightgray"
   }
 }));
 
@@ -153,14 +158,24 @@ const SingleProducts = (props) => {
             justifyContent="space-around"
             alignItems="center">
             {/* top of right column */}
-            <Grid container direction="column" justifyContent="center" alignItems="center">
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className="title-container">
               <div className="single-product-title">{product.name}</div>
             </Grid>
 
             {/* middle of right column */}
-            <Grid container direction="column" justifyContent="center" alignItems="center">
-              <div>{product.description}</div>
-              <div>$ {product.price / 100}</div>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={styles.descContainer}>
+              <div className="description">{product.description}</div>
+              <div className="price">$ {product.price / 100}</div>
             </Grid>
             <Grid item>
               <Button
