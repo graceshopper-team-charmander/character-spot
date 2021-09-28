@@ -57,6 +57,8 @@ export function NavbarMenu() {
   const anchorRef = React.useRef(null);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
+  const loginSuccessAlert = useSelector((state) => state.auth.loginSuccess);
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
