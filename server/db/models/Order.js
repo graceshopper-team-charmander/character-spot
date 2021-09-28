@@ -27,9 +27,7 @@ Order.checkout = async (user) => {
       }
     })
   )[0];
-  console.log('order that should be pending', order)
   await order.update({ status: "FULFILLED" });
-  console.log('order that should be fulfilled', order)
   await user.createOrder(); //for their next order
   return order.getProducts();
 };

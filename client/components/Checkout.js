@@ -68,14 +68,17 @@ const Checkout = (props) => {
     const newErrors = newState.errors;
     try {
       await validationSchema.validate(newState, { abortEarly: false });
-      const { guestEmailAddress } = newState;
+      // const { guestEmailAddress } = newState;
       for (let key in newErrors) {
         newErrors[key] = false;
       }
-      // setSnackbarMessage("Submitting Order...");
-      // setSnackBarOpen(true);
+      if(!isLoggedIn){
+        console.log("****** FORMSTATE*", newState)
+        localStorage.setItem("guestFirstName", JSON.stringify(newState.firstName));
+        localStorage.setItem("guestLastName", JSON.stringify(newState.lastName));
+        localStorage.setItem("guestEmailAddress", JSON.stringify(newState.guestEmailAddress));
+      }
       dispatch(validateCheckoutInfo(history,formState));
-      // dispatch(submitOrder(history,formState));
     } catch (err) {
       err.inner.forEach((error) => {
         newErrors[error.path] = error.message;

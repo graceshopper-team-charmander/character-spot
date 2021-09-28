@@ -38,7 +38,6 @@ router.post("/cart", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/cart - checks the users cart out
 router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
   try {
-    console.log('in the put route')
     const order = await req.user.getOrders({
       where: {
         status: "PENDING"
@@ -46,16 +45,13 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     });
     //create email to send
     const name = req.user.firstName
-    const products = await order[0].getProducts()
+    const products = req.body.cart
     const orderNumber = order[0].id
     const date = order[0].createdAt
     const emailBodyHTML = await emailBody(name, products, orderNumber, date)
 
-    await order[0].update({ status: "FULFILLED" })
-    console.log('updated order', order)
-    await req.user.createOrder();
-    // const orderedProducts = await Order.checkout(req.user);
-    await Product.updateInventory(products);
+    const orderedProducts = await Order.checkout(req.user);
+    await Product.updateInventory(orderedProducts);
 
     //send email
     sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
@@ -70,14 +66,32 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/guest-checkout - checks the users cart out
 router.put("/guest-checkout", async (req, res, next) => {
   try {
+    console.log('IN THE GUEST CHECKOUT ROUTE', req.body)
     //@todo: quantity checking needs to occur before anything else
     req.body.password =
       faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
     await userSignupSchema.validate(req.body);
     const guestUser = await User.makeOrFind(req.body); //find or create a guest account
+
+    //@todo: send email
+
+    const order = await guestUser.getOrders({
+      where: {
+        status: "PENDING"
+      }
+    });
+    console.log(req.body.cart, '*****')
+    const name = guestUser.firstName
+    const products = req.body.cart
+    const orderNumber = order[0].id
+    const date = order[0].createdAt
+    const emailBodyHTML = await emailBody(name, products, orderNumber, date)
+
     const orderedProducts = await Order.guestCheckout(guestUser, req.body.cart);
     await Product.updateInventory(orderedProducts);
-    //@todo: send email
+
+    sendConfirmEmail({to: guestUser.email, html: emailBodyHTML })
+
     res.sendStatus(200);
   } catch (err) {
     next(err);

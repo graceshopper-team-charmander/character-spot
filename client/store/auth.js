@@ -164,7 +164,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName, lastName: action.lastName, email: action.email};
     case LOGOUT:
-      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
+      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest", lastName: "", email: ""};
     case SET_INFO:
       return { ...state, user: action.user };
     case UPDATE_INFO:

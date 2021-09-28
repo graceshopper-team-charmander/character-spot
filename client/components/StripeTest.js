@@ -14,15 +14,13 @@ const StripeTest = () => {
   const {firstName, guestEmailAddress, lastName } = useSelector((state) => state.cart.form);
 
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const submitOrder = isLoggedIn ? submitOrderThunk : submitGuestOrderThunk;
+  // const checkout = isLoggedIn ? checkoutSession : guestCheckoutSession;
 
   const history = useHistory();
 
 
    const handleSubmit = async (evt) => {
     evt.preventDefault()
-    //change products state to processing and add total price
-    //dispatch(processing(cart, firstName, guestEmail, etc))
     dispatch(checkoutSession(cart, firstName, guestEmailAddress, lastName, history))
    }
   return (

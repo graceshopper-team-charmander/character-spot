@@ -165,7 +165,7 @@ export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, or
   return async (dispatch) => {
     console.log('checkout session thunk')
     try {
-      const { data } = await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName, orderId});
+      const { data } = await axios.post(`/charge/create-checkout-session`);
       window.location.href = data
     } catch (err) {
       console.log(err);
@@ -175,10 +175,10 @@ export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, or
 };
 
 export const submitOrderThunk = () => {
-  console.log('**** IN THE SUBMIT ORDER THUNK****')
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const state = getState()
     try {
-      await axios.put(`/api/users/checkout`);
+      await axios.put(`/api/users/checkout`, {cart: state.cart.cart});
       dispatch(submitOrder());
     } catch (err) {
       console.log(err);

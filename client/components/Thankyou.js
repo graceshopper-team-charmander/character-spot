@@ -10,13 +10,18 @@ const Thankyou = (props) => {
 
   const fetchCartStatus = useSelector((state) => state.cart.fetchStatus);
 
-  const currState = useSelector((state) => state);
+  const form = useSelector((state) => state.cart.form);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
-  // const submitOrder = isLoggedIn ? submitOrderThunk : submitGuestOrderThunk;
+  const submitOrder = isLoggedIn ? submitOrderThunk : submitGuestOrderThunk;
+
   useEffect(() => {
     if(fetchCartStatus === "FETCH_SUCCESS"){
-      dispatch(submitOrderThunk())
+      dispatch(submitOrder({
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.guestEmailAddress
+      }))
     }
   }, [fetchCartStatus]);
 
