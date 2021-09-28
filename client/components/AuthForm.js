@@ -20,6 +20,14 @@ const AuthForm = (props) => {
   const [password, setPassword] = useState("123");
   const [firstName, setFirstName] = useState("Cody");
 
+  const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
+  const handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBarWarningOpen(false);
+  };
+
   const history = useHistory();
   const routeChange = () => {
     let path = `/`;
@@ -27,16 +35,27 @@ const AuthForm = (props) => {
   };
 
   const loginSuccessAlert = useSelector((state) => state.auth.loginSuccess);
+  const authState = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (name === "signup") {
       dispatch(authenticate(name, { email, password, firstName }));
-      routeChange();
+      console.log("auth state", authState);
+      if (loginSuccessAlert) {
+        dispatch(routeChange());
+      } else {
+        setSnackBarWarningOpen(true);
+      }
     } else {
       dispatch(authenticate(name, { email, password }));
-      routeChange();
+      console.log("auth state", authState);
+      if (loginSuccessAlert) {
+        routeChange();
+      } else {
+        setSnackBarWarningOpen(true);
+      }
     }
   };
 
@@ -49,8 +68,18 @@ const AuthForm = (props) => {
         /* width: 80%; */
         margin: "0 auto"
       }}>
-      <Snackbar open={!loginSuccessAlert} autoHideDuration={3000}>
-        <Alert onClose={() => dispatch(loginSuccess(true))} severity="error" sx={{ width: "100%" }}>
+      <Snackbar
+        open={snackBarWarningOpen}
+        autoHideDuration={3000}
+        onClose={handleWarningClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert
+          onClose={() => {
+            handleWarningClose();
+            // dispatch(loginSuccess(true));
+          }}
+          severity="error"
+          sx={{ width: "100%" }}>
           Incorrect Email/Password
         </Alert>
       </Snackbar>
