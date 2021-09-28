@@ -54,12 +54,11 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     await order[0].update({ status: "FULFILLED" })
     console.log('updated order', order)
     await req.user.createOrder();
-    console.log(req.user.cart)
     // const orderedProducts = await Order.checkout(req.user);
     await Product.updateInventory(products);
 
     //send email
-    // sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
+    sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
     //@todo: quantity checking needs to occur before anything else
 
     res.sendStatus(200);

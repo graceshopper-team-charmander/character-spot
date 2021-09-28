@@ -20,7 +20,9 @@ const StripeTest = () => {
 
 
    const handleSubmit = async (evt) => {
-     evt.preventDefault()
+    evt.preventDefault()
+    //change products state to processing and add total price
+    //dispatch(processing(cart, firstName, guestEmail, etc))
     dispatch(checkoutSession(cart, firstName, guestEmailAddress, lastName, history))
    }
   return (
