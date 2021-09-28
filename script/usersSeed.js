@@ -12,21 +12,21 @@ const customUsers = [
     password: "123"
   },
   {
-    email: "alexandra@charm.com",
+    email: "amarks93@gmail.com",
     firstName: "Alexandra",
     lastName: "Marks",
     password: "123",
     isAdmin: true
   },
   {
-    email: "nicole@charm.com",
+    email: "nicole.pan1127@gmail.com",
     firstName: "Nicole",
     lastName: "Pan",
     password: "123",
     isAdmin: true
   },
   {
-    email: "amaya@charm.com",
+    email: "amaya.agha@gmail.com",
     firstName: "Amaya",
     lastName: "Agha",
     password: "123",

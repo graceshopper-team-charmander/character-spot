@@ -17,6 +17,7 @@ import Profile from "./components/Profile";
 import Thankyou from "./components/Thankyou";
 import NotFound from "./components/NotFound";
 import StripeTest from "./components/StripeTest";
+import Admin from "./components/Admin";
 
 /**
  * COMPONENT
@@ -33,7 +34,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     return (
       <div>
@@ -63,16 +64,17 @@ class Routes extends Component {
             <Profile />
           </Route>
           <Route path="/thankyou">
-            <Thankyou/>
+            <Thankyou />
           </Route>
           <Route path="/payment">
             <StripeTest/>
           </Route>
           {isLoggedIn ? (
             <>
-              <Redirect to="/" component={Home} />
-              {/* Figure out how to get to not found with a redirect?? */}
-              <Route component={NotFound} />
+              <Switch>
+                {isAdmin && <Route exact path="/admin" component={Admin} />}
+                <Route component={NotFound} />
+              </Switch>
             </>
           ) : (
             <Switch>
@@ -95,7 +97,8 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: state.auth.loggedIn,
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    isAdmin: state.auth.adminStatus
   };
 };
 
