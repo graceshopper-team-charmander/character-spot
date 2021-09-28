@@ -11,6 +11,7 @@ const SET_CART = "SET_CART";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const SUBMIT_ORDER = "SUBMIT_ORDER";
+const STORE_CHECKOUT_INFO = "STORE_CHECKOUT_INFO"
 
 export const initCart = (dispatch, state) => {
   const localCart = JSON.parse(localStorage.getItem("characterSpotCart"));
@@ -141,8 +142,41 @@ const submitOrder = (cart) => {
   };
 };
 
+const storeCheckoutInfo = (formState) => {
+  return {
+    type: STORE_CHECKOUT_INFO,
+    formState
+  };
+};
+
+export const validateCheckoutInfo = (history, formState) => {
+  return async (dispatch) => {
+    try {
+      dispatch(storeCheckoutInfo(formState));
+      history.push("/payment");
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  };
+};
+
+export const checkoutSession = (cart, firstName, guestEmailAddress, lastName) => {
+  return async (dispatch) => {
+    console.log('checkout session thunk')
+    try {
+      await axios.post(`/charge/create-checkout-session`, {cart, firstName, guestEmailAddress, lastName});
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  };
+};
+
 export const submitOrderThunk = (history) => {
   return async (dispatch) => {
+    console.log('submit order thunk')
     try {
       const { data } = await axios.put(`/api/users/checkout`);
       dispatch(submitOrder(data));
@@ -155,7 +189,7 @@ export const submitOrderThunk = (history) => {
   };
 };
 
-let initialState = { fetchStatus: FETCH_PENDING, cart: [] };
+let initialState = { fetchStatus: FETCH_PENDING, cart: [], form: {} };
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -195,6 +229,8 @@ export default (state = initialState, action) => {
       return { ...state, cart: [] };
     case SET_CART_FETCH_STATUS:
       return { ...state, fetchStatus: action.status };
+    case STORE_CHECKOUT_INFO:
+      return { ...state, form: action.formState };
     default:
       return state;
   }

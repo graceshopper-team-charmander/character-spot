@@ -65,7 +65,7 @@ class Routes extends Component {
           <Route path="/thankyou">
             <Thankyou/>
           </Route>
-          <Route path="/stripetest">
+          <Route path="/payment">
             <StripeTest/>
           </Route>
           {isLoggedIn ? (

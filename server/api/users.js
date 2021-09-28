@@ -54,7 +54,7 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
     await Product.updateInventory(orderedProducts);
 
     //send email
-    sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
+    // sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
     //@todo: quantity checking needs to occur before anything else
 
     res.sendStatus(200);

@@ -24,7 +24,7 @@ const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 /***********************
  * ACTION CREATORS     *
  ***********************/
-const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
+const setLoggedIn = (firstName, lastName, email) => ({ type: LOGIN, firstName, lastName, email});
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
 const updateInfo = (user, firstName) => ({ type: UPDATE_INFO, user, firstName });
@@ -76,8 +76,12 @@ export const whoAmI = () => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get("/auth/whoAmI");
+      console.log('*****', response)
       if (response.data.loggedIn) {
-        dispatch(setLoggedIn(response.data.firstName));
+        dispatch(setLoggedIn(
+          response.data.firstName,
+          response.data.lastName,
+          response.data.email));
       } else {
         console.log("Failed to authenticate");
         //@todo failed to authenticate
@@ -139,6 +143,8 @@ export const changePasswordThunk = (pw) => {
  ***********************/
 const initialState = {
   firstName: "Guest",
+  lastName: "",
+  email: "",
   loggedIn: NOT_LOGGED_IN,
   loginSuccess: true,
   user: {},
@@ -148,7 +154,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName };
+      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName, lastName: action.lastName, email: action.email};
     case LOGOUT:
       return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
     case SET_INFO:
