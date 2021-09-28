@@ -13,7 +13,7 @@ function emailBody(name, order, orderNumber, date) {
   </tr>`)
 
   //subtotal for items and shipping in pennies
-  const subtotal = order.reduce( (acc, product) => acc + (product.cart.cartQuantity * product.price), 0)
+  const subtotal = order.reduce( (acc, product) => acc + (product.cartQuantity * product.price), 0)
   const shipping = 500
 
   //cost and order summary

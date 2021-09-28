@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-import { submitOrderThunk } from "../store/cart";
+import { submitOrderThunk, validateCheckoutInfo } from "../store/cart";
 import { submitGuestOrderThunk } from "../store/localCart";
 import GuestCheckoutForm from "./GuestCheckoutForm";
 import * as Yup from "yup";
@@ -44,38 +44,47 @@ const Checkout = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
-  const submitOrder = isLoggedIn ? submitOrderThunk : submitGuestOrderThunk;
+
+  const loggedInUserFirstName = useSelector((state) => state.auth.firstName);
+  const loggedInUserLastName = useSelector((state) => state.auth.lastName);
+  const loggedInUserEmail = useSelector((state) => state.auth.email);
+
+  // const submitOrder = isLoggedIn ? submitOrderThunk : submitGuestOrderThunk;
   const history = useHistory();
   const [formState, setFormState] = useState({
-    guestEmailAddress: "cody@charm.com",
-    firstName: "Cody",
-    lastName: "Charm",
+    guestEmailAddress: loggedInUserEmail,
+    firstName: loggedInUserFirstName,
+    lastName: loggedInUserLastName,
     errors: {
       firstName: false,
       lastName: false,
       guestEmailAddress: false
     }
   });
-  const [snackBarMessage, setSnackbarMessage] = useState("");
+  // const [snackBarMessage, setSnackbarMessage] = useState("");
 
   const handleSubmit = async (evt) => {
     const newState = { ...formState };
     const newErrors = newState.errors;
     try {
       await validationSchema.validate(newState, { abortEarly: false });
-      const { guestEmailAddress } = newState;
+      // const { guestEmailAddress } = newState;
       for (let key in newErrors) {
         newErrors[key] = false;
       }
-      setSnackbarMessage("Submitting Order...");
-      setSnackBarOpen(true);
-      dispatch(submitOrder(history,formState));
+      if(!isLoggedIn){
+        console.log("****** FORMSTATE*", newState)
+        localStorage.setItem("guestFirstName", JSON.stringify(newState.firstName));
+        localStorage.setItem("guestLastName", JSON.stringify(newState.lastName));
+        localStorage.setItem("guestEmailAddress", JSON.stringify(newState.guestEmailAddress));
+      }
+      dispatch(validateCheckoutInfo(history,formState));
     } catch (err) {
       err.inner.forEach((error) => {
         newErrors[error.path] = error.message;
       });
     }
-    setFormState(newState);
+    // setFormState(newState);
   };
 
   return (
@@ -94,9 +103,9 @@ const Checkout = (props) => {
           <Grid item>
             <Shipping />
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <PaymentMethod />
-          </Grid>
+          </Grid> */}
           <Grid item>
             <div className="form-actions">
               <Button
@@ -106,19 +115,19 @@ const Checkout = (props) => {
                 className={muiClasses.buttonRoot}
                 startIcon={<ShoppingCartOutlinedIcon />}
                 onClick={handleSubmit}>
-                Place Order
+                Proceed to Payment
               </Button>
             </div>
           </Grid>
         </Grid>
-        <Snackbar
+        {/* <Snackbar
           open={snackBarOpen}
           autoHideDuration={6000}
           onClose={() => setSnackBarOpen(false)}>
           <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
             {snackBarMessage}
           </Alert>
-        </Snackbar>
+        </Snackbar> */}
       </div>
     </div>
   );

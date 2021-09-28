@@ -25,10 +25,10 @@ const SET_ADMIN_STATUS = "SET_ADMIN_STATUS";
 /***********************
  * ACTION CREATORS     *
  ***********************/
-const setLoggedIn = (firstName) => ({ type: LOGIN, firstName });
+const setLoggedIn = (firstName, lastName, email) => ({ type: LOGIN, firstName, lastName, email});
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
-const updateInfo = (user) => ({ type: UPDATE_INFO, user });
+const updateInfo = (user, firstName) => ({ type: UPDATE_INFO, user, firstName });
 const changePassword = () => ({ type: CHANGE_PW });
 const setAdminStatus = (status) => ({ type: SET_ADMIN_STATUS, status });
 export const loginSuccess = (bool) => ({ type: LOGIN_SUCCESS, bool });
@@ -41,15 +41,15 @@ export const authenticate = (method, credentials) => {
     try {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
-        dispatch(setLoggedIn(response.data.firstName));
         dispatch(loginSuccess(true));
-        console.log("AUTHENTICATE", response.data.isAdmin);
+        dispatch(setLoggedIn(response.data.firstName));
         dispatch(setAdminStatus(response.data.isAdmin));
-        // console.log(response.data);
+        return true;
       } else {
         console.log("Failed to authenticate");
         dispatch(loginSuccess(false));
         //@todo failed to authenticate
+        return false;
       }
     } catch (err) {
       // alert("Email/Password Incorrect")
@@ -67,6 +67,7 @@ export const logout = () => {
       const response = await axios.get("/auth/logout");
       if (!response.data.loggedIn) {
         dispatch(setLoggedOut());
+        dispatch(loginSuccess(false));
       } else {
         console.log("Failed to logout");
         //@todo failed to logout
@@ -81,8 +82,13 @@ export const whoAmI = () => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get("/auth/whoAmI");
+      console.log('*****', response)
       if (response.data.loggedIn) {
-        dispatch(setLoggedIn(response.data.firstName));
+        // @todo cleanup
+        dispatch(setLoggedIn(
+          response.data.firstName,
+          response.data.lastName,
+          response.data.email));
         dispatch(setAdminStatus(response.data.isAdmin));
       } else {
         console.log("Failed to authenticate");
@@ -114,6 +120,7 @@ export const updateInfoThunk = (update) => {
       if (data) {
         alert("Info changed");
         dispatch(updateInfo(data));
+        dispatch(setLoggedIn(data.firstName));
       }
     } catch (err) {
       console.log(err);
@@ -144,6 +151,8 @@ export const changePasswordThunk = (pw) => {
  ***********************/
 const initialState = {
   firstName: "Guest",
+  lastName: "",
+  email: "",
   loggedIn: NOT_LOGGED_IN,
   loginSuccess: true,
   user: {},
@@ -154,19 +163,19 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName };
+      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName, lastName: action.lastName, email: action.email};
     case LOGOUT:
-      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest" };
+      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest", lastName: "", email: ""};
     case SET_INFO:
       return { ...state, user: action.user };
     case UPDATE_INFO:
-      return { ...state, user: action.user };
+      return { ...state, user: action.user};
     case CHANGE_PW:
       return { ...state };
     case LOGIN_SUCCESS:
+      console.log("REDUCER", action.bool);
       return { ...state, loginSuccess: action.bool };
     case SET_ADMIN_STATUS:
-      console.log("REDUCER", action.status);
       return { ...state, adminStatus: action.status };
     default:
       return state;
