@@ -55,7 +55,7 @@ const Sort = (props) => {
         <Select
           labelId="sort-direction-select"
           id="sort-direction-select"
-          value={getQueryParam(location, "dir") || ""} //"asc"
+          value={getQueryParam(location, "dir") || "asc"}
           name="dir"
           onChange={(evt) => handleChange(location, history, evt)}>
           {Object.entries(sortDirections).map(([key, val]) => (
