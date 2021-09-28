@@ -38,20 +38,19 @@ const AuthForm = (props) => {
   const authState = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (name === "signup") {
-      dispatch(authenticate(name, { email, password, firstName }));
+      const successLogIn = await dispatch(authenticate(name, { email, password, firstName }));
       console.log("auth state", authState);
-      if (loginSuccessAlert) {
-        dispatch(routeChange());
+      if (successLogIn) {
+        routeChange();
       } else {
         setSnackBarWarningOpen(true);
       }
     } else {
-      dispatch(authenticate(name, { email, password }));
-      console.log("auth state", authState);
-      if (loginSuccessAlert) {
+      const successLogIn = await dispatch(authenticate(name, { email, password }));
+      if (successLogIn) {
         routeChange();
       } else {
         setSnackBarWarningOpen(true);
