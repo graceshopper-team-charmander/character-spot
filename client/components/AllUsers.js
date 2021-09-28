@@ -42,7 +42,6 @@ const columns = [
 ];
 
 export default function AllUsers({ users }) {
-  console.log(users);
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid

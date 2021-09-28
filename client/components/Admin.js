@@ -56,20 +56,23 @@ const Admin = () => {
   const users = useSelector((state) => state.admin.users);
   const products = useSelector((state) => state.admin.products);
 
-  console.log(users, products);
+  const fetchUsersStatus = useSelector((state) => state.admin.fetchUsersStatus);
+  const fetchProductsStatus = useSelector((state) => state.admin.fetchProductsStatus);
 
   useEffect(() => {
     dispatch(fetchAdminProducts());
     dispatch(fetchAdminUsers());
   }, []);
 
-  if (fetchStatus === FETCH_PENDING)
+  if (fetchUsersStatus === FETCH_PENDING || fetchProductsStatus === FETCH_PENDING)
     return (
       <div className="loading">
         <LoadingBar />
       </div>
     );
-  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
+
+  if (fetchUsersStatus === FETCH_FAILED || fetchProductsStatus === FETCH_FAILED)
+    return <div>Error!</div>;
 
   return (
     <div className={classes.root}>

@@ -76,7 +76,9 @@ export const fetchAdminProducts = () => {
  ************************/
 const initialState = {
   users: [],
-  products: []
+  products: [],
+  fetchUsersStatus: FETCH_PENDING,
+  fetchProductsStatus: FETCH_PENDING
 };
 
 export default (state = initialState, action) => {
@@ -85,6 +87,10 @@ export default (state = initialState, action) => {
       return { ...state, users: action.payload };
     case SET_ADMIN_PRODUCTS:
       return { ...state, products: action.payload };
+    case SET_ADMIN_USERS_FETCH_STATUS:
+      return { ...state, fetchUsersStatus: action.status };
+    case SET_ADMIN_PRODUCTS_FETCH_STATUS:
+      return { ...state, fetchProductsStatus: action.status };
     default:
       return state;
   }
