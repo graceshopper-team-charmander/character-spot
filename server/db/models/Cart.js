@@ -39,7 +39,8 @@ const refactorSingleCartItem = (item) => {
     imageUrl: item["imageUrl"],
     price: item["price"],
     quantity: item["quantity"],
-    cartQuantity: item.cart.cartQuantity
+    cartQuantity: item.cart.cartQuantity,
+    description: item["description"]
   };
 };
 
