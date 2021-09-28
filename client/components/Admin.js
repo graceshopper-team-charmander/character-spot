@@ -4,6 +4,7 @@ import { fetchAdminUsers, fetchAdminProducts } from "../store/admin";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import AllUsers from "./AllUsers";
 import AllAdminProducts from "./AllAdminProducts";
+import LoadingBar from "./LoadingBar";
 
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -61,6 +62,14 @@ const Admin = () => {
     dispatch(fetchAdminProducts());
     dispatch(fetchAdminUsers());
   }, []);
+
+  if (fetchStatus === FETCH_PENDING)
+    return (
+      <div className="loading">
+        <LoadingBar />
+      </div>
+    );
+  else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
     <div className={classes.root}>
