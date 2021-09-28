@@ -26,7 +26,7 @@ const Thankyou = (props) => {
   }, [fetchCartStatus]);
 
   return (
-    <div>Thanks for your order!</div>
+    <div>Thanks for your order!!!!</div>
   )
 
 };
