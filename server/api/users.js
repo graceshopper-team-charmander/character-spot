@@ -14,6 +14,9 @@ const faker = require("faker");
 const { sendConfirmEmail, emailBody} = require("../email/email")
 const test = "freda.hamill81@ethereal.email"
 
+//mount wishlist on user
+router.use('/wishlist', require('./wishlist'));
+
 
 //Get the cart of a user
 //GET /api/users/cart - returns the users cart

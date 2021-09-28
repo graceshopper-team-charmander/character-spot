@@ -19,6 +19,10 @@ import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { addToLocalCart } from "../store/localCart";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { addToWishlistThunk, deleteFromWishlistThunk } from "../store/wishlist";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import WishlistHeartToggle from "./WishlistHeartToggle";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -65,6 +69,15 @@ const useStyles = makeStyles((theme) => ({
       transform: "translate3d(0px, -10px, 0px)"
     },
     zIndex: 1
+  },
+  actions: {
+    display:"flex",
+    flexDirection: "row"
+  },
+  favorite: {
+    alignSelf: "center",
+    height: "24px",
+    marginLeft: "10px"
   }
 }));
 
@@ -162,7 +175,7 @@ const SingleProducts = (props) => {
               <div>{product.description}</div>
               <div>$ {product.price / 100}</div>
             </Grid>
-            <Grid item>
+            <Grid item className={styles.actions}>
               <Button
                 variant="contained"
                 onClick={() => {
@@ -177,6 +190,7 @@ const SingleProducts = (props) => {
                 className={styles.button}>
                 ADD TO CART
               </Button>
+              <WishlistHeartToggle product={product}/>
             </Grid>
           </Grid>
           {/* </Grid> */}

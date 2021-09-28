@@ -18,6 +18,8 @@ import Thankyou from "./components/Thankyou";
 import NotFound from "./components/NotFound";
 import StripeTest from "./components/StripeTest";
 import Admin from "./components/Admin";
+import Wishlist from "./components/Wishlist";
+import { fetchWishlist } from "./store/wishlist";
 
 /**
  * COMPONENT
@@ -63,6 +65,9 @@ class Routes extends Component {
           <Route path="/profile">
             <Profile />
           </Route>
+          <Route path="/wishlist">
+            <Wishlist />
+          </Route>
           <Route path="/thankyou">
             <Thankyou />
           </Route>
@@ -107,6 +112,7 @@ const mapDispatch = (dispatch) => {
     async loadInitialData() {
       dispatch(fetchProductCategories());
       await dispatch(whoAmI());
+      dispatch(fetchWishlist())
     },
     setCartThunk(cart) {
       dispatch(setCartThunk(cart));
