@@ -9,6 +9,7 @@ import cart from "./cart";
 import orders from "./orders";
 import localCart from "./localCart";
 import admin from "./admin";
+import wishlist from "./wishlist";
 
 const reducer = combineReducers({
   auth,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   singleProduct, //for single product
   cart,
   orders,
-  admin
+  admin,
+  wishlist
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

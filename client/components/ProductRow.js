@@ -13,6 +13,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import { addToWishlistThunk, deleteFromWishlistThunk } from "../store/wishlist";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import WishlistHeartToggle from "./WishlistHeartToggle";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -84,7 +88,8 @@ export function checkQuantity(product, productsInCart) {
     if (product.quantity - qtyInCart < 1) {
       return false;
     }
-  } else {
+  }
+  else {
     if (product.quantity < 1) {
       return false;
     }
@@ -101,6 +106,7 @@ const ProductRow = (props) => {
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const wishlist = useSelector(state => state.wishlist.wishlist);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -117,6 +123,7 @@ const ProductRow = (props) => {
   };
 
   const productsInCart = useSelector((state) => state.cart.cart);
+  const inWishlist = wishlist.find(wishlistItem => wishlistItem.id === product.id);
 
   return (
     <div>
@@ -141,9 +148,17 @@ const ProductRow = (props) => {
       <Card className={styles.card}>
         <Link to={`/products/${id}`}>
           <CardContent className={styles.cardContent}>
-            <Typography sx={{ fontSize: 10 }} className={styles.cardTitle} id="card-title">
-              {name}
-            </Typography>
+            <div className="product-row-header">
+              <Typography sx={{ fontSize: 10 }} className={styles.cardTitle} id="card-title">
+                {name}
+              </Typography>
+              {
+                isLoggedIn &&
+                <div>
+                 <WishlistHeartToggle product={product}/>
+                </div>
+              }
+            </div>
             <div className={styles.cardBody}>
               <CardMedia
                 className={styles.cardImage}
@@ -164,7 +179,8 @@ const ProductRow = (props) => {
             if (checkQuantity(product, productsInCart)) {
               setSnackBarOpen(true);
               isLoggedIn ? dispatch(addToCartThunk(id)) : dispatch(addToLocalCart(product));
-            } else {
+            }
+            else {
               setSnackBarWarningOpen(true);
               // alert(`There are no ${product.name}'s left to add to your cart!`);
             }

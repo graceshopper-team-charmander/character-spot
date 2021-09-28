@@ -135,7 +135,7 @@ async function runSeed() {
   console.log("seeding...");
   try {
     await seed();
-    await dbpg.query("CREATE EXTENSION pg_trgm");
+    // await dbpg.query("CREATE EXTENSION pg_trgm");
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
