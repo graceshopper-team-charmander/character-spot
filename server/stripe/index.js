@@ -4,30 +4,36 @@ const stripe = require('stripe')('sk_test_51JeNOmJCEzosvIpqKVCJcixnkjtGffehY9nOn
 
 //mounted on charge
 router.post("/create-checkout-session", async (req, res) => {
+  const cart = req.body.cart
   try {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-
-    // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true)
 
-    //create products
-
-    //create prices
+    let stripeProduct = []
+    for(let i = 0 ; i < cart.length; i++){
+      let product = await stripe.products.create({name: `${cart[i].name}`})
+      stripeProduct.push( {
+        product,
+        quantity: cart[i].cartQuantity,
+        price: cart[i].price})
+    }
+    const lineItems = []
+    for(let j = 0; j < stripeProduct.length; j++){
+      let stripePrice = await stripe.prices.create({
+        product: stripeProduct[j].product.id,
+        unit_amount: stripeProduct[j].price,
+        currency: 'usd',
+      });
+      lineItems.push({
+        price: stripePrice.id,
+        quantity: stripeProduct[j].quantity
+      })
+    }
 
     const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price: 'price_1JeQCHJCEzosvIpqXeN8B1z8',
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
       payment_method_types: [
         'card',
       ],

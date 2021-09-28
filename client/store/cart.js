@@ -163,12 +163,8 @@ export const validateCheckoutInfo = (history, formState) => {
 
 export const checkoutSession = (cart, firstName, guestEmailAddress, lastName, orderId, history) => {
   return async (dispatch) => {
-    console.log('checkout session thunk')
     try {
-      const body = {
-        cart,
-      }
-      const { data } = await axios.post(`/charge/create-checkout-session`, body);
+      const { data } = await axios.post(`/charge/create-checkout-session`, {cart});
       window.location.href = data
     } catch (err) {
       console.log(err);
