@@ -23,11 +23,12 @@ export const fetchOrders = () => {
   return async (dispatch) => {
     try {
       dispatch(setFetchOrdersStatus(FETCH_PENDING));
-      const { data } = await axios.get("/api/orders");
-      dispatch(setOrders(data));
+      const response = await axios.get("/api/orders");
+      dispatch(setOrders(response.data));
       dispatch(setFetchOrdersStatus(FETCH_SUCCESS));
     } catch (err) {
-      dispatch(setFetchProductsStatus(FETCH_FAILED));
+      // console.log(err.status === 500 ? )
+      dispatch(setFetchOrdersStatus(FETCH_FAILED));
       console.log(err);
     }
   };
