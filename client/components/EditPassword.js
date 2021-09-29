@@ -163,7 +163,8 @@ class EditPassword extends React.Component {
 
 const mapState = (state) => {
   return {
-    error: state.auth.error
+    error: state.auth.error,
+    auth: state.auth
   };
 };
 
