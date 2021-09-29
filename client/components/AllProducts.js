@@ -12,6 +12,7 @@ import Sort from "./Sort";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 import NotFound from "./NotFound";
 import ListPagination from "./ListPagination";
+import { fetchWishlist } from "../store/wishlist";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -48,6 +49,10 @@ const AllProducts = (props) => {
     } else {
       dispatch(fetchProducts(location));
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchWishlist());
   }, []);
 
   useEffect(() => {
