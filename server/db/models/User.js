@@ -118,12 +118,11 @@ User.makeOrFind = async function ({ firstName, email, password }) {
   }
   else {
     user = await User.create({
-      defaults: {
         firstName,
         email,
         password
       }
-    });
+    );
     await user.createOrder();
   }
   return user;
