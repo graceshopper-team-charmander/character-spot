@@ -7,8 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import { addToCartThunk } from "../store/cart";
-import { deleteFromWishlistThunk } from "../store/wishlist";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useDispatch } from "react-redux";
 import { adminUpdateUserThunk } from "../store/admin";

@@ -12,16 +12,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  adminDeleteProductThunk,
-  adminUpdateProductThunk,
-  fetchAdminProducts
-} from "../store/admin";
+import { adminDeleteProductThunk, fetchAdminProducts } from "../store/admin";
 import AdminProductFormDialog from "./AdminProductFormDialog";
 import { useHistory, useLocation } from "react-router-dom";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 import ListPagination from "./ListPagination";
-import { fetchProducts } from "../store/products";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
@@ -33,7 +28,7 @@ const useStyles = makeStyles({
     "&:hover": {
       backgroundColor: "#fcd000"
     },
-    marginBottom:"10px"
+    marginBottom: "10px"
   },
   buttonLabel: {
     fontFamily: "mario"
@@ -65,7 +60,7 @@ const AdminProductList = (props) => {
   const [formName, setFormName] = useState("Default");
   const [dialogStatus, setDialogStatus] = useState(false);
   const [selectedData, setSelectedData] = useState({});
-  const [dialogMode, setDialogMode] = useState('edit');
+  const [dialogMode, setDialogMode] = useState("edit");
   const history = useHistory();
   useEffect(() => {
     const page = getQueryParam(location, "page");
@@ -89,10 +84,10 @@ const AdminProductList = (props) => {
         <Button
           classes={{ root: muiClasses.addButton, label: muiClasses.buttonLabel }}
           onClick={() => {
-              setSelectedData({ } );
-              setDialogStatus(true);
-              setFormName("Add New Product");
-              setDialogMode('add');
+            setSelectedData({});
+            setDialogStatus(true);
+            setFormName("Add New Product");
+            setDialogMode("add");
           }}>
           Add New Product
         </Button>
@@ -118,7 +113,7 @@ const AdminProductList = (props) => {
                     <IconButton
                       onClick={() => {
                         setSelectedData(product);
-                        setDialogMode('edit');
+                        setDialogMode("edit");
                         setDialogStatus(true);
                         setFormName("Edit Product");
                       }}
@@ -126,17 +121,17 @@ const AdminProductList = (props) => {
                       <EditIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete"
-                  onClick={async () => {
-                    const success = await dispatch(adminDeleteProductThunk(product.id))
-                    if(success) {
-                      setSnackbarMessage('Deleted ' + product.name);
-                    }
-                    else {
-                      setSnackbarMessage('Failed to delete ' + product.name);
-                    }
-                    setSnackbarStatus(true);
-                  }}>
+                  <Tooltip
+                    title="Delete"
+                    onClick={async () => {
+                      const success = await dispatch(adminDeleteProductThunk(product.id));
+                      if (success) {
+                        setSnackbarMessage("Deleted " + product.name);
+                      } else {
+                        setSnackbarMessage("Failed to delete " + product.name);
+                      }
+                      setSnackbarStatus(true);
+                    }}>
                     <IconButton classes={{ root: muiClasses.iconButtonRoot }}>
                       <HighlightOffIcon fontSize="small" />
                     </IconButton>
@@ -158,7 +153,7 @@ const AdminProductList = (props) => {
         </Grid>
       </Grid>
       <AdminProductFormDialog
-        dialogMode = {dialogMode}
+        dialogMode={dialogMode}
         setSnackbarStatus={setSnackbarStatus}
         setSnackbarMessage={setSnackbarMessage}
         dialogStatus={dialogStatus}

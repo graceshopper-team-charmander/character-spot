@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAdminUsers, fetchAdminProducts } from "../store/admin";
-import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
-import AllUsers from "./AllUsers";
-import AllAdminProducts from "./AllAdminProducts";
-import LoadingBar from "./LoadingBar";
-
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import AdminTabSelector from "./AdminTabSelector";
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import AdminUserList from "./AdminUserList";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import AdminUserFormDialog from "./AdminUserFormDialog";
 import AdminProductList from "./AdminProductList";
-import { getQueryParam, setQueryParam } from "../utility-funcs/query";
-import { fetchProducts } from "../store/products";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,8 +73,8 @@ const Admin = () => {
   const history = useHistory();
 
   useEffect(() => {
-    history.push('/admin/' + selectedTab);
-  },[]);
+    history.push("/admin/" + selectedTab);
+  }, []);
 
   return (
     <>
