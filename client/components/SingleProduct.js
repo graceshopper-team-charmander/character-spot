@@ -114,7 +114,6 @@ const SingleProducts = (props) => {
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const products = useSelector((state) => state.products.products);
-  console.log(products);
 
   let categories = product.categories || [];
   categories = categories.map((category) => category.name).join(", ");

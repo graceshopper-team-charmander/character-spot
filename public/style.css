@@ -607,3 +607,8 @@ a {
   width: 100%;
   object-fit: scale-down;
 }
+
+.login-img {
+  width: 100%;
+  height: auto;
+}
