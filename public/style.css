@@ -14,7 +14,7 @@
 body {
   color: rgb(72, 72, 72);
   background-color: ghostwhite;
-  min-width: 1200px;
+  min-width: 1300px;
 }
 
 label {
@@ -176,7 +176,7 @@ a {
 }
 
 .product-row-header {
-  display:flex;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -191,14 +191,53 @@ a {
   object-fit: "contain";
 }
 
+.title-container {
+  width: 100%;
+  padding: 3px 10px;
+  background-color: #484848;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
 .single-product-title {
-  font-size: 3rem;
-  color: #484848;
+  font-size: 2.5rem;
+  color: white;
+
   font-weight: bold;
+  font-family: "mario";
+}
+
+.single-button {
+  font-family: "mario";
+  font-size: 1.2rem;
+}
+
+.desc-container {
+  background-color: lightgray;
+  width: 50%;
+}
+
+.top {
+  padding-bottom: 20px;
+  border-bottom: 1px solid gray;
+  width: 100%;
+}
+
+#top-left {
+  text-align: center;
+}
+
+#bottom-left {
+  text-align: center;
+}
+
+.bottom {
+  padding-top: 20px;
+  border-top: 1px solid gray;
+  width: 100%;
 }
 
 .single-product-sub-title {
-  font-size: 2rem;
+  font-size: 4rem;
   color: #484848;
   font-weight: bold;
   margin-bottom: 2%;
@@ -255,10 +294,25 @@ a {
   justify-content: center;
 }
 
+#order-summary {
+  background-color: #e71e07;
+}
+
 .cart-body {
-  /* width: 80%; */
+  width: 60%;
   margin: 0;
   padding: 10px 40px;
+}
+
+.img-container {
+  width: 40%;
+  margin: 0;
+  padding: 10px 40px;
+}
+
+.img-check-out-process {
+  width: 100%;
+  height: auto;
 }
 
 /***********************
@@ -268,11 +322,9 @@ a {
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  /* width: 80%; */
+  width: 60%;
   margin: 0 auto;
 }
-
-
 
 .page-header {
   display: flex;
@@ -290,7 +342,6 @@ a {
   margin: 0;
   padding: 10px 40px;
 }
-
 
 /***********************
  Forms                 *
@@ -462,21 +513,103 @@ a {
   align-items: center;
 }
 
-
 /***********************
  Wishlist              *
 ***********************/
+.wishlist-page {
+  padding-top: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .wishlist-right {
-  display:flex;
-  flex-grow:1;
+  display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
 }
 
 .wishlist-buttons {
-  text-align:right;
+  text-align: right;
 }
 .wishlist-buttons > *:first-child {
   margin-right: 5px;
+}
+
+/***********************
+ Profile               *
+***********************/
+
+.profile-body {
+  width: 60%;
+  margin: 1rem;
+  padding: 10px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/***********************
+ Featured              *
+***********************/
+.featured-header {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 30px;
+  padding: 16px 40px;
+  margin: 2em 1em 0 1em;
+  color: white;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.featured-title {
+  font-weight: bold;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  font-family: "mario";
+}
+
+.creator-header {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 30px;
+  padding: 24px 40px 0 40px;
+  margin: 2em 1em 1em 1em;
+  color: #484848;
+  justify-content: center;
+  align-items: center;
+}
+
+.creator-title {
+  font-weight: bold;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  font-family: "mario";
+}
+
+.creator-subtitle {
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 75%;
+}
+
+.avatar-img {
+  height: 100%;
+  width: 100%;
+  object-fit: scale-down;
+}
+
+.login-img {
+  width: 100%;
+  height: auto;
 }

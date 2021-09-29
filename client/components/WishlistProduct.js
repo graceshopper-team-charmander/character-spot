@@ -31,21 +31,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#009edb",
     color: "white",
     fontStyle: "bold",
-    '&:hover': {
-      backgroundColor: '#fcd000',
-    },
+    "&:hover": {
+      backgroundColor: "#fcd000"
+    }
   },
   deleteButton: {
     backgroundColor: "#e71e07",
     color: "white",
     fontStyle: "bold",
-    '&:hover': {
-      backgroundColor: '#fcd000',
+    "&:hover": {
+      backgroundColor: "#fcd000",
       color: "#e71e07"
-    },
+    }
   },
   buttonLabel: {
-    fontFamily: "mario",
+    fontFamily: "mario"
   }
 }));
 
@@ -76,7 +76,7 @@ const WishlistProduct = (props) => {
       <Box sx={{ display: "flex" }}>
         <CardMedia
           component="img"
-          style={{ height: 100, width: "auto", margin: "10px" }}
+          style={{ height: 100, width: 100, margin: "10px", objectFit: "contain" }}
           image={`${product.imageUrl}`}
         />
         <Box sx={{ m: 2 }}>
@@ -92,13 +92,14 @@ const WishlistProduct = (props) => {
             })}
           </Typography>
           <div className="wishlist-buttons">
-            <Button classes={{root:muiClasses.addButton, label: muiClasses.buttonLabel}}
-            onClick={() => dispatch(addToCartThunk(product.id))}
-            >Add To Cart
+            <Button
+              classes={{ root: muiClasses.addButton, label: muiClasses.buttonLabel }}
+              onClick={() => dispatch(addToCartThunk(product.id))}>
+              Add To Cart
             </Button>
-            <Button classes={{root:muiClasses.deleteButton, label: muiClasses.buttonLabel}}
-                    onClick={() => dispatch(deleteFromWishlistThunk(product.id))}
-            >
+            <Button
+              classes={{ root: muiClasses.deleteButton, label: muiClasses.buttonLabel }}
+              onClick={() => dispatch(deleteFromWishlistThunk(product.id))}>
               Delete
             </Button>
           </div>

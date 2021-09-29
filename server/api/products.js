@@ -48,7 +48,13 @@ router.get("/:id", async (req, res, next) => {
     //make sure the ID is a number
     await idSchema.validate(req.params);
     const product = await Product.findByPk(req.params.id, {
-      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"]
+      attributes: ["id", "name", "description", "price", "imageUrl", "quantity"],
+      include: [
+        {
+          model: ProductCategory,
+          as: "categories"
+        }
+      ]
     });
     if (product) {
       res.send(product);

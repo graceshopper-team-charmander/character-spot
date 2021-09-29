@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import HomeCarousel from "./HomeCarousel";
 import HomeFeaturedProducts from "./HomeFeaturedProducts";
+import HomeCreators from "./HomeCreators";
 import Grid from "@material-ui/core/Grid";
 /**
  * COMPONENT
@@ -16,6 +17,8 @@ export const Home = (props) => {
       <HomeCarousel />
 
       <HomeFeaturedProducts />
+
+      <HomeCreators />
     </Grid>
   );
 };

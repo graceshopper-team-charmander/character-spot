@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SingleCartProduct from "./SingleCartProduct";
-import TotalSummary from "./TotalSummary"
+import TotalSummary from "./TotalSummary";
 import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
 import LoadingBar from "./LoadingBar";
 import { fetchProducts } from "../store/products";
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px"
   },
   text: {
-    fontFamily: "mario",
+    fontFamily: "mario"
   }
 }));
 
@@ -83,7 +83,7 @@ const Cart = () => {
       return;
     }
     setSnackBarWarningOpen(false);
-    setNoItemsWarningOpen(false)
+    setNoItemsWarningOpen(false);
   };
 
   if (fetchStatus === FETCH_PENDING) {
@@ -125,14 +125,15 @@ const Cart = () => {
       <div className="cart-header">
         <div className="cart-title">Your New Friends (Cart)</div>
       </div>
-      <div className="cart-body">
-        <div>
-          {cart.map((product) => {
-            return <SingleCartProduct key={product.id} product={product} />;
-          })}
-        </div>
-        < TotalSummary />
-        {/* <Card
+      <Grid container direction="row" justifyContent="center" alignItems="center">
+        <div className="cart-body">
+          <div>
+            {cart.map((product) => {
+              return <SingleCartProduct key={product.id} product={product} />;
+            })}
+          </div>
+          <TotalSummary />
+          {/* <Card
           variant="outlined"
           style={{ margin: "10px", textAlign: "right" }}
           className={muiClasses.totalRoot}>
@@ -160,28 +161,31 @@ const Cart = () => {
             </Typography>
           </Box>
         </Card> */}
-        <Box style={{ margin: "10px", textAlign: "right" }}>
-          <div>
-            <Button
-              size="large"
-              variant="contained"
-              color="secondary"
-              className={muiClasses.buttonRoot}
-              onClick={() => {
-                if (cart.length === 0){
-                  setNoItemsWarningOpen(true)
-                }
-                else if (checkProductQuantities(cart)) {
-                  routeChange();
-                } else {
-                  setSnackBarWarningOpen(true);
-                }
-              }}>
-              <h3 className={muiClasses.text}>Checkout</h3>
-            </Button>
-          </div>
-        </Box>
-      </div>
+          <Box style={{ margin: "10px", textAlign: "right" }}>
+            <div>
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                className={muiClasses.buttonRoot}
+                onClick={() => {
+                  if (cart.length === 0) {
+                    setNoItemsWarningOpen(true);
+                  } else if (checkProductQuantities(cart)) {
+                    routeChange();
+                  } else {
+                    setSnackBarWarningOpen(true);
+                  }
+                }}>
+                <h3 className={muiClasses.text}>Proceed to Shipping</h3>
+              </Button>
+            </div>
+          </Box>
+        </div>
+        <div className="img-container">
+          <img src="/images/charmander.png" className="img-check-out-process" />
+        </div>
+      </Grid>
     </Grid>
   );
 };
