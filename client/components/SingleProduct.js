@@ -105,11 +105,12 @@ const SingleProducts = (props) => {
 
     script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0";
     script.async = true;
-    script.crossorigin= "anonymous"
-    script.nonce="PfgteS8h"
+    script.setAttribute("crossorigin", "anonymous")
+    script.setAttribute("nonce","PfgteS8h" )
 
     document.body.appendChild(script);
     return () => {
+      console.log(script)
       document.body.removeChild(script);
     }
 
@@ -214,7 +215,7 @@ const SingleProducts = (props) => {
                 ADD TO CART
               </Button>
               <WishlistHeartToggle product={product}/>
-              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${product.id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
+              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
                 Share</a></div>
             </Grid>
           </Grid>
