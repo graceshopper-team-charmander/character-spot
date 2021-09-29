@@ -10,6 +10,9 @@ const Wishlist = (props) => {
   const dispatch = useDispatch();
   const fetchStatus = useSelector((state) => state.wishlist.fetchStatus);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  useEffect(() => {
+    dispatch(fetchWishlist());
+  }, []);
   if (fetchStatus === FETCH_PENDING)
     return (
       <div className="loading">
@@ -25,7 +28,7 @@ const Wishlist = (props) => {
       </div>
       <div className="page-body">
         {wishlist.map((product) => (
-          <WishlistProduct product={product} key = {product.id}/>
+          <WishlistProduct product={product} key={product.id} />
         ))}
       </div>
     </Grid>
