@@ -56,28 +56,28 @@ const HomeFeaturedProducts = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const products = useSelector((state) => state.products.products);
+  // const products = useSelector((state) => state.products.products);
   const fetchStatus = useSelector((state) => state.products.fetchStatus);
   const productsInCart = useSelector((state) => state.cart.cart);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  // }, []);
 
-  const featuredProducts = [];
-  const productsIds = [11, 7, 13, 17];
-  for (let i = 0; i < productsIds.length; i++) {
-    // let productIndex = Math.floor(Math.random() * products.length);
-    let product = products.filter((product) => product.id === productsIds[i]);
-    featuredProducts.push(product[0]);
-  }
+  // const featuredProducts = [];
+  // const productsIds = [11, 7, 13, 17];
+  // for (let i = 0; i < productsIds.length; i++) {
+  //   // let productIndex = Math.floor(Math.random() * products.length);
+  //   let product = products.filter((product) => product.id === productsIds[i]);
+  //   featuredProducts.push(product[0]);
+  // }
 
-  // const featuredProducts = [
-  //   { name: "Daisy", img: "/images/daisy.png" },
-  //   { name: "Peach", img: "/images/peach.png" },
-  //   { name: "Mario", img: "/images/mario.png" },
-  //   { name: "Luigi", img: "/images/luigi.png" }
-  // ];
+  const featuredProducts = [
+    { name: "Daisy", img: "/images/daisy.png", id: 3 },
+    { name: "Peach", img: "/images/peach.png", id: 4 },
+    { name: "Mario", img: "/images/mario.png", id: 1 },
+    { name: "Luigi", img: "/images/luigi.png", id: 2 }
+  ];
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
@@ -94,13 +94,13 @@ const HomeFeaturedProducts = () => {
     setSnackBarWarningOpen(false);
   };
 
-  if (fetchStatus === FETCH_PENDING) {
-    return (
-      <div className="loading">
-        <LoadingBar />
-      </div>
-    );
-  }
+  // if (fetchStatus === FETCH_PENDING) {
+  //   return (
+  //     <div className="loading">
+  //       <LoadingBar />
+  //     </div>
+  //   );
+  // }
   return (
     <Grid
       container
@@ -122,7 +122,7 @@ const HomeFeaturedProducts = () => {
           <Card className={classes.card}>
             <Link to={`/products/${product.id}`}>
               <CardContent>
-                <img src={product.imageUrl} className="featured-img"></img>
+                <img src={product.img} className="featured-img"></img>
               </CardContent>
             </Link>
           </Card>
