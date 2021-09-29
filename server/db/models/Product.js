@@ -83,7 +83,7 @@ const categoryFilter = ({ categories }) => {
 };
 
 /**
- * returns a sequelize fragment for student sorting operations
+ * returns a sequelize fragment for product sorting operations
  * @param {string|null} sort
  * @param {string|null} dir
  * @returns {{}|{order: (sequelize.literal|*|string)[][]}}

@@ -9,9 +9,9 @@ import LoadingBar from "./LoadingBar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Sort from "./Sort";
-import Pagination from "./Pagination";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 import NotFound from "./NotFound";
+import ListPagination from "./ListPagination";
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -96,7 +96,7 @@ const AllProducts = (props) => {
               ))}
             </Grid>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-              <Pagination totalItems={totalItems} />
+              <ListPagination totalItems={totalItems} />
             </Grid>
           </Grid>
           {/* </Paper> */}

@@ -135,6 +135,24 @@ class UserNotFoundError extends Error {
   }
 }
 
+/************************
+ Sequelize Helpers      *
+ ***********************/
+/**
+ * returns a sequelize fragment for user sorting operations
+ * @param {string|null} sort
+ * @param {string|null} dir
+ * @returns {{}|{order: (sequelize.literal|*|string)[][]}}
+ */
+const userSort = ({ sort, dir = "asc" }) => {
+  if (sort && sort !== "none") {
+    return {
+      order: [[sort, dir.toUpperCase()]]
+    };
+  }
+  return {};
+};
+
 /******************
  * Hooks          *
  * ****************/
@@ -158,4 +176,4 @@ User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 User.beforeSave(lowerCaseEmail);
 User.beforeBulkCreate((users) => Promise.all(users.map(lowerCaseEmail)));
 
-module.exports = User;
+module.exports = { User, userSort };

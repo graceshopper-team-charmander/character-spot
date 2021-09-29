@@ -2,7 +2,7 @@
 
 const db = require("./db");
 
-const User = require("./models/User");
+const {User, userSort} = require("./models/User");
 const { Product, categoryFilter } = require("./models/Product");
 const { ProductCategory } = require("./models/ProductCategory");
 
@@ -35,7 +35,8 @@ module.exports = {
     ProductCategory,
     Cart,
     Order,
-    categoryFilter
+    categoryFilter,
+    userSort
   }
 };
 

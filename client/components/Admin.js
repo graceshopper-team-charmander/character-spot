@@ -10,7 +10,14 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import AdminTabSelector from "./AdminTabSelector";
-import WishlistProduct from "./WishlistProduct";
+import { Route, Router, Switch, useHistory } from "react-router-dom";
+import AdminUserList from "./AdminUserList";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import AdminUserFormDialog from "./AdminUserFormDialog";
+import AdminProductList from "./AdminProductList";
+import { getQueryParam, setQueryParam } from "../utility-funcs/query";
+import { fetchProducts } from "../store/products";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,88 +55,87 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
       transition: "all .4s ease"
     }
+  },
+  tabsContainer: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  listContainer: {
+    flexGrow: 1,
+    marginTop: "1rem"
+  },
+  snackbarRoot: {
+    backgroundColor: "#009edb"
+  },
+  alertRoot: {
+    backgroundColor: "#009edb"
+  },
+  alertIcon: {
+    color: "#fcd000 !important"
   }
 }));
 
 const Admin = () => {
   const classes = useStyles();
-
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.admin.users);
-  const products = useSelector((state) => state.admin.products);
-
-  const fetchUsersStatus = useSelector((state) => state.admin.fetchUsersStatus);
-  const fetchProductsStatus = useSelector((state) => state.admin.fetchProductsStatus);
+  const [snackbarStatus, setSnackbarStatus] = useState(false);
+  const [snackBarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [selectedTab, setSelectedTab] = useState("users");
+  const history = useHistory();
 
   useEffect(() => {
-    dispatch(fetchAdminProducts());
-    dispatch(fetchAdminUsers());
-  }, []);
-
-  if (fetchUsersStatus === FETCH_PENDING || fetchProductsStatus === FETCH_PENDING)
-    return (
-      <div className="loading">
-        <LoadingBar />
-      </div>
-    );
-
-  if (fetchUsersStatus === FETCH_FAILED || fetchProductsStatus === FETCH_FAILED)
-    return <div>Error!</div>;
+    history.push('/admin/' + selectedTab);
+  },[]);
 
   return (
-    <Grid item xs={12} className="page">
-      <div className="page-header">
-        <div className="page-title">Administration</div>
-      </div>
-      <div className="page-body">
-        <Grid container justifyContent="center">
-          <Grid item xs={12}>
-            <AdminTabSelector />
+    <>
+      <Grid item xs={12} className="page">
+        <div className="page-header">
+          <div className="page-title">Administration</div>
+        </div>
+        <div className="page-body">
+          <Grid container justifyContent="center">
+            <Grid item xs={12} className={classes.tabsContainer}>
+              <AdminTabSelector selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            </Grid>
+            <Grid item className={classes.listContainer}>
+              <Route path="/admin/users">
+                <AdminUserList
+                  setSnackbarStatus={setSnackbarStatus}
+                  setSnackbarMessage={setSnackbarMessage}
+                  setSnackbarSeverity={setSnackbarSeverity}
+                />
+              </Route>
+              <Route path="/admin/products">
+                <AdminProductList
+                  setSnackbarStatus={setSnackbarStatus}
+                  setSnackbarMessage={setSnackbarMessage}
+                  setSnackbarSeverity={setSnackbarSeverity}
+                />
+              </Route>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </Grid>
+        </div>
+      </Grid>
+      <Snackbar
+        className={classes.snackbarRoot}
+        open={snackbarStatus}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarStatus(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert
+          classes={{
+            root: classes.alertRoot,
+            icon: classes.alertIcon
+          }}
+          onClose={() => setSnackbarStatus(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}>
+          <div className="snackbar-message">{snackBarMessage}</div>
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
-/*
-
- <div className={classes.root}>
-      <Grid container direction="row" justifyContent="flex-start" className="admin-header">
-        <Grid container direction="row" justifyContent="flex-start" className="admin-title">
-          Administration
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        className={classes.adminPage}>
-
-        <Paper elevation={3} className={classes.adminTable}>
-          <Grid container direction="column" justifyContent="center">
-            <Grid id="users" className={classes.tableTitle} container alignItems="center">
-              Users
-            </Grid>
-            <AllUsers users={users} />
-          </Grid>
-        </Paper>
-        <Paper elevation={3} className={classes.adminTable}>
-          <Grid container direction="column" justifyContent="center">
-            <Grid id="products" className={classes.tableTitle} container alignItems="center">
-              Products
-            </Grid>
-            <AllAdminProducts products={products} />
-          </Grid>
-        </Paper>
-      </Grid>
-    </div>
- */
-
 export default Admin;
-
-// Get all products
-// Get all users
-// If products have 0 - delete from database
-// Promo codes? - probably not

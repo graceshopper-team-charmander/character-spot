@@ -7,6 +7,9 @@ const cookieSecret = process.env.cookieSecret;
 router.use(cookieParser(cookieSecret));
 const { requireTokenMiddleware, isAdminMiddleware } = require("../auth-middleware");
 const { productSchema, idSchema } = require("./validationSchemas");
+const { productSort, paginate, productSearch } = require("../db/models/Product");
+const { DEFAULT_PAGESIZE } = require("../../constants");
+const { userSort } = require("../db/models/User");
 
 //all routes under /api/admin require a user to be logged in and have admin privileges
 router.use(requireTokenMiddleware, isAdminMiddleware, (req, res, next) => {
@@ -16,10 +19,13 @@ router.use(requireTokenMiddleware, isAdminMiddleware, (req, res, next) => {
 //GET /api/admin/users - returns a list of all users
 router.get("/users", async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      attributes: ["id", "email", "firstName", "lastName", "isAdmin"]
+    const { rows: users, count: totalUsers } = await User.findAndCountAll({
+      attributes: ["id", "email", "firstName", "lastName", "isAdmin"],
+      ...userSort(req.query),
+      ...paginate(req.query, DEFAULT_PAGESIZE),
+      distinct: true,
     });
-    res.json(users);
+    res.json({ users, totalUsers});
   } catch (err) {
     next(err);
   }
@@ -96,8 +102,28 @@ router.put("/products/:id", async (req, res, next) => {
   }
 });
 
-module.exports = router;
+//PUT /api/admin/users/:id - update a user with the given id
+router.put("/users/:id", async (req, res, next) => {
+  try {
+    await idSchema.validate(req.params);
+    //@todo: userSchema.validate()
+    const { firstName, lastName, email, isAdmin } = req.body;
+    const user = await User.findByPk(req.params.id);
+    if (user) {
+      await user.update(
+        { firstName, lastName, email, isAdmin },
+        {
+          attributes: ["firstName", "lastName", "email", "isAdmin"]
+        }
+      );
+      res.json(user);
+    } else {
+      throw { status: 401, message: "User Not Found!" };
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
 
-/*
-token=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImlhdCI6MTYzMjI2Nzg3N30.gFwmWcK_Mr9dE9YQ2b7hN58NLPmohAWB2gXvwKbRuNQ.2nKP8XPVucZ84SFO6b9Qxb1j5qC%2Fss6bvDnTnYSchwk; Path=/; HttpOnly;
- */
+module.exports = router;

@@ -480,3 +480,11 @@ a {
 .wishlist-buttons > *:first-child {
   margin-right: 5px;
 }
+
+/***********************
+ Snackbar              *
+***********************/
+.snackbar-message {
+  color: #fcd000;
+  font-family: mario;
+}
