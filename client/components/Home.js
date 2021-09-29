@@ -1,15 +1,21 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import HomeCarousel from "./HomeCarousel";
 import HomeFeaturedProducts from "./HomeFeaturedProducts";
 import HomeCreators from "./HomeCreators";
 import Grid from "@material-ui/core/Grid";
+import { fetchProducts } from "../store/products";
 /**
  * COMPONENT
  */
 export const Home = (props) => {
   const { firstName } = props;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
 
   return (
     <Grid container direction="column">

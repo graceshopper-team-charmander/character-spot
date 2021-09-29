@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../store/products";
-import { FETCH_FAILED, FETCH_PENDING } from "../../constants";
+import { FETCH_FAILED, FETCH_PENDING, FETCH_SUCCESS } from "../../constants";
 import LoadingBar from "./LoadingBar";
 import { updateQuantityThunk, addToCartThunk } from "../store/cart";
 import { addToLocalCart } from "../store/localCart";
@@ -56,13 +56,10 @@ const HomeFeaturedProducts = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // const products = useSelector((state) => state.products.products);
+  const products = useSelector((state) => state.products.products);
   const fetchStatus = useSelector((state) => state.products.fetchStatus);
   const productsInCart = useSelector((state) => state.cart.cart);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, []);
 
   // const featuredProducts = [];
   // const productsIds = [11, 7, 13, 17];
@@ -72,14 +69,15 @@ const HomeFeaturedProducts = () => {
   //   featuredProducts.push(product[0]);
   // }
 
-  const featuredProducts = [
-    { name: "Daisy", img: "/images/daisy.png", id: 3 },
-    { name: "Peach", img: "/images/peach.png", id: 4 },
-    { name: "Mario", img: "/images/mario.png", id: 1 },
-    { name: "Luigi", img: "/images/luigi.png", id: 2 }
-  ];
-  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  // const featuredProducts = [
+  //   { name: "Daisy", img: "/images/daisy.png", id: 3 },
+  //   { name: "Peach", img: "/images/peach.png", id: 4 },
+  //   { name: "Mario", img: "/images/mario.png", id: 1 },
+  //   { name: "Luigi", img: "/images/luigi.png", id: 2 }
+  // ];
 
+
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -101,6 +99,10 @@ const HomeFeaturedProducts = () => {
   //     </div>
   //   );
   // }
+  let featuredProducts = [];
+  if(fetchStatus === FETCH_SUCCESS) {
+    featuredProducts.push(products[0], products[1], products[2], products[3]);
+  }
   return (
     <Grid
       container
@@ -122,7 +124,7 @@ const HomeFeaturedProducts = () => {
           <Card className={classes.card}>
             <Link to={`/products/${product.id}`}>
               <CardContent>
-                <img src={product.img} className="featured-img"></img>
+                <img src={product.imageUrl} className="featured-img"></img>
               </CardContent>
             </Link>
           </Card>
