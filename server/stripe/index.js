@@ -38,7 +38,7 @@ router.post("/create-checkout-session", async (req, res) => {
         'card',
       ],
       mode: 'payment',
-      success_url: `http://localhost:8080/thankyou/`,
+      success_url: `https://character-spot.herokuapp.com/thankyou/`,
       cancel_url: `https://character-spot.herokuapp.com/`,
     });
 
