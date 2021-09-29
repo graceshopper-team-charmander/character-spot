@@ -20,6 +20,7 @@ import PayByStripe from "./components/PayByStripe";
 import Admin from "./components/Admin";
 import Wishlist from "./components/Wishlist";
 import { fetchWishlist } from "./store/wishlist";
+import { NoEncryption } from "@material-ui/icons";
 
 /**
  * COMPONENT
@@ -74,20 +75,16 @@ class Routes extends Component {
           <Route path="/payment">
             <PayByStripe/>
           </Route>
-          {isLoggedIn ? (
-            <>
-              <Switch>
-                {isAdmin && <Route exact path="/admin" component={Admin} />}
-                <Route component={NotFound} />
-              </Switch>
-            </>
-          ) : (
+          <Route  path="/admin">
+            {isLoggedIn && isAdmin ? <Admin /> : <NotFound />}
+          </Route>
+          {!isLoggedIn && (
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
-              <Route component={NotFound} />
             </Switch>
           )}
+          <Route path="*"><NotFound/></Route>
         </Switch>
       </div>
     );
@@ -112,7 +109,7 @@ const mapDispatch = (dispatch) => {
     async loadInitialData() {
       dispatch(fetchProductCategories());
       await dispatch(whoAmI());
-      dispatch(fetchWishlist())
+      dispatch(fetchWishlist());
     },
     setCartThunk(cart) {
       dispatch(setCartThunk(cart));

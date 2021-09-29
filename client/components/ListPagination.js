@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
 import { DEFAULT_PAGESIZE } from "../../constants";
-import {  useSelector } from "react-redux";
 
 const ListPagination = (props) => {
   const {items, totalItems} = props;
