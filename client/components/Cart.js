@@ -125,7 +125,7 @@ const Cart = () => {
       <div className="cart-header">
         <div className="cart-title">Your New Friends (Cart)</div>
       </div>
-      <Grid container direction="row" justifyContent="center" alignItems="center">
+      <Grid container direction="row" justifyContent="center" alignItems="flex-start">
         <div className="cart-body">
           <div>
             {cart.map((product) => {

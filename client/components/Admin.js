@@ -78,7 +78,7 @@ const Admin = () => {
 
   return (
     <>
-      <Grid item xs={12} className="page">
+      <Grid item xs={12} className="admin-page">
         <div className="page-header">
           <div className="page-title">Administration</div>
         </div>

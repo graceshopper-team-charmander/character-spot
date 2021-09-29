@@ -57,8 +57,7 @@ const dbzProducts = [
   },
   {
     name: "Chi-Chi",
-    imageUrl:
-      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/84dc13b7-a2e7-4b45-83ec-311e72e82900/dctr4ds-b9efa306-1833-414d-994c-615a9bd72e2a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg0ZGMxM2I3LWEyZTctNGI0NS04M2VjLTMxMWU3MmU4MjkwMFwvZGN0cjRkcy1iOWVmYTMwNi0xODMzLTQxNGQtOTk0Yy02MTVhOWJkNzJlMmEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.QO-8Be0PyzbhjoEOUubMvzNJtxNV6GQjjTmY2EnauNs",
+    imageUrl: "https://live.staticflickr.com/65535/51531426178_d35d94dfa9_o.png",
     description: "Fiercest housewife you'll ever meet.",
     price: 28999,
     quantity: 50

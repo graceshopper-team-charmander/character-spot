@@ -279,7 +279,8 @@ a {
 /***********************
  Cart                  *
 ***********************/
-.cart-page {
+.cart-page,
+.admin-page {
   padding-top: 1rem;
 }
 
@@ -310,9 +311,18 @@ a {
   padding: 10px 40px;
 }
 
+.img-container-stripe {
+  width: 40%;
+  margin: 0;
+  padding: 10px 10px;
+}
+
 .img-check-out-process {
-  width: 100%;
-  height: auto;
+  /* width: 100%;
+  height: auto; */
+  width: auto;
+  height: 500px;
+  object-fit: contain;
 }
 
 /***********************
@@ -621,4 +631,13 @@ a {
 .login-img {
   width: 100%;
   height: auto;
+}
+
+.share {
+  /* height: 45px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
 }

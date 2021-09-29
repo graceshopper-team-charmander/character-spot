@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
     height: "200px",
     boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
 
-    "&:hover": {
-      transition: "all .4s ease",
-      boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
-      transform: "translate3d(0px, -10px, 0px)"
-    },
+    // "&:hover": {
+    //   transition: "all .4s ease",
+    //   boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
+    //   transform: "translate3d(0px, -10px, 0px)"
+    // },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -83,11 +83,11 @@ const HomeCreators = () => {
           alignItems="center"
           key={i}
           className={classes.avatars}>
-          <a href={creator.link}>
-            <Avatar className={classes.avatar}>
-              <img src={creator.imageUrl} className="avatar-img"></img>
-            </Avatar>
-          </a>
+          {/* <a href={creator.link}> */}
+          <Avatar className={classes.avatar}>
+            <img src={creator.imageUrl} className="avatar-img"></img>
+          </Avatar>
+          {/* </a> */}
           <Grid className={classes.name}>{creator.name}</Grid>
         </Grid>
       ))}
