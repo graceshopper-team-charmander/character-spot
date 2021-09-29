@@ -26,9 +26,15 @@ const SET_ADMIN_STATUS = "SET_ADMIN_STATUS";
  * ACTION CREATORS     *
  ***********************/
 const setLoggedIn = (firstName, lastName, email) => ({ type: LOGIN, firstName, lastName, email });
-const setLoggedOut = () => ({ type: LOGOUT });
-const setInfo = (user) => ({ type: SET_INFO, user });
-const updateInfo = (user, firstName) => ({ type: UPDATE_INFO, user, firstName });
+const setLoggedOut = () => ({ type: LOGOUT, firstName: 'Guest' });
+const setInfo = ({ firstName, lastName, email }) => ({
+  type: SET_INFO,
+  payload: { firstName, lastName, email }
+});
+const updateInfo = ({ firstName, lastName, email }) => ({
+  type: UPDATE_INFO,
+  payload: { firstName, lastName, email }
+});
 const changePassword = () => ({ type: CHANGE_PW });
 const setAdminStatus = (status) => ({ type: SET_ADMIN_STATUS, status });
 export const loginSuccess = (bool) => ({ type: LOGIN_SUCCESS, bool });
@@ -42,7 +48,7 @@ export const authenticate = (method, credentials) => {
       const response = await axios.post(`/auth/${method}`, credentials);
       if (response.data.loggedIn) {
         dispatch(loginSuccess(true));
-        dispatch(setLoggedIn(response.data.firstName));
+        dispatch(setLoggedIn(response.data.firstName, response.data.lastName, response.data.email));
         dispatch(setAdminStatus(response.data.isAdmin));
         return true;
       } else {
@@ -103,7 +109,7 @@ export const getInfo = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("/auth/info");
-      dispatch(setInfo(data));
+      dispatch(setInfo(data.user));
     } catch (err) {
       console.log(err);
     }
@@ -115,9 +121,9 @@ export const updateInfoThunk = (update) => {
     try {
       const { data } = await axios.put("/auth/update", update);
       if (data) {
-        alert("Info changed");
-        dispatch(updateInfo(data));
-        dispatch(setLoggedIn(data.firstName));
+        console.log("updateInfo", data);
+        dispatch(updateInfo(data.user));
+        // dispatch(setLoggedIn(data.firstName, data.lastName, data.email));
       }
     } catch (err) {
       console.log(err);
@@ -152,7 +158,6 @@ const initialState = {
   email: "",
   loggedIn: NOT_LOGGED_IN,
   loginSuccess: true,
-  user: {},
   error: false,
   adminStatus: false
 };
@@ -170,9 +175,9 @@ export default (state = initialState, action) => {
     case LOGOUT:
       return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest", lastName: "", email: "" };
     case SET_INFO:
-      return { ...state, user: action.user };
+      return { ...state, ...action.payload };
     case UPDATE_INFO:
-      return { ...state, user: action.user };
+      return { ...state, ...action.payload };
     case CHANGE_PW:
       return { ...state };
     case LOGIN_SUCCESS:

@@ -72,7 +72,7 @@ class EditInfo extends React.Component {
   }
   render() {
     const muiClasses = this.props.classes;
-    let user = this.props.user.user;
+    const {firstName, lastName, email} = this.props.auth;
     return (
       <Box style={{ margin: 25 }}>
         <form onSubmit={this.handleSubmit} name="info">
@@ -85,7 +85,7 @@ class EditInfo extends React.Component {
                   <TextField
                     size="small"
                     name="firstName"
-                    defaultValue={user ? user.firstName : ""}
+                    defaultValue={firstName ? firstName : ""}
                     inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
@@ -96,7 +96,7 @@ class EditInfo extends React.Component {
                   <TextField
                     size="small"
                     name="lastName"
-                    defaultValue={user ? user.lastName : ""}
+                    defaultValue={lastName ? lastName : ""}
                     inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
@@ -117,7 +117,7 @@ class EditInfo extends React.Component {
                     classes={{ root: muiClasses.textRoot }}
                     inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
-                    defaultValue={user ? user.email : ""}
+                    defaultValue={email ? email : ""}
                   />
                 </Box>
               </Box>
@@ -145,7 +145,7 @@ class EditInfo extends React.Component {
 
 const mapState = (state) => {
   return {
-    user: state.auth.user
+    auth: state.auth
   };
 };
 

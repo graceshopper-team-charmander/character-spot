@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user.user) || [];
+  const { firstName, lastName, email } = useSelector((state) => state.auth) || [];
   const [edit, toggleEdit] = useState(false);
   const [editPassword, toggleEditPassword] = useState(false);
 
@@ -73,7 +73,7 @@ const Profile = () => {
       <Grid container direction="row" justifyContent="flex-start" alignItems="center">
         <div className="profile-body">
           {edit ? (
-            <EditInfo user={user} toggleEdit={toggleEdit} />
+            <EditInfo toggleEdit={toggleEdit} />
           ) : (
             <Box style={{ margin: "25 25 0 25" }}>
               <Card className={styles.infoRoot}>
@@ -82,7 +82,7 @@ const Profile = () => {
                 </Box>
                 <Box style={{ flexGrow: 1, textAlign: "center" }}>
                   <p className={styles.text}>
-                    {user.firstName} {user.lastName}
+                    {firstName} {lastName}
                   </p>
                 </Box>
               </Card>
@@ -91,7 +91,7 @@ const Profile = () => {
                   <h1 className={styles.labelText}>Email</h1>
                 </Box>
                 <Box style={{ flexGrow: 1, textAlign: "center" }}>
-                  <p className={styles.text}> {user.email}</p>
+                  <p className={styles.text}> {email}</p>
                 </Box>
               </Card>
             </Box>
@@ -110,7 +110,7 @@ const Profile = () => {
             )}
           </Box>
           {editPassword ? (
-            <EditPassword user={user} toggleEdit={toggleEditPassword} />
+            <EditPassword toggleEdit={toggleEditPassword} />
           ) : (
             <Box style={{ margin: "25 25 0 25" }}>
               <Card className={styles.infoRoot}>
