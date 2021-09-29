@@ -125,6 +125,22 @@ const SingleProducts = (props) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+
+    script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0";
+    script.async = true;
+    script.setAttribute("crossorigin", "anonymous")
+    script.setAttribute("nonce","PfgteS8h" )
+
+    document.body.appendChild(script);
+    return () => {
+      console.log(script)
+      document.body.removeChild(script);
+    }
+
+  }, [id]);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -202,10 +218,12 @@ const SingleProducts = (props) => {
             <Grid
               container
               direction="row"
-              justifyContent="center"
+              justifyContent="space-around"
               alignItems="center"
               className="title-container">
               <div className="single-product-title">{product.name}</div>
+              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
+                Share</a></div>
             </Grid>
 
             {/* middle of right column */}
