@@ -28,27 +28,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 const SingleCheckoutProduct = (props) => {
   const dispatch = useDispatch();
   const product = props.product;
   const muiClasses = useStyles();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
-
   return (
     <Card className={muiClasses.cardRoot}>
       <Box sx={{ display: "flex" }}>
         <CardMedia
           component="img"
-          style={{ height: 100, width: "auto", margin: "10px" }}
+          style={{ height: 100, width: 100, objectFit: "contain", margin: "10px" }}
           image={`${product.imageUrl}`}
         />
         <Box sx={{ m: 2 }}>
           <Typography style={{ fontWeight: 600, fontSize: 20 }}>{product.name}</Typography>
           <Typography>{product.description}</Typography>
-          < br />
-            Quantity: {product.cartQuantity}
+          <br />
+          Quantity: {product.cartQuantity}
         </Box>
         <Box sx={{ m: 2 }} style={{ flexGrow: 1 }}>
           <Typography style={{ textAlign: "right" }}>

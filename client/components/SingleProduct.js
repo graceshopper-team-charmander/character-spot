@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
   },
   rightCol: {
     width: "55%",
-    paddingLeft: "2%"
+    paddingLeft: "2%",
+    margin: "6% 4%"
   },
   button: {
     backgroundColor: "#fcd000",
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#e71e07",
       transition: "all .4s ease"
-    }
+    },
+    boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
   },
   transparent: {
     color: "transparent"
@@ -70,14 +72,33 @@ const useStyles = makeStyles((theme) => ({
     },
     zIndex: 1
   },
+  descContainer: {
+    width: "80%",
+    height: "200px",
+    backgroundColor: "lightgray",
+    margin: "1em 0",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+  },
   actions: {
-    display:"flex",
+    display: "flex",
     flexDirection: "row"
   },
   favorite: {
     alignSelf: "center",
     height: "24px",
     marginLeft: "10px"
+  },
+  descLeft: {
+    width: "35%",
+    height: "100%",
+    padding: "20px 10px",
+    fontWeight: "bold"
+  },
+  descRight: {
+    width: "65%",
+    height: "100%",
+    backgroundColor: "white",
+    padding: "20px 10px"
   }
 }));
 
@@ -92,6 +113,10 @@ const SingleProducts = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const products = useSelector((state) => state.products.products);
+
+  let categories = product.categories || [];
+  categories = categories.map((category) => category.name).join(", ");
 
   //on mount
   useEffect(() => {
@@ -187,17 +212,56 @@ const SingleProducts = (props) => {
             container
             className={styles.rightCol}
             direction="column"
-            justifyContent="space-around"
+            justifyContent="center"
             alignItems="center">
             {/* top of right column */}
-            <Grid container direction="column" justifyContent="center" alignItems="center">
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              className="title-container">
               <div className="single-product-title">{product.name}</div>
+              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
+                Share</a></div>
             </Grid>
 
             {/* middle of right column */}
-            <Grid container direction="column" justifyContent="center" alignItems="center">
-              <div>{product.description}</div>
-              <div>$ {product.price / 100}</div>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              className={styles.descContainer}>
+              <Grid
+                container
+                direction="column"
+                justifyContent="space-between"
+                alignItems="center"
+                className={styles.descLeft}>
+                <div className="top" id="top-left">
+                  Category
+                </div>
+
+                <div>Description</div>
+
+                <div className="bottom" id="bottom-left">
+                  {" "}
+                  Price{" "}
+                </div>
+              </Grid>
+              <Grid
+                container
+                direction="column"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                className={styles.descRight}>
+                <div className="top">{categories}</div>
+
+                <div>{product.description}</div>
+
+                <div className="bottom">$ {product.price / 100}</div>
+              </Grid>
             </Grid>
             <Grid item className={styles.actions}>
               <Button
@@ -212,11 +276,9 @@ const SingleProducts = (props) => {
                   }
                 }}
                 className={styles.button}>
-                ADD TO CART
+                <div className="single-button">ADD TO CART</div>
               </Button>
-              <WishlistHeartToggle product={product}/>
-              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
-                Share</a></div>
+              <WishlistHeartToggle product={product} />
             </Grid>
           </Grid>
           {/* </Grid> */}

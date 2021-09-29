@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store";
@@ -94,91 +95,114 @@ const AuthForm = (props) => {
       <div className="cart-header">
         <h4 className="cart-title">{name === "signup" ? "Sign Up" : "Login"}</h4>
       </div>
-      <Box style={{ margin: 25 }}>
-        <form onSubmit={handleSubmit} name={name}>
-          <Card
-            style={{
-              display: "flex",
-              border: "8px solid #fcd000",
-              margin: "10px",
-              padding: "5px",
-              borderRadius: "10px"
-            }}>
-            <Box style={{ margin: 0, minWidth: "13rem" }} htmlFor="Email">
-              <h1 style={{ fontFamily: "mario" }}>Email</h1>
-            </Box>
-            <TextField
-              value={email}
-              onChange={(evt) => {
-                setEmail(evt.target.value);
-              }}
-              name="email"
-              type="text"
-              inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
-              style={{ flexGrow: 1 }}
-              InputProps={{ disableUnderline: true }}
-            />
-          </Card>
-          <Card
-            style={{
-              display: "flex",
-              border: "8px solid #fcd000",
-              margin: "10px",
-              padding: "5px",
-              borderRadius: "10px"
-            }}>
-            <Box style={{ margin: 0, minWidth: "13rem" }} htmlFor="password">
-              <h1 style={{ fontFamily: "mario" }}>Password</h1>
-            </Box>
-            <TextField
-              value={password}
-              onChange={(evt) => {
-                setPassword(evt.target.value);
-              }}
-              inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
-              InputProps={{ disableUnderline: true }}
-              style={{ flexGrow: 1 }}
-              name="password"
-              type="password"
-            />
-          </Card>
-          {name === "signup" && (
-            <Card
-              style={{
-                display: "flex",
-                border: "8px solid #fcd000",
-                margin: "10px",
-                padding: "5px",
-                borderRadius: "10px"
-              }}>
-              <Box htmlFor="First Name">
-                <h1 style={{ fontFamily: "mario" }}>First Name</h1>
+      <Grid container direction="row" justifyContent="center" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          style={{ width: "50%" }}>
+          <Box style={{ margin: 25, width: "100%" }}>
+            <form onSubmit={handleSubmit} name={name}>
+              <Card
+                style={{
+                  display: "flex",
+                  border: "8px solid #fcd000",
+                  margin: "10px",
+                  padding: "5px",
+                  borderRadius: "10px"
+                }}>
+                <Box style={{ margin: 0, width: "250px", padding: "1em" }} htmlFor="Email">
+                  <h1 style={{ fontFamily: "mario" }}>Email</h1>
+                </Box>
+                <TextField
+                  value={email}
+                  onChange={(evt) => {
+                    setEmail(evt.target.value);
+                  }}
+                  name="email"
+                  type="text"
+                  // inputProps={{ style: { textAlign: "center", margin: "0 auto" } }}
+                  style={{ flexGrow: 1, justifyContent: "center", alignItems: "flex-start" }}
+                  InputProps={{ disableUnderline: true }}
+                />
+              </Card>
+              <Card
+                style={{
+                  display: "flex",
+                  border: "8px solid #fcd000",
+                  margin: "10px",
+                  padding: "5px",
+                  borderRadius: "10px"
+                }}>
+                <Box style={{ margin: 0, width: "250px", padding: "1em" }} htmlFor="password">
+                  <h1 style={{ fontFamily: "mario" }}>Password</h1>
+                </Box>
+                <TextField
+                  value={password}
+                  onChange={(evt) => {
+                    setPassword(evt.target.value);
+                  }}
+                  // inputProps={{ style: { textAlign: "center" } }}
+                  InputProps={{ disableUnderline: true }}
+                  style={{ flexGrow: 1, justifyContent: "center", alignItems: "flex-start" }}
+                  name="password"
+                  type="password"
+                />
+              </Card>
+              {name === "signup" && (
+                <Card
+                  style={{
+                    display: "flex",
+                    border: "8px solid #fcd000",
+                    margin: "10px",
+                    padding: "5px",
+                    borderRadius: "10px"
+                  }}>
+                  <Box htmlFor="First Name" style={{ margin: 0, width: "250px", padding: "1em" }}>
+                    <h1
+                      style={{
+                        fontFamily: "mario"
+                      }}>
+                      First Name
+                    </h1>
+                  </Box>
+                  <TextField
+                    value={firstName}
+                    onChange={(evt) => {
+                      setFirstName(evt.target.value);
+                    }}
+                    name="firstName"
+                    type="text"
+                    // inputProps={{ style: { textAlign: "center" } }}
+                    InputProps={{ disableUnderline: true }}
+                    style={{ flexGrow: 1, justifyContent: "center", alignItems: "flex-start" }}
+                  />
+                </Card>
+              )}
+              <Box style={{ display: "flex", justifyContent: "right" }}>
+                <Button
+                  style={{
+                    margin: "10px",
+                    border: "3px solid #44af35"
+                  }}
+                  type="submit">
+                  <h3 style={{ fontFamily: "mario" }}>{displayName}</h3>
+                </Button>
               </Box>
-              <TextField
-                value={firstName}
-                onChange={(evt) => {
-                  setFirstName(evt.target.value);
-                }}
-                name="firstName"
-                type="text"
-                inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
-                InputProps={{ disableUnderline: true }}
-              />
-            </Card>
-          )}
-          <Box style={{ display: "flex", justifyContent: "right" }}>
-            <Button
-              style={{
-                margin: "10px",
-                border: "3px solid #44af35"
-              }}
-              type="submit">
-              <h3 style={{ fontFamily: "mario" }}>{displayName}</h3>
-            </Button>
+              {error && error.response && <Box> {error.response.data} </Box>}
+            </form>
           </Box>
-          {error && error.response && <Box> {error.response.data} </Box>}
-        </form>
-      </Box>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          style={{ width: "30%" }}>
+          <img src="/images/toad.png" alt="toad" className="login-img" />
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

@@ -15,7 +15,7 @@ const styles = (theme) => ({
     display: "flex",
     border: "8px solid #fcd000",
     margin: "10px",
-    padding: "5px",
+    padding: "15px",
     borderRadius: "10px"
   },
   submitButton: {
@@ -32,6 +32,7 @@ const styles = (theme) => ({
     fontSize: "1rem",
     flexGrow: 1,
     padding: "2px",
+    fontFamily: "helvetica"
   },
   boxRoot: {
     flexDirection: "row",
@@ -43,10 +44,10 @@ const styles = (theme) => ({
   fieldName: {
     minWidth: "13rem",
     fontFamily: "mario"
-  },
-  text: {
-    fontFamily: "mario"
   }
+  // text: {
+  //   fontFamily: "mario"
+  // }
 });
 
 class EditInfo extends React.Component {
@@ -73,7 +74,7 @@ class EditInfo extends React.Component {
     const muiClasses = this.props.classes;
     let user = this.props.user.user;
     return (
-      <Box style = {{margin: 25}}>
+      <Box style={{ margin: 25 }}>
         <form onSubmit={this.handleSubmit} name="info">
           <Card classes={{ root: muiClasses.cardRoot }}>
             <Box style={{ flexGrow: 1, margin: 0 }}>
@@ -85,7 +86,7 @@ class EditInfo extends React.Component {
                     size="small"
                     name="firstName"
                     defaultValue={user ? user.firstName : ""}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
                   />
@@ -96,7 +97,7 @@ class EditInfo extends React.Component {
                     size="small"
                     name="lastName"
                     defaultValue={user ? user.lastName : ""}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
                     classes={{ root: muiClasses.textRoot }}
                   />
@@ -104,9 +105,7 @@ class EditInfo extends React.Component {
               </Box>
             </Box>
           </Card>
-          <Card
-            classes={{ root: muiClasses.cardRoot }}
-          >
+          <Card classes={{ root: muiClasses.cardRoot }}>
             <Box style={{ flexGrow: 1, margin: 0 }}>
               <h1 style={{ fontFamily: "mario" }}>Email </h1>
               <Box style={{ display: "flex", margin: 0, flexDirection: "column" }}>
@@ -116,7 +115,7 @@ class EditInfo extends React.Component {
                     size="small"
                     name="email"
                     classes={{ root: muiClasses.textRoot }}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     InputProps={{ disableUnderline: true }}
                     defaultValue={user ? user.email : ""}
                   />
@@ -124,12 +123,18 @@ class EditInfo extends React.Component {
               </Box>
             </Box>
           </Card>
-          <Box style={{ display: "flex", justifyContent: "right"}}>
-            <Button  classes={{ root: muiClasses.submitButton }} onSubmit={this.handleSubmit} type="submit">
-            <h3 style = {{fontFamily: "mario"}}>Submit</h3>
+          <Box style={{ display: "flex", justifyContent: "right" }}>
+            <Button
+              classes={{ root: muiClasses.submitButton }}
+              onSubmit={this.handleSubmit}
+              type="submit">
+              <h3 style={{ fontFamily: "mario" }}>Submit</h3>
             </Button>
-            <Button classes={{ root: muiClasses.cancelButton }} onClick={this.handleCancel} type="button">
-            <h3 style = {{fontFamily: "mario"}}>Cancel</h3>
+            <Button
+              classes={{ root: muiClasses.cancelButton }}
+              onClick={this.handleCancel}
+              type="button">
+              <h3 style={{ fontFamily: "mario" }}>Cancel</h3>
             </Button>
           </Box>
         </form>

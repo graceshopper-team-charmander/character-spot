@@ -15,14 +15,14 @@ const styles = (theme) => ({
     display: "flex",
     border: "8px solid #fcd000",
     margin: "10px",
-    padding: "5px",
+    padding: "15px",
     borderRadius: "10px"
   },
   textRoot: {
     outline: "2px solid #fcd000",
     fontSize: "1rem",
     flexGrow: 1,
-    padding: "2px",
+    padding: "2px"
   },
   submitButton: {
     margin: "10px",
@@ -42,10 +42,10 @@ const styles = (theme) => ({
   fieldName: {
     minWidth: "13rem",
     fontFamily: "mario"
-  },
-  text: {
-    fontFamily: "mario"
   }
+  // text: {
+  //   fontFamily: "mario"
+  // }
 });
 
 class EditPassword extends React.Component {
@@ -90,7 +90,7 @@ class EditPassword extends React.Component {
   render() {
     const muiClasses = this.props.classes;
     return (
-      <Box style = {{margin: 25}}>
+      <Box style={{ margin: 25 }}>
         <form onSubmit={this.handleSubmit} name="pw">
           <Card classes={{ root: muiClasses.cardRoot }}>
             <Box style={{ flexGrow: 1, margin: 0 }}>
@@ -105,7 +105,7 @@ class EditPassword extends React.Component {
                     type="password"
                     name="currentPassword"
                     classes={{ root: muiClasses.textRoot }}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
                     InputProps={{ disableUnderline: true }}
                     onChange={this.onChangeOld}
                   />
@@ -117,7 +117,7 @@ class EditPassword extends React.Component {
                     type="password"
                     name="newPassword"
                     classes={{ root: muiClasses.textRoot }}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
                     InputProps={{ disableUnderline: true }}
                     onChange={this.onChange}
                   />
@@ -133,7 +133,7 @@ class EditPassword extends React.Component {
                     error={this.state.errorText}
                     helperText={"Passwords must match"}
                     classes={{ root: muiClasses.textRoot }}
-                    inputProps={{ style: {textAlign: 'center', fontFamily: "mario"} }}
+                    inputProps={{ style: { textAlign: "center", fontFamily: "mario" } }}
                     InputProps={{ disableUnderline: true }}
                     onChange={this.onChangeConfirm}
                   />
@@ -141,11 +141,17 @@ class EditPassword extends React.Component {
               </Box>
             </Box>
           </Card>
-          <Box style={{ display: "flex", justifyContent: "right"}}>
-            <Button type="submit"  classes={{ root: muiClasses.submitButton }}  onClick={this.handleSubmit}>
+          <Box style={{ display: "flex", justifyContent: "right" }}>
+            <Button
+              type="submit"
+              classes={{ root: muiClasses.submitButton }}
+              onClick={this.handleSubmit}>
               <h3 style={{ fontFamily: "mario" }}>Submit</h3>
             </Button>
-            <Button onClick={this.handleCancel}  classes={{ root: muiClasses.cancelButton }} type="button">
+            <Button
+              onClick={this.handleCancel}
+              classes={{ root: muiClasses.cancelButton }}
+              type="button">
               <h3 style={{ fontFamily: "mario" }}>Cancel</h3>
             </Button>
           </Box>
