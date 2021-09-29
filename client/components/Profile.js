@@ -13,25 +13,36 @@ import EditInfo from "./EditInfo";
 import EditPassword from "./EditPassword";
 
 const useStyles = makeStyles((theme) => ({
+  paperRoot: {
+    margin: "1rem 40px"
+  },
   infoRoot: {
     display: "flex",
     margin: "10px",
-    padding: "5px",
+    padding: "15px",
     border: "8px solid #fcd000",
     borderRadius: "10px",
     alignItems: "center"
   },
   editButton: {
     margin: "10px",
-    border: "3px solid #009edb"
+    width: "100px",
+    // border: "3px solid #009edb",
+    backgroundColor: "#009edb",
+    color: "white"
   },
   buttonBox: {
     display: "flex",
     justifyContent: "right",
-    margin: "25px"
+    margin: " 0 25px"
   },
-  text: {
+  buttonText: {
     fontFamily: "mario",
+    fontSize: "1.2rem"
+  },
+  labelText: {
+    fontSize: "1.5rem",
+    fontFamily: "mario"
   }
 }));
 
@@ -47,65 +58,96 @@ const Profile = () => {
   }, []);
 
   return (
-    <Grid item xs={12} style ={{paddingTop: "1rem",
-    /* width: 80%; */
-    margin: "0 auto"}}>
+    <Grid
+      item
+      xs={12}
+      style={{
+        paddingTop: "1rem",
+        /* width: 80%; */
+        margin: "0 auto"
+      }}>
       <div className="all-products-header">
         <h4 className="all-products-title">Profile</h4>
       </div>
-      {edit ? (
-        <EditInfo user={user} toggleEdit={toggleEdit} />
-      ) : (
-        <Box style = {{margin: 25}}>
-          <Card className={styles.infoRoot}>
-            <Box style={{minWidth: "13rem" }}>
-              {" "}
-              <h1 className={styles.text} >Name</h1>
+
+      <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+        <div className="profile-body">
+          {edit ? (
+            <EditInfo user={user} toggleEdit={toggleEdit} />
+          ) : (
+            <Box style={{ margin: "25 25 0 25" }}>
+              <Card className={styles.infoRoot}>
+                <Box style={{ minWidth: "13rem" }}>
+                  <h1 className={styles.labelText}>Name</h1>
+                </Box>
+                <Box style={{ flexGrow: 1, textAlign: "center" }}>
+                  <p className={styles.text}>
+                    {user.firstName} {user.lastName}
+                  </p>
+                </Box>
+              </Card>
+              <Card className={styles.infoRoot}>
+                <Box style={{ minWidth: "13rem" }}>
+                  <h1 className={styles.labelText}>Email</h1>
+                </Box>
+                <Box style={{ flexGrow: 1, textAlign: "center" }}>
+                  <p className={styles.text}> {user.email}</p>
+                </Box>
+              </Card>
             </Box>
-            <Box style = {{flexGrow: 1, textAlign: "center"}}>
-            <p className={styles.text}>
-              {user.firstName} {user.lastName}
-            </p>
+          )}
+
+          <Box className={styles.buttonBox}>
+            {!edit && (
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                className={styles.editButton}
+                onClick={() => toggleEdit(!edit)}>
+                <h3 className={styles.buttonText}>Edit</h3>
+              </Button>
+            )}
+          </Box>
+          {editPassword ? (
+            <EditPassword user={user} toggleEdit={toggleEditPassword} />
+          ) : (
+            <Box style={{ margin: "25 25 0 25" }}>
+              <Card className={styles.infoRoot}>
+                <Box style={{ minWidth: "13rem" }}>
+                  <h1 className={styles.labelText}>Password</h1>{" "}
+                </Box>
+                <Box style={{ flexGrow: 1, textAlign: "center" }}>
+                  <p className={styles.text}>******</p>{" "}
+                </Box>
+              </Card>
             </Box>
-          </Card>
-          <Card className={styles.infoRoot}>
-            <Box style={{ minWidth: "13rem"}}>
-              <h1 className={styles.text}>Email</h1>
-            </Box>
-            <Box style = {{flexGrow: 1, textAlign: "center"}}>
-            <p className={styles.text}> {user.email}</p>
-            </Box>
-          </Card>
-        </Box>
-      )}
-      <Box className={styles.buttonBox}>
-        {!edit && (
-          <Button className={styles.editButton} onClick={() => toggleEdit(!edit)}>
-            <h3 className={styles.text}>Edit</h3>
-          </Button>
-        )}
-      </Box>
-      {editPassword ? (
-        <EditPassword user={user} toggleEdit={toggleEditPassword} />
-      ) : (
-        <Box style = {{margin: 25}}>
-          <Card className={styles.infoRoot}>
-            <Box style={{minWidth: "13rem"}}>
-              <h1 className={styles.text}>Password</h1>{" "}
-            </Box>
-            <Box style = {{flexGrow: 1, textAlign: "center"}}>
-              <p className={styles.text}>******</p>{" "}
-              </Box>
-          </Card>
-        </Box>
-      )}
-      <Box className={styles.buttonBox}>
-        {!editPassword && (
-          <Button className={styles.editButton} onClick={() => toggleEditPassword(!editPassword)}>
-            <h3 className={styles.text}>Edit</h3>
-          </Button>
-        )}
-      </Box>
+          )}
+          <Box className={styles.buttonBox}>
+            {!editPassword && (
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                className={styles.editButton}
+                onClick={() => toggleEditPassword(!editPassword)}>
+                <h3 className={styles.buttonText}>Edit</h3>
+              </Button>
+            )}
+          </Box>
+        </div>
+        <Grid
+          style={{ width: "35%" }}
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center">
+          <img
+            src="http://assets.stickpng.com/images/5f539984060f2e000485808f.png"
+            alt="isabelle"
+          />
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

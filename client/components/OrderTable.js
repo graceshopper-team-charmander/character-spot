@@ -31,9 +31,9 @@ const useRowStyles = makeStyles({
   },
   orderTable: {
     marginLeft: "40px",
-    marginRight: "1em",
+    marginRight: "40px",
     marginTop: "1rem",
-    width: "75%"
+    width: "94%"
   }
 });
 
@@ -137,12 +137,13 @@ function Row(props) {
                             severity="warning"
                             sx={{ width: "100%" }}>
                             {/* There are no {product.name}s left to add to your cart! */}
-                            There are no {product.name}s left to add to your cart!
+                            This product is out of stock! Unable to add to cart!
                           </Alert>
                         </Snackbar>
                         <Button
                           variant="contained"
                           onClick={() => {
+                            console.log(product);
                             if (checkQuantity(product, productsInCart)) {
                               setSnackBarOpen(true);
                               dispatch(addToCartThunk(product.id));
@@ -151,7 +152,7 @@ function Row(props) {
                               // alert(`There are no ${product.name}'s left to add to your cart!`);
                             }
                           }}>
-                          ADD TO CART
+                          <div className="button-font">ADD TO CART</div>
                         </Button>
                       </TableCell>
                       <TableCell>

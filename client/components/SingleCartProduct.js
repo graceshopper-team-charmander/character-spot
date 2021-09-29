@@ -66,7 +66,7 @@ const SingleCartProduct = (props) => {
       <Box sx={{ display: "flex" }}>
         <CardMedia
           component="img"
-          style={{ height: 100, width: "auto", margin: "10px" }}
+          style={{ height: 100, width: 100, margin: "10px", objectFit: "contain" }}
           image={`${product.imageUrl}`}
         />
         <Box sx={{ m: 2 }}>
