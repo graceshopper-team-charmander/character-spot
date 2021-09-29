@@ -11,12 +11,11 @@ const { refactorCartItems, refactorSingleCartItem } = require("../db/models/Cart
 const { userSignupSchema } = require("../api/validationSchemas");
 const faker = require("faker");
 
-const { sendConfirmEmail, emailBody} = require("../email/email")
-const test = "freda.hamill81@ethereal.email"
+const { sendConfirmEmail, emailBody } = require("../email/email");
+const test = "freda.hamill81@ethereal.email";
 
 //mount wishlist on user
-router.use('/wishlist', require('./wishlist'));
-
+router.use("/wishlist", require("./wishlist"));
 
 //Get the cart of a user
 //GET /api/users/cart - returns the users cart
@@ -47,17 +46,17 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
       }
     });
     //create email to send
-    const name = req.user.firstName
-    const products = req.body.cart
-    const orderNumber = order[0].id
-    const date = order[0].createdAt
-    const emailBodyHTML = await emailBody(name, products, orderNumber, date)
+    const name = req.user.firstName;
+    const products = req.body.cart;
+    const orderNumber = order[0].id;
+    const date = order[0].createdAt;
+    const emailBodyHTML = await emailBody(name, products, orderNumber, date);
 
     const orderedProducts = await Order.checkout(req.user);
     await Product.updateInventory(orderedProducts);
 
     //send email
-    sendConfirmEmail({to: req.user.email, html: emailBodyHTML })
+    sendConfirmEmail({ to: req.user.email, html: emailBodyHTML });
     //@todo: quantity checking needs to occur before anything else
 
     res.sendStatus(200);
@@ -69,10 +68,10 @@ router.put("/checkout", requireTokenMiddleware, async (req, res, next) => {
 //PUT /api/users/guest-checkout - checks the users cart out
 router.put("/guest-checkout", async (req, res, next) => {
   try {
-    console.log('IN THE GUEST CHECKOUT ROUTE', req.body)
+    console.log("IN THE GUEST CHECKOUT ROUTE", req.body);
     //@todo: quantity checking needs to occur before anything else
-    req.body.password =
-      faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
+    req.body.password = 123;
+    // faker.internet.password() + faker.internet.password() + Math.floor(Math.random() * 1000);
     await userSignupSchema.validate(req.body);
     const guestUser = await User.makeOrFind(req.body); //find or create a guest account
 
@@ -83,17 +82,17 @@ router.put("/guest-checkout", async (req, res, next) => {
         status: "PENDING"
       }
     });
-    console.log(req.body.cart, '*****')
-    const name = guestUser.firstName
-    const products = req.body.cart
-    const orderNumber = order[0].id
-    const date = order[0].createdAt
-    const emailBodyHTML = await emailBody(name, products, orderNumber, date)
+    console.log(req.body.cart, "*****");
+    const name = guestUser.firstName;
+    const products = req.body.cart;
+    const orderNumber = order[0].id;
+    const date = order[0].createdAt;
+    const emailBodyHTML = await emailBody(name, products, orderNumber, date);
 
     const orderedProducts = await Order.guestCheckout(guestUser, req.body.cart);
     await Product.updateInventory(orderedProducts);
 
-    sendConfirmEmail({to: guestUser.email, html: emailBodyHTML })
+    sendConfirmEmail({ to: guestUser.email, html: emailBodyHTML });
 
     res.sendStatus(200);
   } catch (err) {
@@ -107,7 +106,11 @@ router.put("/cart/:id", requireTokenMiddleware, async (req, res, next) => {
     // need to validate userId with middleware
     await idSchema.validate(req.params);
     await cartProductQuantitySchema.validate(req.body);
-    res.send(refactorSingleCartItem(await Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity)));
+    res.send(
+      refactorSingleCartItem(
+        await Cart.updateCartQuantity(req.user, req.params.id, req.body.quantity)
+      )
+    );
   } catch (err) {
     next(err);
   }
