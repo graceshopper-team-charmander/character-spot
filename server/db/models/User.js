@@ -110,7 +110,9 @@ User.findByToken = async (token) => {
 
 //creates or finds the user by their email and creates a 'PENDING' order for them if necessary
 User.makeOrFind = async function ({ firstName, email, password }) {
-  let user = await User.findAll({where: email});
+  let user = await User.findAll({where: {
+    email: email
+  }});
   if(user.length) {
     user = user[0];
   }
