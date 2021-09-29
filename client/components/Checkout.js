@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     backgroundColor: "#009edb",
     color: "white"
+  },
+  text: {
+    fontFamily: "mario"
   }
 }));
 
@@ -72,63 +75,60 @@ const Checkout = (props) => {
       for (let key in newErrors) {
         newErrors[key] = false;
       }
-      if(!isLoggedIn){
-        console.log("****** FORMSTATE*", newState)
+      if (!isLoggedIn) {
         localStorage.setItem("guestFirstName", JSON.stringify(newState.firstName));
         localStorage.setItem("guestLastName", JSON.stringify(newState.lastName));
         localStorage.setItem("guestEmailAddress", JSON.stringify(newState.guestEmailAddress));
       }
-      dispatch(validateCheckoutInfo(history,formState));
+      dispatch(validateCheckoutInfo(history, formState));
     } catch (err) {
       err.inner.forEach((error) => {
         newErrors[error.path] = error.message;
       });
     }
-    // setFormState(newState);
+    setFormState(newState);
   };
 
   return (
     <div className="checkout-page">
       <div className="checkout-header">
-        <h4 className="checkout-title">Checkout</h4>
+        <h4 className="checkout-title">Shipping</h4>
       </div>
-      <div className="page">
-        <Grid container spacing={2} direction="column">
-          <Grid item>
-            <GuestCheckoutForm formState={formState} setFormState={setFormState} />
-          </Grid>
-          <Grid item>
-            <Address />
-          </Grid>
-          <Grid item>
-            <Shipping />
-          </Grid>
-          {/* <Grid item>
+      <Grid container direction="row" justifyContent="center" alignItems="center">
+        <div className="img-container">
+          <img src="/images/charmeleon.png" className="img-check-out-process" />
+        </div>
+
+        <div className="page">
+          <Grid container spacing={2} direction="column">
+            <Grid item>
+              <GuestCheckoutForm formState={formState} setFormState={setFormState} />
+            </Grid>
+            {/* <Grid item>
+              <Address />
+            </Grid> */}
+            <Grid item>
+              <Shipping />
+            </Grid>
+            {/* <Grid item>
             <PaymentMethod />
           </Grid> */}
-          <Grid item>
-            <div className="form-actions">
-              <Button
-                size="large"
-                variant="contained"
-                color="secondary"
-                className={muiClasses.buttonRoot}
-                startIcon={<ShoppingCartOutlinedIcon />}
-                onClick={handleSubmit}>
-                Proceed to Payment
-              </Button>
-            </div>
+            <Grid item>
+              <div className="form-actions">
+                <Button
+                  size="large"
+                  variant="contained"
+                  color="secondary"
+                  className={muiClasses.buttonRoot}
+                  startIcon={<ShoppingCartOutlinedIcon />}
+                  onClick={handleSubmit}>
+                  <h3 className={muiClasses.text}>Proceed To Payment</h3>
+                </Button>
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-        {/* <Snackbar
-          open={snackBarOpen}
-          autoHideDuration={6000}
-          onClose={() => setSnackBarOpen(false)}>
-          <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{ width: "100%" }}>
-            {snackBarMessage}
-          </Alert>
-        </Snackbar> */}
-      </div>
+        </div>
+      </Grid>
     </div>
   );
 };

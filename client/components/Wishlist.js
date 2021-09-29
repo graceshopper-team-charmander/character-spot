@@ -19,12 +19,14 @@ const Wishlist = (props) => {
   else if (fetchStatus === FETCH_FAILED) return <div>Error!</div>;
 
   return (
-    <Grid item xs={12} className="page">
+    <Grid item xs={12} className="wishlist-page">
       <div className="page-header">
         <div className="page-title">Wishlist</div>
       </div>
       <div className="page-body">
-        {wishlist.map(product => <WishlistProduct product={product}/>)}
+        {wishlist.map((product) => (
+          <WishlistProduct product={product} />
+        ))}
       </div>
     </Grid>
   );

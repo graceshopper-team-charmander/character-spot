@@ -25,7 +25,7 @@ const SET_ADMIN_STATUS = "SET_ADMIN_STATUS";
 /***********************
  * ACTION CREATORS     *
  ***********************/
-const setLoggedIn = (firstName, lastName, email) => ({ type: LOGIN, firstName, lastName, email});
+const setLoggedIn = (firstName, lastName, email) => ({ type: LOGIN, firstName, lastName, email });
 const setLoggedOut = () => ({ type: LOGOUT });
 const setInfo = (user) => ({ type: SET_INFO, user });
 const updateInfo = (user, firstName) => ({ type: UPDATE_INFO, user, firstName });
@@ -82,13 +82,10 @@ export const whoAmI = () => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get("/auth/whoAmI");
-      console.log('*****', response)
+      console.log("*****", response);
       if (response.data.loggedIn) {
         // @todo cleanup
-        dispatch(setLoggedIn(
-          response.data.firstName,
-          response.data.lastName,
-          response.data.email));
+        dispatch(setLoggedIn(response.data.firstName, response.data.lastName, response.data.email));
         dispatch(setAdminStatus(response.data.isAdmin));
       } else {
         console.log("Failed to authenticate");
@@ -163,13 +160,19 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, loggedIn: LOGGED_IN, firstName: action.firstName, lastName: action.lastName, email: action.email};
+      return {
+        ...state,
+        loggedIn: LOGGED_IN,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        email: action.email
+      };
     case LOGOUT:
-      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest", lastName: "", email: ""};
+      return { ...state, loggedIn: NOT_LOGGED_IN, firstName: "Guest", lastName: "", email: "" };
     case SET_INFO:
       return { ...state, user: action.user };
     case UPDATE_INFO:
-      return { ...state, user: action.user};
+      return { ...state, user: action.user };
     case CHANGE_PW:
       return { ...state };
     case LOGIN_SUCCESS:
