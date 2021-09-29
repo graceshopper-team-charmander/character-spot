@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#e71e07",
       transition: "all .4s ease"
     },
-    boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+    boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+    marginLeft: "1.2em"
   },
   transparent: {
     color: "transparent"
@@ -126,19 +127,18 @@ const SingleProducts = (props) => {
   }, [id]);
 
   useEffect(() => {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
 
     script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0";
     script.async = true;
-    script.setAttribute("crossorigin", "anonymous")
-    script.setAttribute("nonce","PfgteS8h" )
+    script.setAttribute("crossorigin", "anonymous");
+    script.setAttribute("nonce", "PfgteS8h");
 
     document.body.appendChild(script);
     return () => {
-      console.log(script)
+      console.log(script);
       document.body.removeChild(script);
-    }
-
+    };
   }, [id]);
 
   const handleClose = (event, reason) => {
@@ -218,12 +218,10 @@ const SingleProducts = (props) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-around"
+              justifyContent="center"
               alignItems="center"
               className="title-container">
               <div className="single-product-title">{product.name}</div>
-              <div className="fb-share-button" data-href={`https://character-spot.herokuapp.com/products/${id}`} data-layout="button" data-size="large"><a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">
-                Share</a></div>
             </Grid>
 
             {/* middle of right column */}
@@ -264,6 +262,7 @@ const SingleProducts = (props) => {
               </Grid>
             </Grid>
             <Grid item className={styles.actions}>
+              <WishlistHeartToggle product={product} />
               <Button
                 variant="contained"
                 onClick={() => {
@@ -278,7 +277,20 @@ const SingleProducts = (props) => {
                 className={styles.button}>
                 <div className="single-button">ADD TO CART</div>
               </Button>
-              <WishlistHeartToggle product={product} />
+              <div className="share">
+                <div
+                  className="fb-share-button"
+                  data-href={`https://character-spot.herokuapp.com/products/${id}`}
+                  data-layout="button"
+                  data-size="large">
+                  <a
+                    target="_blank"
+                    href={`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fproducts%2F5&amp;src=sdkpreparse`}
+                    className="fb-xfbml-parse-ignore">
+                    Share
+                  </a>
+                </div>
+              </div>
             </Grid>
           </Grid>
           {/* </Grid> */}

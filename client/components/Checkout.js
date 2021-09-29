@@ -94,7 +94,7 @@ const Checkout = (props) => {
       <div className="checkout-header">
         <h4 className="checkout-title">Shipping</h4>
       </div>
-      <Grid container direction="row" justifyContent="center" alignItems="center">
+      <Grid container direction="row" justifyContent="center" alignItems="flex-start">
         <div className="img-container">
           <img src="/images/charmeleon.png" className="img-check-out-process" />
         </div>

@@ -37,7 +37,7 @@ const PayByStripe = () => {
         <div className="cart-header" id="order-summary">
           <div className="cart-title">Order Summary</div>
         </div>
-        <Grid container direction="row" justifyContent="center" alignItems="center">
+        <Grid container direction="row" justifyContent="center" alignItems="flex-start">
           <div className="cart-body">
             <div>
               {cart.map((product) => {
@@ -60,7 +60,7 @@ const PayByStripe = () => {
               </div>
             </Box>
           </div>
-          <div className="img-container">
+          <div className="img-container-stripe">
             <img src="/images/charizard.png" className="img-check-out-process" />
           </div>
         </Grid>
