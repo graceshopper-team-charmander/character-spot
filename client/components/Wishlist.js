@@ -25,7 +25,7 @@ const Wishlist = (props) => {
       </div>
       <div className="page-body">
         {wishlist.map((product) => (
-          <WishlistProduct product={product} />
+          <WishlistProduct product={product} key = {product.id}/>
         ))}
       </div>
     </Grid>
