@@ -5,7 +5,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import PersonPinIcon from "@material-ui/icons/PersonPin";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -16,19 +15,17 @@ const useStyles = makeStyles({
 });
 
 const AdminTabSelector = (props) => {
-  const {selectedTab, setSelectedTab} = props;
+  const { selectedTab, setSelectedTab } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const history = useHistory();
-
 
   const handleChange = (evt, newValue) => {
     const section = evt.target.innerText.toLowerCase();
     setValue(newValue);
     setSelectedTab(section);
-    history.push('/admin/' + section);
+    history.push("/admin/" + section);
   };
-
 
   return (
     <Paper square className={classes.root}>

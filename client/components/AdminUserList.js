@@ -16,8 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminProducts, fetchAdminUsers } from "../store/admin";
 import AdminUserFormDialog from "./AdminUserFormDialog";
 import { getQueryParam, setQueryParam } from "../utility-funcs/query";
-import { fetchProducts } from "../store/products";
-import Sort from "./Sort";
 import ListPagination from "./ListPagination";
 import Grid from "@material-ui/core/Grid";
 
