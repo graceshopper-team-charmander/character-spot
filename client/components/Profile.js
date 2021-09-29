@@ -142,10 +142,7 @@ const Profile = () => {
           direction="column"
           justifyContent="center"
           alignItems="center">
-          <img
-            src="http://assets.stickpng.com/images/5f539984060f2e000485808f.png"
-            alt="isabelle"
-          />
+          <img src="/images/isabelle.png" alt="isabelle" />
         </Grid>
       </Grid>
     </Grid>

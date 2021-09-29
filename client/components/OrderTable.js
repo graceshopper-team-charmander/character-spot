@@ -143,7 +143,6 @@ function Row(props) {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            console.log(product);
                             if (checkQuantity(product, productsInCart)) {
                               setSnackBarOpen(true);
                               dispatch(addToCartThunk(product.id));

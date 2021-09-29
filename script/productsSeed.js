@@ -128,7 +128,7 @@ const pokemonProducts = [
     name: "Mac",
     imageUrl: "https://live.staticflickr.com/65535/51521308196_43775bcd7a_o.png",
     description: "Wishes he were Trainer Red",
-    price: 1999,
+    price: 2108,
     quantity: 1
   }
 ];

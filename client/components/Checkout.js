@@ -86,7 +86,7 @@ const Checkout = (props) => {
         newErrors[error.path] = error.message;
       });
     }
-    // setFormState(newState);
+    setFormState(newState);
   };
 
   return (
@@ -104,9 +104,9 @@ const Checkout = (props) => {
             <Grid item>
               <GuestCheckoutForm formState={formState} setFormState={setFormState} />
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Address />
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Shipping />
             </Grid>

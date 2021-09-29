@@ -67,6 +67,7 @@ export const logout = () => {
       const response = await axios.get("/auth/logout");
       if (!response.data.loggedIn) {
         dispatch(setLoggedOut());
+        dispatch(loginSuccess(false));
       } else {
         console.log("Failed to logout");
         //@todo failed to logout
