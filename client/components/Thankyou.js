@@ -53,7 +53,7 @@ const Thankyou = (props) => {
       <div style = {{textAlign: "center"}}>
       <h1 className={muiClasses.text}>Thank you for your order!</h1>
       <img
-        src = "/images/charmander.png"
+        src = "/images/charm-char.png"
         style = {{maxWidth: "50%", padding: "30px"}}/>
       </div>
       </Box>
