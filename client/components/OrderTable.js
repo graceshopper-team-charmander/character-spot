@@ -158,8 +158,7 @@ function Row(props) {
                         <Link to={`/products/${product.id}`}>{product.name}</Link>
                       </TableCell>
                       <TableCell align="right">{product.cart.cartQuantity}</TableCell>
-                      <TableCell align="right">${product.price / 100}</TableCell>
-
+                      <TableCell align="right">${product.cart.priceAtCheckout / 100}</TableCell>
                       <TableCell align="right">
                         ${Math.round(product.cart.cartQuantity * product.price) / 100}
                       </TableCell>
