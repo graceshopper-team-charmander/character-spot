@@ -7,8 +7,17 @@ const {
 /** creating fake data */
 const faker = require("faker");
 const Order = require("../server/db/models/Order");
+const {
+  marioProducts,
+  dbzProducts,
+  pokemonProducts,
+  kirbyProducts,
+  hunterProducts,
+  finalFantasyProducts,
+  sailorMoonProducts
+} = require("./productsSeed");
 const dbpg = require("../server/db/dbpg");
-
+const { customUsers } = require("./usersSeed");
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -17,98 +26,104 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  let amtOfFakeData = 22;
-  //Create Fake Users
-  const fakeUsers = await Promise.all(
-    Array(amtOfFakeData)
-      .fill("")
-      .map((product) =>
-        User.create({
-          email: faker.internet.email(),
-          firstName: faker.name.firstName(),
-          lastName: faker.name.lastName(),
-          password: faker.internet.password()
-        })
-      )
-  );
+  //Create Users
+  const [cody, murphy, alexandra, nicole, amaya] = await User.bulkCreate(customUsers);
+  const users = [cody, murphy, alexandra, nicole, amaya];
 
-  //Create Fake Categories
-  const categories = await Promise.all(
-    Array(10)
-      .fill("")
-      .map((item) =>
-        ProductCategory.create({
-          name: faker.random.word()
-        })
-      )
-  );
+  //Create Categories
+  const categories = [
+    { name: "anime" },
+    { name: "Nintendo" },
+    { name: "Mario" },
+    { name: "Dragonball Z" },
+    { name: "Pokemon" },
+    { name: "Kirby" },
+    { name: "Hunter x Hunter" },
+    { name: "Final Fantasy" },
+    { name: "Sailor Moon" }
+  ];
+  const [
+    animeCat,
+    nintendoCat,
+    marioCat,
+    dragonballZCat,
+    pokemonCat,
+    kirbyCat,
+    hunterXHunterCat,
+    finalFantasyCat,
+    sailorMoonCat
+  ] = await ProductCategory.bulkCreate(categories);
 
-  //Give the users 'pending' orders
+  //Create Orders
   const createdFakeOrders = [];
-  for (let i = 0; i < fakeUsers.length; i++) {
+  for (let i = 0; i < users.length; i++) {
     const order = await Order.create({ status: "PENDING" });
     createdFakeOrders.push(order);
-    await order.setUser(fakeUsers[i]);
+    await order.setUser(users[i]);
   }
 
-  //Create Fake Products
-  const fakeProducts = await Promise.all(
-    Array(amtOfFakeData)
-      .fill("")
-      .map((product) =>
-        Product.create({
-          name: faker.random.word(),
-          imageUrl: faker.image.food(),
-          description: faker.lorem.sentence(),
-          price: faker.datatype.number(),
-          quantity: 5
-        })
-      )
-  );
+  //Create Products
+  const mario = await Product.bulkCreate(marioProducts);
+  const dbz = await Product.bulkCreate(dbzProducts);
+  const pokemon = await Product.bulkCreate(pokemonProducts);
+  const kirby = await Product.bulkCreate(kirbyProducts);
+  const hunter = await Product.bulkCreate(hunterProducts);
+  const final = await Product.bulkCreate(finalFantasyProducts);
+  const sailor = await Product.bulkCreate(sailorMoonProducts);
 
-  //Add Categories to products
-  for (let i = 0; i < amtOfFakeData; i++) {
-    const product = fakeProducts[i];
-    await product.addCategory(categories[Math.floor(Math.random() * 10) + 1]);
+  //Product Category Associations
+  for (let i = 0; i < mario.length; i++) {
+    const marioProduct = mario[i];
+    await marioProduct.setCategories([marioCat, nintendoCat]);
   }
 
-  //Map Products to Users
-  createdFakeOrders[0].addProduct(fakeProducts[0]);
-  createdFakeOrders[0].addProduct(fakeProducts[1]);
-  createdFakeOrders[0].addProduct(fakeProducts[2]);
-  createdFakeOrders[0].addProduct(fakeProducts[3]);
-  createdFakeOrders[21].addProduct(fakeProducts[0]);
+  for (let i = 0; i < dbz.length; i++) {
+    const dbzProduct = dbz[i];
+    await dbzProduct.setCategories([dragonballZCat, animeCat]);
+  }
 
-  // Original Code: Creating Users
-  const users = await Promise.all([
-    User.create({
-      email: "cody@charm.com",
-      firstName: "Cody",
-      lastName: "Turtle",
-      password: "123"
-    })
-  ]);
+  for (let i = 0; i < pokemon.length; i++) {
+    const pokemonProduct = pokemon[i];
+    await pokemonProduct.setCategories([pokemonCat, nintendoCat]);
+  }
 
-  const cody = users[0];
-  const order = await Order.create({ status: "PENDING" });
-  await order.setUser(cody);
-  // await order.addProduct(fakeProducts[0]);
+  for (let i = 0; i < kirby.length; i++) {
+    const kirbyProduct = kirby[i];
+    await kirbyProduct.setCategories([kirbyCat, nintendoCat]);
+  }
 
-  const luigi = await Product.create({
-    name: "Luigi",
-    imageUrl: "https://live.staticflickr.com/65535/51509441876_dbc8c6d5bd_o.png",
-    description: "An Italian plumber's brother. Makes better spaghetti.",
-    price: 9999,
-    quantity: 1
-  });
+  for (let i = 0; i < hunter.length; i++) {
+    const hunterProduct = hunter[i];
+    await hunterProduct.setCategories([hunterXHunterCat, animeCat]);
+  }
+
+  for (let i = 0; i < final.length; i++) {
+    const finalProduct = final[i];
+    await finalProduct.setCategories([finalFantasyCat]);
+  }
+
+  for (let i = 0; i < sailor.length; i++) {
+    const sailorProduct = sailor[i];
+    await sailorProduct.setCategories([sailorMoonCat, animeCat]);
+  }
+
+  // Set Products on Users
+  const codyOrder = await cody.getOrders();
+  await codyOrder[0].setProducts([mario[0], mario[4]]);
+
+  const murphyOrder = await murphy.getOrders();
+  await murphyOrder[0].setProducts([dbz[2]]);
+
+  const alexandraOrder = await alexandra.getOrders();
+  await alexandraOrder[0].setProducts([sailor[1], kirby[0]]);
+
+  const nicoleOrder = await nicole.getOrders();
+  await nicoleOrder[0].setProducts([hunter[0], pokemon[4]]);
+
+  const amayaOrder = await amaya.getOrders();
+  await amayaOrder[0].setProducts([final[0], pokemon[5]]);
 
   console.log(`seeded successfully`);
-
-  return {
-    users: {
-      cody: users[0]
-    }
-  };
 }
 
 /*
@@ -120,7 +135,7 @@ async function runSeed() {
   console.log("seeding...");
   try {
     await seed();
-    await dbpg.query("CREATE EXTENSION pg_trgm");
+    // await dbpg.query("CREATE EXTENSION pg_trgm");
   } catch (err) {
     console.error(err);
     process.exitCode = 1;

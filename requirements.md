@@ -58,7 +58,7 @@
 ### As an engineer, I want to:
 - [ ] have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
 - *By doing this, you really set yourselves up to tackle many of the points throughout the tiers. In the long run, this will save you, potentially, tons of time.*
-- *For example, seed hundreds of products with dummy data so that when you get to the “pagination” user story, you won’t have to worry about adding more products.*
+- *For example, seedOld hundreds of products with dummy data so that when you get to the “pagination” user story, you won’t have to worry about adding more products.*
 - *Likewise, add a bunch of users with products in their carts so editing the cart can be worked on without already having the “add to cart” functionality built out.*
   - User Faker.js to generate data
 - [ ] user data to be secure so that no one can unrightfully manipulate information.
@@ -120,7 +120,7 @@
   - [ ] *This is an opportunity to dive into a "search" input field. You can filter all products using vanilla JavaScript, or look into Algolia (search-as-a-service).*
 - [ ] browse through all products in a digestible way so that I am not overwhelmed with an endless list of products.
   - [ ] *Dive into pagination here!*
-  - [ ] *This goes back to the initial seed in Tier 1. If you have a database seeded with thousands of products, there shouldn't be any blockers in order to tackle this user story. It also begs the question of whether we should fetch all of the products from the database or limit the response in intervals (e.g. 25 at a time) and show more only through a user action (e.g. clicking a “Next”/”Show More” button).*
+  - [ ] *This goes back to the initial seedOld in Tier 1. If you have a database seeded with thousands of products, there shouldn't be any blockers in order to tackle this user story. It also begs the question of whether we should fetch all of the products from the database or limit the response in intervals (e.g. 25 at a time) and show more only through a user action (e.g. clicking a “Next”/”Show More” button).*
   - [ ] *Keep in mind, if you already have the product filter feature built out, can you get pagination to work on the results as well?*
 - [ ] view featured products so that I can get inspiration.
   - [ ] *For example, display the five most purchased products within a given period of time (i.e. yesterday or last week), or the most recently added products.*
