@@ -29,7 +29,12 @@ Order.checkout = async (user) => {
   )[0];
   await order.update({ status: "FULFILLED" });
   await user.createOrder(); //for their next order
-  return order.getProducts();
+  const products = await order.getProducts();
+  for(let i = 0; i < products.length; i++) {
+    await products[i].cart.update({priceAtCheckout: products[i].price});
+  }
+  return products;
+  //update the ordered products to price at checkout
 };
 
 /**

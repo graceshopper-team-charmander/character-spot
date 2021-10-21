@@ -6,7 +6,7 @@ const {
   models: { User }
 } = require("../../../server/db");
 const jwt = require("jsonwebtoken");
-const seed = require("../../../script/seed");
+const seed = require("../../../script/seed-old");
 
 describe("User model", () => {
   let users;

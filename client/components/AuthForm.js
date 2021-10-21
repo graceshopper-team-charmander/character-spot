@@ -17,9 +17,9 @@ import { useHistory } from "react-router-dom";
  */
 const AuthForm = (props) => {
   const { name, displayName, error } = props;
-  const [email, setEmail] = useState("cody@charm.com");
-  const [password, setPassword] = useState("123");
-  const [firstName, setFirstName] = useState("Cody");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
 
   const [snackBarWarningOpen, setSnackBarWarningOpen] = useState(false);
   const [snackBarErrorOpen, setSnackBarErrorOpen] = useState(false);

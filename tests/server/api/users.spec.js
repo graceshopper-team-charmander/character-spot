@@ -6,7 +6,7 @@ const {
   db,
   models: { User }
 } = require("../../../server/db");
-const seed = require("../../../script/seed");
+const seed = require("../../../script/seed-old");
 const app = require("../../../server/app");
 
 describe("User routes", () => {

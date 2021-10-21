@@ -17,14 +17,14 @@ export const initCart = (dispatch, state) => {
   const localCart = JSON.parse(localStorage.getItem("characterSpotCart"));
   if (!state.auth.loggedIn) {
     //user not logged in
-    if (localCart.length) {
+    if (localCart && localCart.length) {
       dispatch(setLocalCart(localCart)); //set redux cart from localStorage
     }
     dispatch(setFetchCartStatus(FETCH_SUCCESS));
     //when not logged in, and the user has nothing in local storage
   } else {
     //user logged in
-    if (localCart.length) {
+    if (localCart && localCart.length) {
       dispatch(setCartThunk(localCart)); //merge localStorage with DB
       clearLocalCart();
     } else if (state.cart.cart.length) {
