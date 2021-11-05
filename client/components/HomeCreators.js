@@ -11,12 +11,11 @@ const useStyles = makeStyles((theme) => ({
     width: "200px",
     height: "200px",
     boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
-
-    // "&:hover": {
-    //   transition: "all .4s ease",
-    //   boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
-    //   transform: "translate3d(0px, -10px, 0px)"
-    // },
+    "&:hover": {
+      transition: "all .4s ease",
+      boxShadow: "rgba(0, 0, 0, 0.22) 0px 19px 43px",
+      transform: "translate3d(0px, -10px, 0px)"
+    },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -47,17 +46,17 @@ const HomeCreators = () => {
     {
       name: "Alexandra",
       imageUrl: "https://ca.slack-edge.com/T024FPYBQ-U029NF4D8LD-4ef038e02b60-512",
-      link: "https://github.com/amarks93"
+      link: "https://www.linkedin.com/in/alexandravmarks"
     },
     {
       name: "Amaya",
       imageUrl: "https://ca.slack-edge.com/T024FPYBQ-U029RG52CRG-73c1288bddba-512",
-      link: "https://github.com/AmayaWinter"
+      link: "https://www.linkedin.com/in/amaya-agha/"
     },
     {
       name: "Nicole",
       imageUrl: "https://ca.slack-edge.com/T024FPYBQ-U029RMVNK1R-c994e254b6d0-512",
-      link: "https://github.com/pannicole"
+      link: "https://www.linkedin.com/in/nicole-pan1/"
     }
   ];
 
@@ -83,11 +82,11 @@ const HomeCreators = () => {
           alignItems="center"
           key={i}
           className={classes.avatars}>
-          {/* <a href={creator.link}> */}
-          <Avatar className={classes.avatar}>
-            <img src={creator.imageUrl} className="avatar-img"></img>
-          </Avatar>
-          {/* </a> */}
+          <a href={creator.link} target="_blank" rel="noreferrer noopener">
+            <Avatar className={classes.avatar}>
+              <img src={creator.imageUrl} className="avatar-img"></img>
+            </Avatar>
+          </a>
           <Grid className={classes.name}>{creator.name}</Grid>
         </Grid>
       ))}
