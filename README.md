@@ -110,10 +110,10 @@ refreshToken=insert-your-OAuth-refresh-token
 accessToken=insert-your-OAuth-access-token
 ```
 
-##Running in Development Mode
+## Running in Development Mode
 Run the appliation with `npm run start:dev`
 
-##Running in Production Mode
+## Running in Production Mode
 - Build the bundle with `npm run build`
 - Run the application with `npm run start`
 
