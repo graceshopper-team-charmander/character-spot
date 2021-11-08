@@ -1,6 +1,6 @@
 # Character Spot
 
-![Character Spot Logo](/public/images/logo.png)
+<img src="./public/images/logo.png" width="575" height="auto">
 
 ## Table of Contents
 
@@ -23,11 +23,11 @@ Watch our in class presentation: [Character Spot Presentation](https://youtu.be/
 
 # Creators
 
-|                     Amaya Agha                      |                     Alexandra Marks                     |                      Nicole Pan                      |
-| :-------------------------------------------------: | :-----------------------------------------------------: | :--------------------------------------------------: |
-|      ![Amaya](/public/images/Amaya-circle.png)      |      ![Alexandra](/public/images/Alex-circle.png)       |     ![Nicole](/public/images/Nicole-circle.png)      |
-|      [GitHub](https://github.com/AmayaWinter)       |          [GitHub](https://github.com/amarks93)          |        [GitHub](https://github.com/pannicole)        |
-| [LinkedIn](https://www.linkedin.com/in/amaya-agha/) | [LinkedIn](https://www.linkedin.com/in/alexandravmarks) | [LinkedIn](https://www.linkedin.com/in/nicole-pan1/) |
+|                                     Amaya Agha                                     |                                  Alexandra Marks                                  |                                     Nicole Pan                                      |
+| :--------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="./public/images/Amaya-Circle.png" alt="Amaya"  width="175" height="175"> | <img  src="./public/images/Alex-circle.png" alt="Alex"  width="175" height="175"> | <img src="./public/images/Nicole-circle.png" alt="Nicole" width="175" height="175"> |
+|                      [GitHub](https://github.com/AmayaWinter)                      |                       [GitHub](https://github.com/amarks93)                       |                       [GitHub](https://github.com/pannicole)                        |
+|                [LinkedIn](https://www.linkedin.com/in/amaya-agha/)                 |              [LinkedIn](https://www.linkedin.com/in/alexandravmarks)              |                [LinkedIn](https://www.linkedin.com/in/nicole-pan1/)                 |
 
 # Tech Stack
 
