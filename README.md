@@ -23,9 +23,11 @@ Watch our in class presentation: [Character Spot Presentation](https://youtu.be/
 
 # Creators
 
-- Amaya Agha: [GitHub](https://github.com/AmayaWinter) | [LinkedIn](https://www.linkedin.com/in/amaya-agha/)
-- Alexandra Marks: [GitHub](https://github.com/amarks93) | [LinkedIn](https://www.linkedin.com/in/alexandravmarks)
-- Nicole Pan: [GitHub](https://github.com/pannicole) | [LinkedIn](https://www.linkedin.com/in/nicole-pan1/)
+|                     Amaya Agha                      |                     Alexandra Marks                     |                      Nicole Pan                      |
+| :-------------------------------------------------: | :-----------------------------------------------------: | :--------------------------------------------------: |
+|      ![Amaya](/public/images/Amaya-circle.png)      |      ![Alexandra](/public/images/Alex-circle.png)       |     ![Nicole](/public/images/Nicole-circle.png)      |
+|      [GitHub](https://github.com/AmayaWinter)       |          [GitHub](https://github.com/amarks93)          |        [GitHub](https://github.com/pannicole)        |
+| [LinkedIn](https://www.linkedin.com/in/amaya-agha/) | [LinkedIn](https://www.linkedin.com/in/alexandravmarks) | [LinkedIn](https://www.linkedin.com/in/nicole-pan1/) |
 
 # Tech Stack
 
