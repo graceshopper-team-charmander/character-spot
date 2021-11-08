@@ -4,7 +4,7 @@
   "description": "grace-shopper",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode=production",
     "build:dev": "npm run build -- --watch --mode=development",
     "seed": "node script/seed.js",
     "seed-old": "node script/seed-old.js",
