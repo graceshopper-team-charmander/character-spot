@@ -38,7 +38,6 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-
     return (
       <div>
         <Switch>
@@ -73,18 +72,18 @@ class Routes extends Component {
             <Thankyou />
           </Route>
           <Route path="/payment">
-            <PayByStripe/>
+            <PayByStripe />
           </Route>
-          <Route  path="/admin">
-            {isLoggedIn && isAdmin ? <Admin /> : <NotFound />}
-          </Route>
+          <Route path="/admin">{isLoggedIn && isAdmin ? <Admin /> : <NotFound />}</Route>
           {!isLoggedIn && (
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
             </Switch>
           )}
-          <Route path="*"><NotFound/></Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
       </div>
     );
