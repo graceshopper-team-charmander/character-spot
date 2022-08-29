@@ -1,6 +1,6 @@
 module.exports = {
   entry: [
-    './client/index.js'
+    './client/index.tsx'
   ],
   output: {
     path: __dirname,
@@ -9,15 +9,11 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
+      // Js, Jsx, Ts, Tsx files
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|tsx|ts)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        options: {
-          presets: [
-            '@babel/preset-react'
-          ]
-        }
       }
     ]
   }
