@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AllProducts = (props) => {
+const AllProducts = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
