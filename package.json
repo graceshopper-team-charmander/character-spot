@@ -1,7 +1,7 @@
 {
-  "name": "team-charmander",
+  "name": "character-spot",
   "version": "2.0.0",
-  "description": "grace-shopper",
+  "description": "Character Spot by Team Charmander",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=production",
@@ -19,7 +19,10 @@
     "test:dev:models": "npm run test:dev -- --grep=model",
     "test:dev:routes": "npm run test:dev -- --grep=route"
   },
-  "author": "Fullstack Academy of Code",
+  "engines": {
+    "node": "16.18.1"
+  },
+  "author": "Amaya Agha<amaya.agha@gmail.com>, Nicole Pan<nicole.pan1127@gmail.com>, Alexandra Marks",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.12.3",
