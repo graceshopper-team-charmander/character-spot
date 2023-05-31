@@ -46,9 +46,7 @@
     "react-material-ui-carousel": "^2.3.5",
     "sequelize": "^6.6.5",
     "stripe": "^8.176.0",
-    "yup": "^0.32.9"
-  },
-  "devDependencies": {
+    "yup": "^0.32.9",
     "@babel/core": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
     "@babel/register": "^7.12.10",
